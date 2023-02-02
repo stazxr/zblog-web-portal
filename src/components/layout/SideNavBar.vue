@@ -110,10 +110,10 @@ export default {
     },
     drawer: {
       set(value) {
-        this.$store.state.drawer = value
+        this.$store.state.drawerFlag = value
       },
       get() {
-        return this.$store.state.drawer
+        return this.$store.state.drawerFlag
       }
     }
   },

@@ -55,31 +55,31 @@
   content: "\e6ed";
 }
 
-.iconshijian:before {
+.icon-time:before {
   content: "\e61a";
 }
 
-.iconliulan:before {
+.icon-viewsCount:before {
   content: "\e60e";
 }
 
-.iconpinglunzu1:before {
+.icon-commentCount:before {
   content: "\e766";
 }
 
-.iconfenlei1:before {
+.icon-category:before {
   content: "\e625";
 }
 
-.iconzishu:before {
+.icon-wordNum:before {
   content: "\e617";
 }
 
-.icongengxinshijian:before {
+.icon-updateTime:before {
   content: "\e6be";
 }
 
-.iconrili:before {
+.icon-riLi:before {
   content: "\e797";
 }
 
@@ -139,7 +139,7 @@
   content: "\e68f";
 }
 
-.iconerweima:before {
+.icon-qrCode:before {
   content: "\e69a";
 }
 
@@ -147,7 +147,7 @@
   content: "\ec7a";
 }
 
-.iconzhiding:before {
+.icon-top:before {
   content: "\e6a7";
 }
 
@@ -155,11 +155,11 @@
   content: "\e62f";
 }
 
-.icondianzan:before {
+.icon-like:before {
   content: "\e60c";
 }
 
-.iconbiaoqing:before {
+.icon-face:before {
   content: "\e644";
 }
 

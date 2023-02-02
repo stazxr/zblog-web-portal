@@ -8,6 +8,14 @@ const routes = [
     path: '/',
     name: 'Home',
     component: resolve => require(['../views/home/index'], resolve)
+  },
+  {
+    path: '/article/:articleId',
+    component: resolve => require(['../views/article/article'], resolve)
+  },
+  {
+    path: '/articles/:articleId',
+    component: resolve => require(['../views/article/article'], resolve)
   }
 ]
 

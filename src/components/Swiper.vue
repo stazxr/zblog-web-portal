@@ -33,7 +33,8 @@ export default {
   },
   data: function() {
     return {
-      num: 0
+      num: 0,
+      interval: null
     }
   },
   computed: {
@@ -43,13 +44,19 @@ export default {
   },
   created: function() {
     const _this = this
-    setInterval(function() {
+    this.interval = setInterval(function() {
       if (_this.num !== _this.list.length) {
         _this.num++
       } else {
         _this.num = 0
       }
-    }, 3000)
+    }, 5000)
+  },
+  destroyed() {
+    if (this.interval != null) {
+      clearInterval(this.interval)
+      this.interval = null
+    }
   }
 }
 </script>

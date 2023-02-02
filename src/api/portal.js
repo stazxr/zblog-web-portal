@@ -18,5 +18,9 @@ export default {
   // 获取文章列表
   queryArticleList: params => {
     return api.httpRequest().get(`${portalApi}/queryArticleList`, params)
+  },
+  // 获取文章详情
+  queryArticleDetail: params => {
+    return api.httpRequest().get(`${portalApi}/queryArticleDetail`, params)
   }
 }

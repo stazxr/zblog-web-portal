@@ -67,7 +67,6 @@ function responseHandler(result) {
     // success, return data
     return result
   } else {
-    console.log('error1')
     Vue.prototype.$toast({ type: 'error', message: '系统异常' })
   }
 }

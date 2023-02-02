@@ -8,7 +8,7 @@ ul {
   padding:0 !important;
 }
 * {
-  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Lato,Roboto,'PingFang SC','Microsoft YaHei',sans-serif !important;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Lato,Roboto,'PingFang SC','Microsoft YaHei',sans-serif;
 }
 .v-navigation-drawer {
   z-index: 20;

@@ -7,7 +7,7 @@
           {{ websiteConfig['websiteName'] }}
         </h1>
         <div class="blog-intro">
-          {{ obj.output }} <span class="typed-cursor">|</span>
+          {{ typedConfig.output }} <span class="typed-cursor">|</span>
         </div>
       </div>
       <div class="scroll-down" @click="scrollDown">
@@ -26,21 +26,24 @@
           <!-- 文章封面图 -->
           <div :class="isRight(index)">
             <router-link :to="'/articles/' + item.id">
-              <v-img class="on-hover" width="100%" height="100%" :src="item['articleCover']" />
+              <!-- 无封面 -->
+              <v-img v-if="item['coverImageType'] === 5" class="on-hover" width="100%" height="100%" :src="noArticleCoverImg" />
+              <!-- 默认封面 -->
+              <v-img v-if="item['coverImageType'] === 3" class="on-hover" width="100%" height="100%" :src="articleDefaultImg" />
+              <!-- 单封面、多封面、封面自动生成 -->
+              <v-img v-else class="on-hover" width="100%" height="100%" :src="item['articleImgLinkList'] && item['articleImgLinkList'].length > 0 ? item['articleImgLinkList'][0] : ''" />
             </router-link>
           </div>
           <!-- 文章信息 -->
           <div class="article-wrapper">
             <div style="line-height:1.4">
-              <router-link :to="'/articles/' + item.id">
-                {{ item['title'] }}
-              </router-link>
+              <router-link :to="'/articles/' + item.id"> {{ item['title'] }} </router-link>
             </div>
             <div class="article-info">
               <!-- 是否置顶 -->
-              <span v-if="item['isTop'] === 1">
+              <span v-if="index === 0">
                 <span style="color:#ff7242">
-                  <i class="iconfont iconzhiding" /> 置顶
+                  <i class="iconfont icon-top" /> 置顶
                 </span>
                 <span class="separator">|</span>
               </span>
@@ -59,9 +62,9 @@
                 <v-icon size="14">mdi-tag-multiple</v-icon>{{ tag['name'] }}
               </router-link>
             </div>
-            <!-- 文章内容 -->
+            <!-- 文章摘要 -->
             <div class="article-content">
-              {{ item['articleContent'] }}
+              {{ item['remark'] }}
             </div>
           </div>
         </v-card>
@@ -161,6 +164,7 @@
 </template>
 
 <script>
+import NoArticleCoverImg from '../../assets/images/no-article-cover.png'
 import Swiper from '../../components/Swiper.vue'
 import EasyTyper from 'easy-typer-js'
 export default {
@@ -172,7 +176,7 @@ export default {
     return {
       tip: false,
       time: '',
-      obj: {
+      typedConfig: {
         output: '',
         isEnd: false,
         speed: 300,
@@ -182,6 +186,8 @@ export default {
         backSpeed: 40,
         sentencePause: true
       },
+      noArticleCoverImg: NoArticleCoverImg,
+      articleDefaultImg: '',
       articleList: [],
       talkList: [],
       articlePage: 1,
@@ -219,6 +225,7 @@ export default {
   created() {
     this.init()
     this.listHomeTalks()
+    this.queryArticleDefaultImg()
     this.timer = setInterval(this.runTime, 1000)
   },
   methods: {
@@ -231,9 +238,9 @@ export default {
       })
     },
     initTyped(input, fn, hooks) {
-      const obj = this.obj
+      const config = this.typedConfig
       // eslint-disable-next-line no-unused-vars
-      const typed = new EasyTyper(obj, input, fn, hooks)
+      const typed = new EasyTyper(config, input, fn, hooks)
     },
     scrollDown() {
       window.scrollTo({
@@ -246,6 +253,14 @@ export default {
         this.talkList = data
       }).catch(_ => {
         this.talkList = []
+      })
+    },
+    queryArticleDefaultImg() {
+      this.$mapi.other.queryArticleDefaultImg().then(res => {
+        const { data } = res
+        this.articleDefaultImg = data || ''
+      }).catch(_ => {
+        this.articleDefaultImg = ''
       })
     },
     runTime() {
