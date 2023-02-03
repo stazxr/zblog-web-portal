@@ -14,6 +14,7 @@ import dayjs from 'dayjs'
 import Share from 'vue-social-share'
 import InfiniteLoading from 'vue-infinite-loading'
 import Highlight from './directive/highlight'
+import { vueBaberrage } from 'vue-baberrage'
 import VueImageSwipe from 'vue-image-swipe'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
 import Toast from './components/toast/index'
@@ -21,6 +22,7 @@ import Toast from './components/toast/index'
 Vue.use(InfiniteLoading)
 Vue.use(animated)
 Vue.use(Share)
+Vue.use(vueBaberrage)
 Vue.use(VueImageSwipe)
 Vue.use(Toast)
 Vue.use(Highlight)

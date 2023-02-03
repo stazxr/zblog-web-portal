@@ -16,6 +16,13 @@ const routes = [
   {
     path: '/articles/:articleId',
     component: resolve => require(['../views/article/article'], resolve)
+  },
+  {
+    path: '/message',
+    component: resolve => require(['../views/message/index'], resolve),
+    meta: {
+      title: '留言板'
+    }
   }
 ]
 

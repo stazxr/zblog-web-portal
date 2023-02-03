@@ -22,5 +22,13 @@ export default {
   // 获取文章详情
   queryArticleDetail: params => {
     return api.httpRequest().get(`${portalApi}/queryArticleDetail`, params)
+  },
+  // 获取留言列表
+  queryMessageList: params => {
+    return api.httpRequest().get(`${portalApi}/queryMessageList`, params)
+  },
+  // 保存留言
+  saveMessage: params => {
+    return api.httpRequest().post(`${portalApi}/saveMessage`, params)
   }
 }
