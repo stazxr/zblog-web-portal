@@ -23,6 +23,20 @@ const routes = [
     meta: {
       title: '留言板'
     }
+  },
+  {
+    path: '/links',
+    component: resolve => require(['../views/link/index'], resolve),
+    meta: {
+      title: '友链列表'
+    }
+  },
+  {
+    path: '/user',
+    component: resolve => require(['../views/user/index'], resolve),
+    meta: {
+      title: '个人中心'
+    }
   }
 ]
 

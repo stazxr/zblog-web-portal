@@ -13,7 +13,13 @@
     <!-- 返回顶部 -->
     <BackTop />
     <!-- 搜索模态框 -->
-    <SearchModel v-if="false" />
+    <SearchModel />
+    <!-- 登录模态框 -->
+    <LoginModel />
+    <!-- 注册模态框 -->
+    <RegisterModel />
+    <!-- 忘记密码模态框 -->
+    <ForgetModel />
   </v-app>
 </template>
 
@@ -23,14 +29,17 @@ import SideNavBar from './components/layout/SideNavBar'
 import Footer from './components/layout/Footer'
 import BackTop from './components/BackTop'
 import SearchModel from './components/model/SearchModel'
+import LoginModel from './components/model/LoginModel'
+import RegisterModel from './components/model/RegisterModel'
+import ForgetModel from './components/model/ForgetModel'
 export default {
   name: 'App',
   components: {
-    TopNavBar, SideNavBar, Footer, BackTop, SearchModel
+    TopNavBar, SideNavBar, Footer, BackTop, SearchModel, LoginModel, RegisterModel, ForgetModel
   },
   computed: {
-    blogInfo() {
-      return this.$store.state.blogInfo
+    websiteConfig() {
+      return this.$store.state.websiteConfig
     },
     isMobile() {
       return navigator.userAgent.match(
@@ -47,7 +56,6 @@ export default {
   methods: {
     getBlogInfo() {
       this.$mapi.portal.queryBlogInfo().then(res => {
-        console.log('res', res)
         this.$store.commit('setBlogInfo', res.data)
       })
     },

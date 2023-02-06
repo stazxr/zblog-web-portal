@@ -1,23 +1,23 @@
 <template>
   <div>
-    <div class="comment-title"><i class="iconfont iconpinglunzu" />评论</div>
+    <!-- 标题 -->
+    <div class="comment-title"><i class="iconfont icon-pingLun" />评论</div>
     <!-- 评论框 -->
     <div class="comment-input-wrapper">
       <div style="display:flex">
         <v-avatar size="40">
-          <img v-if="this.$store.state.avatar" :src="this.$store.state.avatar" alt="">
-          <img v-else :src="this.$store.state.blogInfo.websiteConfig.touristAvatar" alt="">
+          <img v-if="$store.state.user.avatar !== ''" :src="this.$store.state.user.avatar" alt="">
+          <img v-else :src="$store.state.otherConfig['touristAvatar']" alt="">
         </v-avatar>
         <div style="width:100%" class="ml-3">
           <div class="comment-input">
             <textarea v-model="commentContent" class="comment-textarea" placeholder="留下点什么吧..." auto-grow dense />
           </div>
-          <!-- 操作按钮 -->
           <div class="emoji-container">
             <span :class="chooseEmoji ? 'emoji-btn-active' : 'emoji-btn'" @click="chooseEmoji = !chooseEmoji">
               <i class="iconfont icon-face" />
             </span>
-            <button class="upload-btn v-comment-btn" style="margin-left:auto" @click="insertComment">
+            <button :disabled="submitDisabled" class="upload-btn v-comment-btn" style="margin-left:auto" @click="insertComment">
               提交
             </button>
           </div>
@@ -26,116 +26,110 @@
         </div>
       </div>
     </div>
-    <!-- 评论详情 -->
+
+    <!-- 评论列表 -->
     <div v-if="count > 0 && reFresh">
-      <!-- 评论数量 -->
       <div class="count">{{ count }} 评论</div>
-      <!-- 评论列表 -->
       <div v-for="(item, index) of commentList" :key="item.id" style="display:flex" class="pt-5">
-        <!-- 头像 -->
         <v-avatar size="40" class="comment-avatar">
-          <img :src="item.avatar" alt="">
+          <img :src="item['avatar']" alt="">
         </v-avatar>
         <div class="comment-meta">
-          <!-- 用户名 -->
           <div class="comment-user">
-            <span v-if="!item.webSite">{{ item.nickname }}</span>
-            <a v-else :href="item.webSite" target="_blank">
-              {{ item.nickname }}
-            </a>
-            <span v-if="item.userId === 1" class="blogger-tag">博主</span>
+            <span v-if="item['website'] == null || item['website'] === ''">{{ item['nickname'] }}</span>
+            <a v-else :href="item['website']" target="_blank">{{ item['nickname'] }}</a>
+            <span v-if="item['userId'] === 1" class="blogger-tag">管理员</span>
+            <span style="margin-left:10px;font-size: 0.75rem;color: #b3b3b3;">来自{{ item['ipSource'] }}</span>
           </div>
-          <!-- 信息 -->
           <div class="comment-info">
-            <!-- 楼层 -->
             <span style="margin-right:10px">{{ count - index }}楼</span>
-            <!-- 发表时间 -->
-            <span style="margin-right:10px">{{ item.createTime }}</span>
+            <!-- <span style="margin-right:10px">{{ item['ipSource'] }}</span> -->
+            <span style="margin-right:10px">{{ item['createTime'] }}</span>
             <!-- 点赞 -->
-            <span
-              :class="isLike(item.id) + ' iconfont icon-like'"
-              @click="like(item)"
-            />
+            <span :class="isLike(item.id) + ' iconfont icon-like'" @click="like(item)" />
             <span v-show="item.likeCount > 0"> {{ item.likeCount }}</span>
+            <!-- 删除 -->
+            <span v-if="$store.state.user.id === item.userId" class="delete-btn" @click="deleteComment(index, item)">删除</span>
             <!-- 回复 -->
-            <span class="reply-btn" @click="replyComment(index, item)">
-              回复
-            </span>
+            <span class="reply-btn" @click="replyComment(index, item)">回复</span>
           </div>
-          <!-- 评论内容 -->
-          <p class="comment-content" v-html="item.commentContent" />
-          <!-- 回复人 -->
-          <div v-for="reply of item.replyDTOList" :key="reply.id" style="display:flex">
-            <!-- 头像 -->
+          <p class="comment-content" v-html="item.content" />
+
+          <!-- 回复信息 -->
+          <div v-for="reply of item.replyList" :key="reply.id" style="display:flex">
             <v-avatar size="36" class="comment-avatar">
-              <img :src="reply.avatar" alt="">
+              <img :src="reply['avatar']" alt="">
             </v-avatar>
             <div class="reply-meta">
-              <!-- 用户名 -->
               <div class="comment-user">
-                <span v-if="!reply.webSite">{{ reply.nickname }}</span>
-                <a v-else :href="reply.webSite" target="_blank">
-                  {{ reply.nickname }}
-                </a>
-                <span v-if="reply.userId === 1" class="blogger-tag">博主</span>
+                <span v-if="!reply['website']">{{ reply['nickname'] }}</span>
+                <a v-else :href="reply['website']" target="_blank">{{ reply['nickname'] }}</a>
+                <span v-if="reply['userId'] === 1" class="blogger-tag">管理员</span>
+                <span style="margin-left:10px;font-size: 0.75rem;color: #b3b3b3;">来自{{ item['ipSource'] }}</span>
               </div>
-              <!-- 信息 -->
               <div class="comment-info">
-                <!-- 发表时间 -->
-                <span style="margin-right: 10px;">
-                  {{ reply.createTime }}
-                </span>
+                <!-- <span style="margin-right:10px">{{ item['ipSource'] }}</span> -->
+                <span style="margin-right: 10px;">{{ reply['createTime'] }}</span>
                 <!-- 点赞 -->
                 <span :class="isLike(reply.id) + ' iconfont icon-like'" @click="like(reply)" />
-                <span v-show="reply.likeCount > 0"> {{ reply.likeCount }}</span>
+                <span v-show="reply['likeCount'] > 0"> {{ reply['likeCount'] }}</span>
+                <!-- 删除 -->
+                <span v-if="$store.state.user.id === reply.userId" class="delete-btn" @click="deleteComment(index, reply)">删除</span>
                 <!-- 回复 -->
-                <span class="reply-btn" @click="replyComment(index, reply)">
-                  回复
-                </span>
+                <span class="reply-btn" @click="replyComment(index, reply)">回复</span>
               </div>
               <!-- 回复内容 -->
               <p class="comment-content">
                 <!-- 回复用户名 -->
-                <template v-if="reply.replyUserId !== item.userId">
-                  <span v-if="!reply.replyWebSite" class="ml-1">
-                    @{{ reply.replyNickname }}
+                <!-- <template v-if="reply['userId'] !== reply['replyUserId'] && reply['replyCommentId'] !== item['id']"> -->
+                <template v-if="reply['replyCommentId'] !== item['id']">
+                  <span>
+                    回复
                   </span>
-                  <a v-else :href="reply.replyWebSite" target="_blank" class="comment-nickname ml-1">
-                    @{{ reply.replyNickname }}
+                  <span v-if="!reply['replyWebsite']" class="ml-1" style="color: #b3b3b3;">
+                    {{ reply['replyNickname'] }}
+                  </span>
+                  <a v-else :href="reply['replyWebsite']" target="_blank" class="comment-nickname ml-1">
+                    {{ reply['replyNickname'] }}
                   </a>
-                  ，
+                  ：
                 </template>
-                <span v-html="reply.commentContent" />
+                <span v-html="reply['content']" />
               </p>
             </div>
           </div>
+
           <!-- 回复数量 -->
-          <div v-show="item.replyCount > 3" ref="check" class="mb-3" style="font-size:0.75rem;color:#6d757a">
+          <div v-show="item['replyCount'] > 3" ref="check" class="mb-3" style="font-size:0.75rem;color:#6d757a">
             共
-            <b>{{ item.replyCount }}</b>
+            <b>{{ item['replyCount'] }}</b>
             条回复，
             <span style="color:#00a1d6;cursor:pointer" @click="checkReplies(index, item)">
               点击查看
             </span>
           </div>
+
           <!-- 回复分页 -->
           <div ref="paging" class="mb-3" style="font-size:0.75rem;color:#222;display:none">
             <span style="padding-right:10px">
-              共{{ Math.ceil(item.replyCount / 5) }}页
+              共{{ Math.ceil(item['replyCount'] / 5) }}页
             </span>
-            <paging ref="page" :total-page="Math.ceil(item.replyCount / 5)" :index="index" :comment-id="item.id" @changeReplyCurrent="changeReplyCurrent" />
+            <paging ref="page" :total-page="Math.ceil(item['replyCount'] / 5)" :index="index" :comment-id="item.id" @changeReplyCurrent="changeReplyCurrent" />
           </div>
+
           <!-- 回复框 -->
           <Reply ref="reply" :type="type" @reloadReply="reloadReply" />
         </div>
       </div>
-      <!-- 加载按钮 -->
+
+      <!-- 加载更多 -->
       <div class="load-wrapper">
         <v-btn v-if="count > commentList.length" outlined @click="listComments">
           加载更多...
         </v-btn>
       </div>
     </div>
+
     <!-- 没有评论提示 -->
     <div v-else style="padding:1.25rem;text-align:center">
       来发评论吧~
@@ -150,8 +144,8 @@ import Emoji from './Emoji'
 import EmojiList from '../assets/emoji/emoji'
 export default {
   components: {
-    Reply,
     Emoji,
+    Reply,
     Paging
   },
   props: {
@@ -162,11 +156,12 @@ export default {
   },
   data: function() {
     return {
-      reFresh: true,
+      submitDisabled: false,
       commentContent: '',
       chooseEmoji: false,
-      current: 1,
       commentList: [],
+      reFresh: true,
+      current: 1,
       count: 0
     }
   },
@@ -190,167 +185,231 @@ export default {
     this.listComments()
   },
   methods: {
-    replyComment(index, item) {
-      this.$refs.reply.forEach(item => {
-        item.$el.style.display = 'none'
-      })
-      // 传值给回复框
-      this.$refs.reply[index].commentContent = ''
-      this.$refs.reply[index].nickname = item.nickname
-      this.$refs.reply[index].replyUserId = item.userId
-      this.$refs.reply[index].parentId = this.commentList[index].id
-      this.$refs.reply[index].chooseEmoji = false
-      this.$refs.reply[index].index = index
-      this.$refs.reply[index].$el.style.display = 'block'
-    },
     addEmoji(key) {
       this.commentContent += key
     },
-    checkReplies(index, item) {
-      this.axios
-        .get('/api/comments/' + item.id + '/replies', {
-          params: { current: 1, size: 5 }
-        })
-        .then(({ data }) => {
-          this.$refs.check[index].style.display = 'none'
-          item.replyDTOList = data.data
-          // 超过1页才显示分页
-          if (Math.ceil(item.replyCount / 5) > 1) {
-            this.$refs.paging[index].style.display = 'flex'
-          }
-        })
-    },
-    changeReplyCurrent(current, index, commentId) {
-      // 查看下一页回复
-      this.axios
-        .get('/api/comments/' + commentId + '/replies', {
-          params: { current: current, size: 5 }
-        })
-        .then(({ data }) => {
-          this.commentList[index].replyDTOList = data.data
-        })
-    },
     listComments() {
       // 查看评论
-      const path = this.$route.path
-      const arr = path.split('/')
       const param = {
         current: this.current,
         type: this.type
       }
+
+      // 设置评论对象
+      const path = this.$route.path
+      const arr = path.split('/')
       switch (this.type) {
         case 1:
         case 3:
-          param.topicId = arr[2]
+          param.objectId = arr[2]
           break
         default:
           break
       }
-      this.axios
-        .get('/api/comments', {
-          params: param
-        })
-        .then(({ data }) => {
-          if (this.current === 1) {
-            this.commentList = data.data.recordList
-          } else {
-            this.commentList.push(...data.data.recordList)
-          }
-          this.current++
-          this.count = data.data.count
-          this.$emit('getCommentCount', this.count)
-        })
+
+      this.$mapi.portal.queryCommentList(param).then(({ data }) => {
+        if (this.current === 1) {
+          this.commentList = data.list
+        } else {
+          this.commentList.push(...data.list)
+        }
+
+        this.current++
+        this.count = data.total
+        this.$emit('getCommentCount', this.count)
+      })
     },
     insertComment() {
       // 判断登录
-      if (!this.$store.state.userId) {
+      if (!this.$store.state.user.id) {
         this.$store.state.loginFlag = true
         return false
       }
+
       // 判空
       if (this.commentContent.trim() === '') {
         this.$toast({ type: 'error', message: '评论不能为空' })
         return false
       }
+
       // 解析表情
-      const reg = /\[.+?]/g
-      this.commentContent = this.commentContent.replace(reg, function(str) {
+      const content = this.commentContent.replace(/\[.+?]/g, function(str) {
         return (
           "<img src= '" + EmojiList[str] + "' alt='' width='24' height='24' style='margin: 0 1px;vertical-align: text-bottom' />"
         )
       })
 
-      // 发送请求
-      const path = this.$route.path
-      const arr = path.split('/')
+      // 封装参数
       const comment = {
-        commentContent: this.commentContent,
+        userId: this.$store.state.user.id,
+        content: content,
         type: this.type
       }
+
+      // 解析评论对象
+      const path = this.$route.path
+      const arr = path.split('/')
       switch (this.type) {
         case 1:
         case 3:
-          comment.topicId = arr[2]
+          comment.objectId = arr[2]
           break
         default:
           break
       }
-      this.commentContent = ''
-      this.axios.post('/api/comments', comment).then(({ data }) => {
-        if (data.flag) {
-          // 查询最新评论
+
+      // 发送请求
+      this.submitDisabled = true
+      this.$mapi.portal.saveComment(comment).then(({ code, message }) => {
+        if (code === 200) {
           this.current = 1
+          this.commentContent = ''
           this.listComments()
-          const isReview = this.$store.state.blogInfo.websiteConfig.isCommentReview
+          const isReview = this.$store.state.websiteConfig['isCommentReview']
           if (isReview) {
-            this.$toast({ type: 'warnning', message: '评论成功，正在审核中' })
+            this.$toast({ type: 'warning', message: '评论成功，正在审核中' })
           } else {
             this.$toast({ type: 'success', message: '评论成功' })
           }
         } else {
-          this.$toast({ type: 'error', message: data.message })
+          this.$toast({ type: 'error', message: message })
         }
+      }).catch(_ => {
+        this.$toast({ type: 'error', message: '评论失败' })
+      }).finally(_ => {
+        this.submitDisabled = false
       })
     },
     like(comment) {
       // 判断登录
-      if (!this.$store.state.userId) {
+      if (!this.$store.state.user.id) {
         this.$store.state.loginFlag = true
         return false
       }
+
       // 发送请求
-      this.axios
-        .post('/api/comments/' + comment.id + '/like')
-        .then(({ data }) => {
-          if (data.flag) {
-            // 判断是否点赞
-            if (this.$store.state.commentLikeSet.indexOf(comment.id) !== -1) {
-              this.$set(comment, 'likeCount', comment.likeCount - 1)
-            } else {
-              this.$set(comment, 'likeCount', comment.likeCount + 1)
-            }
-            this.$store.commit('commentLike', comment.id)
+      const param = {
+        userId: this.$store.state.user.id,
+        commentId: comment.id
+      }
+      this.$mapi.portal.likeComment(param).then(({ code, message }) => {
+        if (code === 200) {
+          // 判断是否点赞
+          if (this.$store.state.commentLikeSet.indexOf(comment.id) !== -1) {
+            this.$set(comment, 'likeCount', comment.likeCount - 1)
+          } else {
+            this.$set(comment, 'likeCount', comment.likeCount + 1)
           }
-        })
+
+          this.$store.commit('commentLike', comment.id)
+        } else {
+          this.$toast({ type: 'error', message: message })
+        }
+      }).catch(_ => {
+        this.$toast({ type: 'error', message: '点赞失败' })
+      })
+    },
+    deleteComment(index, item) {
+      this.$confirm({ message: '确定删除吗？' }).then(confirm => {
+        if (confirm) {
+          const param = {
+            userId: this.$store.state.user.id,
+            commentId: item.id
+          }
+
+          this.$mapi.portal.deleteComment(param).then(({ code, message }) => {
+            if (code === 200) {
+              this.$toast({ type: 'success', message: '删除成功' })
+              this.reloadReplyBeDelete(index)
+            } else {
+              this.$toast({ type: 'error', message: message })
+            }
+          }).catch(_ => {
+            this.$toast({ type: 'error', message: '删除失败' })
+          })
+        }
+      })
+    },
+    replyComment(index, item) {
+      this.$refs.reply.forEach(item => {
+        item.$el.style.display = 'none'
+      })
+
+      // 传值给回复框
+      this.$refs.reply[index].commentContent = ''
+      this.$refs.reply[index].nickname = item.nickname
+      this.$refs.reply[index].replyUserId = item.userId
+      this.$refs.reply[index].replyCommentId = item.id
+      this.$refs.reply[index].parentId = this.commentList[index].id
+      this.$refs.reply[index].chooseEmoji = false
+      this.$refs.reply[index].index = index
+      this.$refs.reply[index].$el.style.display = 'block'
     },
     reloadReply(index) {
-      this.axios
-        .get('/api/comments/' + this.commentList[index].id + '/replies', {
-          params: {
-            current: this.$refs.page[index].current,
-            size: 5
-          }
-        })
-        .then(({ data }) => {
-          this.commentList[index].replyCount++
+      const param = {
+        parentId: this.commentList[index].id,
+        page: this.$refs.page[index].current,
+        pageSize: 5
+      }
+      this.$mapi.portal.queryCommentReplyList(param).then(({ code, data }) => {
+        if (code === 200) {
+          this.commentList[index]['replyCount']++
           // 回复大于5条展示分页
-          if (this.commentList[index].replyCount > 5) {
+          if (this.commentList[index]['replyCount'] > 5) {
             this.$refs.paging[index].style.display = 'flex'
           }
           this.$refs.check[index].style.display = 'none'
           this.$refs.reply[index].$el.style.display = 'none'
-          this.commentList[index].replyDTOList = data.data
-        })
+          this.commentList[index].replyList = data.list
+        }
+      })
+    },
+    reloadReplyBeDelete(index) {
+      const param = {
+        parentId: this.commentList[index].id,
+        page: this.$refs.page[index].current,
+        pageSize: 5
+      }
+      this.$mapi.portal.queryCommentReplyList(param).then(({ code, data }) => {
+        if (code === 200) {
+          this.commentList[index]['replyCount']--
+          // 回复大于5条展示分页
+          if (this.commentList[index]['replyCount'] > 5) {
+            this.$refs.paging[index].style.display = 'flex'
+          }
+          this.$refs.check[index].style.display = 'none'
+          this.$refs.reply[index].$el.style.display = 'none'
+          this.commentList[index].replyList = data.list
+        }
+      })
+    },
+    checkReplies(index, item) {
+      const param = {
+        parentId: item.id,
+        page: 1,
+        pageSize: 5
+      }
+
+      this.$mapi.portal.queryCommentReplyList(param).then(({ data }) => {
+        this.$refs.check[index].style.display = 'none'
+        item.replyList = data.list
+
+        // 超过1页才显示分页
+        if (Math.ceil(item['replyCount'] / 5) > 1) {
+          this.$refs.paging[index].style.display = 'flex'
+        }
+      })
+    },
+    changeReplyCurrent(current, index, commentId) {
+      const param = {
+        parentId: commentId,
+        page: current,
+        pageSize: 5
+      }
+
+      this.$mapi.portal.queryCommentReplyList(param).then(({ data }) => {
+        this.commentList[index].replyList = data.list
+      })
     }
   }
 }
@@ -421,7 +480,13 @@ export default {
 .reply-btn {
   cursor: pointer;
   float: right;
+  color: dodgerblue;
+}
+.delete-btn {
+  cursor: pointer;
+  float: right;
   color: #ef2f11;
+  margin-left: 10px;
 }
 .comment-content {
   font-size: 0.875rem;

@@ -34,7 +34,7 @@
         </div>
         <div class="menus-item">
           <a class="menu-btn">
-            <i class="iconfont iconfaxian" /> 发现
+            <i class="iconfont iconfaxian" /> 博客
             <i class="iconfont iconxiangxia2 expand" />
           </a>
           <ul class="menus-submenu">
@@ -53,24 +53,24 @@
                 <i class="iconfont iconbiaoqian" /> 标签
               </router-link>
             </li>
-            <li>
+            <!-- <li>
               <router-link to="/columns">
                 <i class="iconfont iconbiaoqian" /> 专栏
               </router-link>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="menus-item">
           <a class="menu-btn">
-            <i class="iconfont iconqita" /> 娱乐
+            <i class="iconfont iconqita" /> 生活
             <i class="iconfont iconxiangxia2 expand" />
           </a>
           <ul class="menus-submenu">
-            <li>
+            <!-- <li>
               <router-link to="/albums">
                 <i class="iconfont iconxiangce1" /> 相册
               </router-link>
-            </li>
+            </li> -->
             <li>
               <router-link to="/talks">
                 <i class="iconfont iconpinglun" /> 说说
@@ -83,22 +83,22 @@
             <i class="iconfont iconlianjie" /> 友链
           </router-link>
         </div>
-        <div class="menus-item">
+        <!-- <div class="menus-item">
           <router-link class="menu-btn" to="/about">
             <i class="iconfont iconzhifeiji" /> 关于
           </router-link>
-        </div>
+        </div> -->
         <div class="menus-item">
           <router-link class="menu-btn" to="/message">
-            <i class="iconfont iconpinglunzu" /> 留言
+            <i class="iconfont icon-pingLun" /> 留言
           </router-link>
         </div>
         <div class="menus-item">
-          <a v-if="!this.$store.state.avatar" class="menu-btn" @click="openLogin">
-            <i class="iconfont icondenglu" /> 登录
+          <a v-if="$store.state.user.id == null || $store.state.user.id === ''" class="menu-btn" @click="openLogin">
+            <i class="iconfont icon-login" /> 登录
           </a>
           <template v-else>
-            <img class="user-avatar" :src="this.$store.state.avatar" height="30" width="30" alt="">
+            <img class="user-avatar" :src="$store.state.user.avatar" height="30" width="30" alt="">
             <ul class="menus-submenu">
               <li>
                 <router-link to="/user">
@@ -106,7 +106,7 @@
                 </router-link>
               </li>
               <li>
-                <a @click="logout"><i class="iconfont icontuichu" /> 退出</a>
+                <a @click="logout"><i class="iconfont icon-logout" /> 退出</a>
               </li>
             </ul>
           </template>
@@ -155,14 +155,9 @@ export default {
       if (this.$route.path === '/user') {
         this.$router.go(-1)
       }
-      this.axios.get('/api/logout').then(({ data }) => {
-        if (data.flag) {
-          this.$store.commit('logout')
-          this.$toast({ type: 'success', message: '注销成功' })
-        } else {
-          this.$toast({ type: 'error', message: data.message })
-        }
-      })
+
+      this.$store.commit('logout')
+      this.$toast({ type: 'success', message: '注销成功' })
     }
   }
 }

@@ -123,7 +123,7 @@
             </a>
             <!-- 社交信息 -->
             <div class="card-info-social">
-              <a v-if="socialConfig['qq'] !== null && socialConfig['qq'] !== ''" target="_blank" :href="socialConfig['qq']" class="mr-5 iconfont iconqq" />
+              <a v-if="socialConfig['qq'] !== null && socialConfig['qq'] !== ''" target="_blank" :href="socialConfig['qq']" class="mr-5 iconfont icon-qq" />
               <a v-if="socialConfig['github'] !== null && socialConfig['github'] !== ''" target="_blank" :href="socialConfig['github']" class="mr-5 iconfont icongithub" />
               <a v-if="socialConfig['gitee'] !== null && socialConfig['gitee'] !== ''" target="_blank" :href="socialConfig['gitee']" class="iconfont icongitee-fill-round" />
             </div>

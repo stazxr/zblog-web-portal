@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import axios from 'axios'
 import JSONBIG from 'json-bigint'
 import { getToken } from '../utils/token'
@@ -67,7 +67,8 @@ function responseHandler(result) {
     // success, return data
     return result
   } else {
-    Vue.prototype.$toast({ type: 'error', message: '系统异常' })
+    return result
+    // Vue.prototype.$toast({ type: 'error', message: '系统异常' })
   }
 }
 

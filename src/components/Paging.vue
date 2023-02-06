@@ -84,7 +84,7 @@ export default {
       default: null
     },
     commentId: {
-      type: Number,
+      type: String,
       default: null
     }
   },

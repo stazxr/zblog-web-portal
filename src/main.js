@@ -17,7 +17,9 @@ import Highlight from './directive/highlight'
 import { vueBaberrage } from 'vue-baberrage'
 import VueImageSwipe from 'vue-image-swipe'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
+import '@mdi/font/css/materialdesignicons.css'
 import Toast from './components/toast/index'
+import Confirm from './components/confirm/index'
 
 Vue.use(InfiniteLoading)
 Vue.use(animated)
@@ -25,6 +27,7 @@ Vue.use(Share)
 Vue.use(vueBaberrage)
 Vue.use(VueImageSwipe)
 Vue.use(Toast)
+Vue.use(Confirm)
 Vue.use(Highlight)
 
 // 声明全局变量

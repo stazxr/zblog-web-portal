@@ -25,22 +25,28 @@ export default new Vuex.Store({
     },
     // 页面信息
     pageList: [],
-    drawerFlag: false,
-    searchFlag: false,
+    // 用户信息
+    user: {
+      id: null,
+      nickname: '',
+      avatar: '',
+      intro: '',
+      webSite: ''
+    },
+    // 登录模态框是否显示
     loginFlag: false,
+    // 注册模态框是否显示
     registerFlag: false,
+    // 忘记密码模态框是否显示
     forgetFlag: false,
-    emailFlag: false,
+    // 侧边栏模态框
+    drawerFlag: false,
+    // 搜索模态框
+    searchFlag: false,
+    // 登录链接
     loginUrl: '',
-    userId: null,
-    avatar: null,
-    nickname: null,
-    intro: null,
-    webSite: null,
-    loginType: null,
-    email: null,
-    articleLikeSet: [],
     commentLikeSet: [],
+    articleLikeSet: [],
     talkLikeSet: []
   },
   mutations: {
@@ -55,61 +61,43 @@ export default new Vuex.Store({
       state.countInfo.viewsCount = blogInfo['viewsCount'] || 0
       state.pageList = blogInfo['pageList'] || []
     },
+    // 登录成功，设置用户信息
     login(state, user) {
-      state.userId = user['']
-      state.avatar = user.avatar
-      state.nickname = user.nickname
-      state.intro = user.intro
-      state.webSite = user.webSite
-      state.articleLikeSet = user.articleLikeSet ? user.articleLikeSet : []
+      state.user.id = user['id']
+      state.user.nickname = user['nickname']
+      state.user.avatar = user['headImgUrl']
+      state.user.webSite = user['website']
+      state.user.intro = user['signature']
+      state.user.email = user['email']
+
       state.commentLikeSet = user.commentLikeSet ? user.commentLikeSet : []
+      state.articleLikeSet = user.articleLikeSet ? user.articleLikeSet : []
       state.talkLikeSet = user.talkLikeSet ? user.talkLikeSet : []
-      state.email = user.email
-      state.loginType = user.loginType
     },
+    // 登出
     logout(state) {
-      state.userId = null
-      state.avatar = null
-      state.nickname = null
-      state.intro = null
-      state.webSite = null
-      state.articleLikeSet = []
+      state.user.id = null
+      state.user.nickname = null
+      state.user.avatar = null
+      state.user.webSite = null
+      state.user.intro = null
+      state.user.email = null
+
       state.commentLikeSet = []
+      state.articleLikeSet = []
       state.talkLikeSet = []
-      state.email = null
-      state.loginType = null
     },
-    saveLoginUrl(state, url) {
-      state.loginUrl = url
-    },
-    saveEmail(state, email) {
-      state.email = email
-    },
-    updateUserInfo(state, user) {
-      state.nickname = user.nickname
-      state.intro = user.intro
-      state.webSite = user.webSite
-    },
-    savePageInfo(state, pageList) {
-      state.pageList = pageList
-    },
-    updateAvatar(state, avatar) {
-      state.avatar = avatar
-    },
+    // 关闭模态框
     closeModel(state) {
       state.registerFlag = false
       state.loginFlag = false
       state.searchFlag = false
-      state.emailFlag = false
     },
-    articleLike(state, articleId) {
-      const articleLikeSet = state.articleLikeSet
-      if (articleLikeSet.indexOf(articleId) !== -1) {
-        articleLikeSet.splice(articleLikeSet.indexOf(articleId), 1)
-      } else {
-        articleLikeSet.push(articleId)
-      }
+    // 三方登录时，保存链接
+    saveLoginUrl(state, url) {
+      state.loginUrl = url
     },
+    // 点赞评论
     commentLike(state, commentId) {
       const commentLikeSet = state.commentLikeSet
       if (commentLikeSet.indexOf(commentId) !== -1) {
@@ -118,6 +106,16 @@ export default new Vuex.Store({
         commentLikeSet.push(commentId)
       }
     },
+    // 点赞文章
+    articleLike(state, articleId) {
+      const articleLikeSet = state.articleLikeSet
+      if (articleLikeSet.indexOf(articleId) !== -1) {
+        articleLikeSet.splice(articleLikeSet.indexOf(articleId), 1)
+      } else {
+        articleLikeSet.push(articleId)
+      }
+    },
+    // 点赞说说
     talkLike(state, talkId) {
       const talkLikeSet = state.talkLikeSet
       if (talkLikeSet.indexOf(talkId) !== -1) {

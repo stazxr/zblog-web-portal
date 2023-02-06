@@ -6,7 +6,7 @@
         <i class="iconfont icon-face" />
       </span>
       <div style="margin-left:auto">
-        <button class="cancle-btn v-comment-btn" @click="cancelReply">
+        <button class="cancel-btn v-comment-btn" @click="cancelReply">
           取消
         </button>
         <button class="upload-btn v-comment-btn" @click="insertReply">
@@ -38,6 +38,7 @@ export default {
       chooseEmoji: false,
       nickname: '',
       replyUserId: null,
+      replyCommentId: null,
       parentId: null,
       commentContent: ''
     }
@@ -46,52 +47,64 @@ export default {
     cancelReply() {
       this.$refs.reply.style.display = 'none'
     },
+    addEmoji(text) {
+      this.commentContent += text
+    },
     insertReply() {
       // 判断登录
-      if (!this.$store.state.userId) {
+      if (!this.$store.state.user.id) {
         this.$store.state.loginFlag = true
         return false
       }
+
+      // 判空
       if (this.commentContent.trim() === '') {
-        this.$toast({ type: 'error', message: '回复不能为空' })
+        this.$toast({ type: 'error', message: '评论不能为空' })
         return false
       }
 
       // 解析表情
       const reg = /\[.+?]/g
-      this.commentContent = this.commentContent.replace(reg, function(str) {
+      const content = this.commentContent.replace(reg, function(str) {
         return (
           "<img src= '" + EmojiList[str] + "' alt='' width='24' height='24' style='margin: 0 1px;vertical-align: text-bottom' />"
         )
       })
+
+      // 封装参数
+      const comment = {
+        userId: this.$store.state.user.id,
+        replyUserId: this.replyUserId,
+        replyCommentId: this.replyCommentId,
+        parentId: this.parentId,
+        content: content,
+        type: this.type
+      }
+
+      // 解析评论对象
       const path = this.$route.path
       const arr = path.split('/')
-      const comment = {
-        type: this.type,
-        replyUserId: this.replyUserId,
-        parentId: this.parentId,
-        commentContent: this.commentContent
-      }
       switch (this.type) {
         case 1:
         case 3:
-          comment.topicId = arr[2]
+          comment.objectId = arr[2]
           break
         default:
           break
       }
-      this.commentContent = ''
-      this.axios.post('/api/comments', comment).then(({ data }) => {
-        if (data.flag) {
-          this.$emit('reloadReply', this.index)
+
+      // 发送请求
+      this.$mapi.portal.replyComment(comment).then(({ code, message }) => {
+        if (code === 200) {
+          this.commentContent = ''
           this.$toast({ type: 'success', message: '回复成功' })
+          this.$emit('reloadReply', this.index)
         } else {
-          this.$toast({ type: 'error', message: data.message })
+          this.$toast({ type: 'error', message: message })
         }
+      }).catch(_ => {
+        this.$toast({ type: 'error', message: '回复失败' })
       })
-    },
-    addEmoji(text) {
-      this.commentContent += text
     }
   }
 }

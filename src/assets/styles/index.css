@@ -114,6 +114,9 @@ p {
 .login-container {
   background: #fff !important;
 }
+.register-container {
+  background: #fff !important;
+}
 @media (min-width: 760px) {
   .v-toolbar__content, .v-toolbar__extension {
     padding: 10px 36px;
@@ -156,6 +159,11 @@ p {
     padding: 1rem;
     border-radius: 4px;
     height: 500px;
+  }
+  .register-container {
+    padding: 1rem;
+    border-radius: 4px;
+    height: 600px;
   }
   .login-wrapper {
      padding: 3.5rem 1.5rem 0 1.5rem;
@@ -200,6 +208,12 @@ p {
     padding: 1rem;
     border-radius: 4px;
     height: 100vh;
+    width: 100vw;
+  }
+  .login-container {
+    padding: 1rem;
+    border-radius: 4px;
+    height: 120vh;
     width: 100vw;
   }
   .login-wrapper {
@@ -282,7 +296,7 @@ p {
 .upload-btn:hover {
   background-color: #ff7242;
 }
-.cancle-btn {
+.cancel-btn {
   background-color: #90939910;
   border-color: #90939950;
   color: #4c4948;

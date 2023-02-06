@@ -91,7 +91,7 @@
   content: "\e669";
 }
 
-.icontuichu:before {
+.icon-logout:before {
   content: "\e600";
 }
 
@@ -99,7 +99,7 @@
   content: "\e606";
 }
 
-.icondenglu:before {
+.icon-login:before {
   content: "\e611";
 }
 
@@ -123,15 +123,15 @@
   content: "\e689";
 }
 
-.iconpinglunzu:before {
+.icon-pingLun:before {
   content: "\e765";
 }
 
-.iconchenggong:before {
+.icon-success:before {
   content: "\e635";
 }
 
-.iconcuowu:before {
+.icon-error:before {
   content: "\e64a";
 }
 
@@ -151,7 +151,7 @@
   content: "\e6a7";
 }
 
-.iconweibo:before {
+.icon-weibo:before {
   content: "\e62f";
 }
 
@@ -163,7 +163,7 @@
   content: "\e644";
 }
 
-.iconqq:before {
+.icon-qq:before {
   content: "\e66a";
 }
 

@@ -46,11 +46,11 @@
           <i class="iconfont iconguidang" /> 归档
         </router-link>
       </div>
-      <div class="menus-item">
+      <!-- <div class="menus-item">
         <router-link to="/albums">
           <i class="iconfont iconxiangce1" /> 相册
         </router-link>
-      </div>
+      </div> -->
       <div class="menus-item">
         <router-link to="/talks">
           <i class="iconfont iconpinglun" /> 说说
@@ -66,23 +66,28 @@
           <i class="iconfont iconbiaoqian" /> 标签
         </router-link>
       </div>
+      <!-- <div class="menus-item">
+        <router-link to="/columns">
+          <i class="iconfont iconbiaoqian" /> 专栏
+        </router-link>
+      </div> -->
       <div class="menus-item">
         <router-link to="/links">
           <i class="iconfont iconlianjie" /> 友链
         </router-link>
       </div>
-      <div class="menus-item">
+      <!-- <div class="menus-item">
         <router-link to="/about">
           <i class="iconfont iconzhifeiji" /> 关于
         </router-link>
-      </div>
+      </div> -->
       <div class="menus-item">
         <router-link to="/message">
-          <i class="iconfont iconpinglunzu" /> 留言
+          <i class="iconfont icon-pingLun" /> 留言
         </router-link>
       </div>
-      <div v-if="!this.$store.state.avatar" class="menus-item">
-        <a @click="openLogin"><i class="iconfont icondenglu" /> 登录 </a>
+      <div v-if="$store.state.user.id == null || $store.state.user.id === ''" class="menus-item">
+        <a @click="openLogin"><i class="iconfont icon-login" /> 登录 </a>
       </div>
       <div v-else>
         <div class="menus-item">
@@ -91,7 +96,7 @@
           </router-link>
         </div>
         <div class="menus-item">
-          <a @click="logout"><i class="iconfont icontuichu" /> 退出</a>
+          <a @click="logout"><i class="iconfont icon-logout" /> 退出</a>
         </div>
       </div>
     </div>
@@ -122,18 +127,12 @@ export default {
       this.$store.state.loginFlag = true
     },
     logout() {
-      // 如果在个人中心则跳回上一页
       if (this.$route.path === '/user') {
         this.$router.go(-1)
       }
-      this.axios.get('/api/logout').then(({ data }) => {
-        if (data.flag) {
-          this.$store.commit('logout')
-          this.$toast({ type: 'success', message: '注销成功' })
-        } else {
-          this.$toast({ type: 'error', message: data.message })
-        }
-      })
+
+      this.$store.commit('logout')
+      this.$toast({ type: 'success', message: '注销成功' })
     }
   }
 }

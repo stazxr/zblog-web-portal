@@ -20,15 +20,15 @@ export default {
       switch (value) {
         case 'error':
           this.color = '#F56C6C'
-          this.icon = 'iconfont iconcuowu'
+          this.icon = 'iconfont icon-error'
           break
         case 'success':
           this.color = '#52C41A'
-          this.icon = 'iconfont iconchenggong'
+          this.icon = 'iconfont icon-success'
           break
-        case 'warnning':
+        case 'warning':
           this.color = '#F57C00'
-          this.icon = 'iconfont iconchenggong'
+          this.icon = 'iconfont icon-success'
       }
     }
   }
