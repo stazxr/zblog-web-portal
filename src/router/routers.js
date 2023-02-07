@@ -32,6 +32,20 @@ const routes = [
     }
   },
   {
+    path: '/talks',
+    component: resolve => require(['../views/talk/index'], resolve),
+    meta: {
+      title: '说说列表'
+    }
+  },
+  {
+    path: '/talks/:talkId',
+    component: resolve => require(['../views/talk/detail'], resolve),
+    meta: {
+      title: '说说'
+    }
+  },
+  {
     path: '/user',
     component: resolve => require(['../views/user/index'], resolve),
     meta: {

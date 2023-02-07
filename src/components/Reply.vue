@@ -9,7 +9,7 @@
         <button class="cancel-btn v-comment-btn" @click="cancelReply">
           取消
         </button>
-        <button class="upload-btn v-comment-btn" @click="insertReply">
+        <button :disabled="submitDisabled" class="upload-btn v-comment-btn" @click="insertReply">
           提交
         </button>
       </div>
@@ -40,7 +40,8 @@ export default {
       replyUserId: null,
       replyCommentId: null,
       parentId: null,
-      commentContent: ''
+      commentContent: '',
+      submitDisabled: false
     }
   },
   methods: {
@@ -94,16 +95,25 @@ export default {
       }
 
       // 发送请求
+      this.submitDisabled = true
       this.$mapi.portal.replyComment(comment).then(({ code, message }) => {
         if (code === 200) {
+          this.chooseEmoji = false
           this.commentContent = ''
-          this.$toast({ type: 'success', message: '回复成功' })
+          const isReview = this.$store.state.otherConfig['isCommentReview']
+          if (isReview) {
+            this.$toast({ type: 'warning', message: '回复成功，正在审核中' })
+          } else {
+            this.$toast({ type: 'success', message: '回复成功' })
+          }
           this.$emit('reloadReply', this.index)
         } else {
           this.$toast({ type: 'error', message: message })
         }
       }).catch(_ => {
         this.$toast({ type: 'error', message: '回复失败' })
+      }).finally(_ => {
+        this.submitDisabled = false
       })
     }
   }

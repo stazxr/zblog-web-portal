@@ -4,9 +4,9 @@
     <div class="comment-title"><i class="iconfont icon-pingLun" />评论</div>
 
     <!-- 评论框 -->
-    <div class="comment-input-wrapper">
-      <div style="display:flex">
-        <v-avatar size="40">
+    <div class="comment-wrapper">
+      <div style="display:flex;width:100%">
+        <v-avatar size="36">
           <img v-if="$store.state.user.avatar !== ''" :src="this.$store.state.user.avatar" alt="">
           <img v-else :src="$store.state.otherConfig['touristAvatar']" alt="">
         </v-avatar>
@@ -30,8 +30,7 @@
 
     <!-- 评论列表 -->
     <div v-if="count > 0 && reFresh">
-      <div class="count">{{ count }} 评论</div>
-      <div v-for="(item, index) of commentList" :key="item.id" style="display:flex" class="pt-5">
+      <div v-for="(item, index) of commentList" :key="item.id" class="comment-wrapper">
         <v-avatar size="40" class="comment-avatar">
           <img :src="item['avatar']" alt="">
         </v-avatar>
@@ -39,7 +38,9 @@
           <div class="comment-user">
             <span v-if="item['website'] == null || item['website'] === ''">{{ item['nickname'] }}</span>
             <a v-else :href="item['website']" target="_blank">{{ item['nickname'] }}</a>
-            <span v-if="item['userId'] === 1" class="blogger-tag">管理员</span>
+            <v-icon v-if="item['userId'] === 1" size="20" color="#ffa51e">
+              mdi-check-decagram
+            </v-icon>
             <span style="margin-left:10px;font-size: 0.75rem;color: #b3b3b3;">来自{{ item['ipSource'] }}</span>
           </div>
           <div class="comment-info">
@@ -65,7 +66,9 @@
               <div class="comment-user">
                 <span v-if="!reply['website']">{{ reply['nickname'] }}</span>
                 <a v-else :href="reply['website']" target="_blank">{{ reply['nickname'] }}</a>
-                <span v-if="reply['userId'] === 1" class="blogger-tag">管理员</span>
+                <v-icon v-if="reply['userId'] === 1" size="20" color="#ffa51e">
+                  mdi-check-decagram
+                </v-icon>
                 <span style="margin-left:10px;font-size: 0.75rem;color: #b3b3b3;">来自{{ item['ipSource'] }}</span>
               </div>
               <div class="comment-info">
@@ -123,7 +126,7 @@
         </div>
       </div>
 
-      <!-- 加载更多 -->
+      <!-- 加载按钮 -->
       <div class="load-wrapper">
         <v-btn v-if="count > commentList.length" outlined @click="listComments">
           加载更多...
@@ -145,8 +148,8 @@ import Emoji from './Emoji'
 import EmojiList from '../assets/emoji/emoji'
 export default {
   components: {
-    Emoji,
     Reply,
+    Emoji,
     Paging
   },
   props: {
@@ -418,14 +421,18 @@ export default {
 </script>
 
 <style scoped>
-.blogger-tag {
-  background: #ffa51e;
-  font-size: 12px;
-  display: inline-block;
-  border-radius: 2px;
-  color: #fff;
-  padding: 0 5px;
-  margin-left: 6px;
+.comment-wrapper {
+  margin-top: 20px;
+  display: flex;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 3px 8px 6px rgb(7 17 27 / 6%);
+  transition: all 0.3s ease 0s;
+}
+.comment-wrapper:hover {
+  box-shadow: 0 5px 10px 8px rgb(7 17 27 / 16%);
+  transform: translateY(-3px);
 }
 .comment-title {
   display: flex;
@@ -433,17 +440,11 @@ export default {
   font-size: 1.25rem;
   font-weight: bold;
   line-height: 40px;
-  margin-bottom: 10px;
+  margin-top: 20px;
 }
 .comment-title i {
   font-size: 1.5rem;
   margin-right: 5px;
-}
-.comment-input-wrapper {
-  border: 1px solid #90939950;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 0 0 10px;
 }
 .count {
   padding: 5px;
@@ -461,7 +462,7 @@ export default {
   width: 100%;
 }
 .comment-user {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.75;
 }
 .comment-user a {

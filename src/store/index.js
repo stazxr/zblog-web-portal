@@ -71,8 +71,8 @@ export default new Vuex.Store({
       state.user.email = user['email']
 
       state.commentLikeSet = user.commentLikeSet ? user.commentLikeSet : []
-      state.articleLikeSet = user.articleLikeSet ? user.articleLikeSet : []
       state.talkLikeSet = user.talkLikeSet ? user.talkLikeSet : []
+      state.articleLikeSet = user.articleLikeSet ? user.articleLikeSet : []
     },
     // 登出
     logout(state) {
@@ -84,8 +84,8 @@ export default new Vuex.Store({
       state.user.email = null
 
       state.commentLikeSet = []
-      state.articleLikeSet = []
       state.talkLikeSet = []
+      state.articleLikeSet = []
     },
     // 关闭模态框
     closeModel(state) {

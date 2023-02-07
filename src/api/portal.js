@@ -15,10 +15,6 @@ export default {
   recordVisitor: params => {
     return api.httpRequest().post(`${portalApi}/recordVisitor`, params)
   },
-  // 获取说说列表
-  queryTalkList: params => {
-    return api.httpRequest().get(`${portalApi}/queryTalkList`, params)
-  },
   // 获取文章列表
   queryArticleList: params => {
     return api.httpRequest().get(`${portalApi}/queryArticleList`, params)
@@ -62,5 +58,25 @@ export default {
   // 获取评论回复列表
   queryCommentReplyList: params => {
     return api.httpRequest().get(`${portalApi}/queryCommentReplyList`, params)
+  },
+  // 获取轮播的说说列表
+  queryBoardTalkList: params => {
+    return api.httpRequest().get(`${portalApi}/queryBoardTalkList`, params)
+  },
+  // 获取说说列表
+  queryTalkList: params => {
+    return api.httpRequest().get(`${portalApi}/queryTalkList`, params)
+  },
+  // 获取说说详情
+  queryTalkById: params => {
+    return api.httpRequest().get(`${portalApi}/queryTalkById`, params)
+  },
+  // 点赞说说
+  likeTalk: params => {
+    return api.httpRequest().post(`${portalApi}/likeTalk`, params)
+  },
+  // 点赞文章
+  likeArticle: params => {
+    return api.httpRequest().post(`${portalApi}/likeArticle`, params)
   }
 }

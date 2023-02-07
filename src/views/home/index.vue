@@ -249,7 +249,7 @@ export default {
       })
     },
     listHomeTalks() {
-      this.$mapi.portal.queryTalkList().then(({ data }) => {
+      this.$mapi.portal.queryBoardTalkList().then(({ data }) => {
         this.talkList = data
       }).catch(_ => {
         this.talkList = []
