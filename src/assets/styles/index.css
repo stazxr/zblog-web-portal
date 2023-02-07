@@ -67,7 +67,8 @@ ul {
   border-color: #ccc;
 }
 .theme--dark.v-card {
-  background: #121212;
+  /* background: #121212; */
+
   color: rgba(255,255,255,0.8);
 }
 .theme--dark.v-footer {

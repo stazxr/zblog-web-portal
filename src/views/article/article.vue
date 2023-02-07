@@ -7,21 +7,22 @@
         <div class="article-info">
           <div class="first-line">
             <span>
+              {{ article.authorNickname }}
+            </span>
+            <span class="separator">|</span>
+            <span>
               <i class="iconfont icon-riLi" />
               发表于 {{ article.createTime }}
             </span>
             <span class="separator">|</span>
-            <span>
+            <span v-if="article.updateTime != null && article.updateTime !== ''">
               <i class="iconfont icon-updateTime" />
               更新于
-              <template v-if="article.updateTime != null && article.updateTime !== ''">
+              <template>
                 {{ article.updateTime }}
               </template>
-              <template v-else>
-                {{ article.createTime }}
-              </template>
+              <span class="separator">|</span>
             </span>
-            <span class="separator">|</span>
             <span class="article-category">
               <i class="iconfont icon-category" />
               <router-link :to="'/categories/' + article.categoryId">
@@ -31,32 +32,36 @@
           </div>
           <div class="second-line">
             <span>
-              <i class="iconfont icon-wordNum" />
-              字数统计: {{ article.wordNum }}
+              <!-- <i class="iconfont icon-wordNum" /> -->
+              字数统计: {{ article.wordCount }}
             </span>
             <span class="separator">|</span>
             <span>
-              <i class="iconfont icon-time" />
-              阅读时长: {{ readTime }}
+              <!-- <i class="iconfont icon-time" /> -->
+              预计阅读时长: {{ readTime }}
             </span>
           </div>
           <div class="third-line">
             <span class="separator">|</span>
             <!-- 阅读量 -->
             <span>
-              <i class="iconfont icon-viewsCount" /> 阅读量: {{ article.viewCount }}
+              <!-- <i class="iconfont icon-viewsCount" /> -->
+              阅读量: {{ article.viewCount }}
             </span>
             <span class="separator">|</span>
             <!-- 评论量 -->
             <span>
-              <i class="iconfont icon-commentCount" />评论数: {{ commentCount }}
+              <!-- <i class="iconfont icon-commentCount" /> -->
+              评论数: {{ commentCount }}
             </span>
           </div>
         </div>
       </div>
     </div>
+
     <!-- 文章内容 -->
     <v-row class="article-container">
+      <!-- 左侧 -->
       <v-col md="9" cols="12">
         <v-card class="article-wrapper">
           <article
@@ -93,7 +98,7 @@
                 {{ item.name }}
               </router-link>
             </div>
-            <share style="margin-left:auto" :config="shareConfig" />
+            <!-- <share style="margin-left:auto" :config="shareConfig" /> -->
           </div>
           <!-- 点赞 / 打赏 -->
           <div class="article-reward">
@@ -119,55 +124,54 @@
           </div>
           <!-- 上一篇 / 下一篇 -->
           <div class="pagination-post">
-            <div v-if="neighbourList.lastArticle" :class="isFull(article.lastArticle)">
-              <router-link :to="'/articles/' + neighbourList.lastArticle.id">
-                <img :src="neighbourList.lastArticle.articleCover" alt="" class="post-cover">
+            <div v-if="article.lastArticle" :class="isFull(article.lastArticle)">
+              <router-link :to="'/articles/' + article.lastArticle.id">
+                <img :src="getArticleCover(article.lastArticle)" alt="" class="post-cover">
                 <div class="post-info">
                   <div class="label">上一篇</div>
-                  <div class="post-title">
-                    {{ neighbourList.lastArticle.title }}
+                  <div class="post-title article-title-more-3">
+                    {{ article.lastArticle.title }}
                   </div>
                 </div>
               </router-link>
             </div>
-            <div v-if="neighbourList.nextArticle" :class="isFull(neighbourList.nextArticle)">
-              <router-link :to="'/articles/' + neighbourList.nextArticle.id">
-                <img :src="neighbourList.nextArticle.articleCover" alt="" class="post-cover">
+            <div v-if="article.nextArticle" :class="isFull(article.nextArticle)">
+              <router-link :to="'/articles/' + article.nextArticle.id">
+                <img :src="getArticleCover(article.nextArticle)" alt="" class="post-cover">
                 <div class="post-info" style="text-align: right">
                   <div class="label">下一篇</div>
-                  <div class="post-title">
-                    {{ neighbourList.nextArticle.title }}
+                  <div class="post-title article-title-more-3">
+                    {{ article.nextArticle.title }}
                   </div>
                 </div>
               </router-link>
             </div>
           </div>
           <!-- 推荐文章 -->
-          <div v-if="recommendList.length > 0" class="recommend-container">
+          <div v-if="article.recommendList.length > 0" class="recommend-container">
             <div class="recommend-title">
               <v-icon size="20" color="#4c4948">mdi-thumb-up</v-icon> 相关推荐
             </div>
             <div class="recommend-list">
-              <div v-for="item of recommendList" :key="item.id" class="recommend-item">
+              <div v-for="item of article.recommendList" :key="item.id" class="recommend-item">
                 <router-link :to="'/articles/' + item.id">
-                  <img :src="item.articleCover" alt="" class="recommend-cover">
+                  <img :src="getArticleCover(item)" alt="" class="recommend-cover">
                   <div class="recommend-info">
                     <div class="recommend-date">
                       <i class="iconfont icon-riLi" />
                       {{ item.createTime }}
                     </div>
-                    <div>{{ item.title }}</div>
+                    <div class="article-title-more-3">{{ item.title }}</div>
                   </div>
                 </router-link>
               </div>
             </div>
           </div>
-          <!-- 分割线 -->
           <hr>
-          <!-- 评论 -->
-          <!-- <comment :type="commentType" @getCommentCount="getCommentCount" /> -->
+          <comment :type="commentType" @getCommentCount="getCommentCount" />
         </v-card>
       </v-col>
+      <!-- 右侧 -->
       <v-col md="3" cols="12" class="d-md-block d-none">
         <div style="position: sticky;top: 20px;">
           <!-- 文章目录 -->
@@ -185,13 +189,13 @@
               <span style="margin-left:10px">最新文章</span>
             </div>
             <div class="article-list">
-              <div v-for="item of newestList" :key="item.id" class="article-item">
+              <div v-for="item of article.newestList" :key="item.id" class="article-item">
                 <router-link :to="'/articles/' + item.id" class="content-cover">
-                  <img :src="item.articleCover" alt="">
+                  <img :src="getArticleCover(item)" alt="">
                 </router-link>
                 <div class="content">
                   <div class="content-title">
-                    <router-link :to="'/articles/' + item.id">
+                    <router-link :to="'/articles/' + item.id" class="article-title-more-2">
                       {{ item.title }}
                     </router-link>
                   </div>
@@ -209,46 +213,49 @@
 <script>
 import Clipboard from 'clipboard'
 import tocbot from 'tocbot'
-// import Comment from '../../components/Comment'
+import Comment from '../../components/Comment'
+import NoArticleCoverImg from '../../assets/images/no-article-cover.png'
 export default {
-  name: 'Article',
-  // components: {
-  //   Comment
-  // },
+  components: {
+    Comment
+  },
   data() {
     return {
+      // 阅读时长
       readTime: 0,
+      // 评论数
       commentCount: 0,
+      // 评论类型
       commentType: 1,
-      clipboard: null,
+      // 默认封面
+      articleDefaultImg: '',
+      noArticleCoverImg: NoArticleCoverImg,
+      // 文章链接
       articleLink: window.location.href,
+      clipboard: null,
       shareConfig: {
         sites: ['qzone', 'wechat', 'weibo', 'qq']
       },
       article: {
+        id: '',
         title: '',
         content: '',
-        wordNum: 0,
+        coverImageType: '',
+        articleImgLinkList: [],
+        authorNickname: '',
         categoryId: '',
         categoryName: '',
-        authorNickname: '',
         createTime: '',
         updateTime: '',
+        wordCount: 0,
         viewCount: 0,
         likeCount: 0,
         tagList: [],
-        isLike: false
-      },
-      neighbourList: {
-        lastArticle: {
-          id: 1,
-          title: '测试',
-          articleCover: ''
-        },
-        nextArticle: null
-      },
-      recommendList: [],
-      newestList: []
+        lastArticle: null,
+        nextArticle: null,
+        recommendList: [],
+        newestList: []
+      }
     }
   },
   computed: {
@@ -256,11 +263,22 @@ export default {
       return this.$store.state.otherConfig
     },
     articleCover() {
-      const cover = ''
+      let cover
+      if (this.article.coverImageType === 3) {
+        cover = this.articleDefaultImg
+      } else if (this.article.coverImageType === 1 || this.article.coverImageType === 2 || this.article.coverImageType === 4) {
+        if (this.article.articleImgLinkList && this.article.articleImgLinkList.length > 0) {
+          cover = this.article.articleImgLinkList[0]
+        }
+      } else {
+        cover = ''
+      }
+
       return 'background: url(' + cover + ') center center / cover no-repeat'
     },
     isLike() {
-      return this.article.isLike ? 'like-btn-active' : 'like-btn'
+      const articleLikeSet = this.$store.state.articleLikeSet
+      return articleLikeSet.indexOf(this.article.id) !== -1 ? 'like-btn-active' : 'like-btn'
     },
     isFull() {
       return function(article) {
@@ -269,6 +287,7 @@ export default {
     }
   },
   created() {
+    this.queryArticleDefaultImg()
     this.getArticle()
   },
   destroyed() {
@@ -278,21 +297,48 @@ export default {
     }
   },
   methods: {
+    queryArticleDefaultImg() {
+      this.$mapi.other.queryArticleDefaultImg().then(res => {
+        const { data } = res
+        this.articleDefaultImg = data || ''
+      }).catch(_ => {
+        this.articleDefaultImg = ''
+      })
+    },
+    getArticleCover(article) {
+      if (article.coverImageType === 3) {
+        return this.articleDefaultImg
+      } else if (article.coverImageType === 1 || article.coverImageType === 2 || article.coverImageType === 4) {
+        if (article.articleImgLinkList && article.articleImgLinkList.length > 0) {
+          return article.articleImgLinkList[0]
+        }
+
+        return this.noArticleCoverImg
+      } else {
+        return this.noArticleCoverImg
+      }
+    },
     getArticle() {
       this.$mapi.portal.queryArticleDetail({ articleId: this.$route.params.articleId }).then(({ data }) => {
         document.title = data['title']
+        this.article.id = data['id'] || ''
         this.article.title = data['title'] || ''
         this.article.content = data['content'] || ''
-        this.article.wordNum = data['wordNum'] || 0
+        this.article.coverImageType = data['coverImageType'] || null
+        this.article.articleImgLinkList = data['articleImgLinkList'] || []
+        this.article.authorNickname = data['authorNickname'] || ''
         this.article.categoryId = data['categoryId'] || ''
         this.article.categoryName = data['categoryName'] || ''
-        this.article.authorNickname = data['authorNickname'] || ''
         this.article.createTime = data['createTime'] || ''
         this.article.updateTime = data['updateTime'] || ''
+        this.article.wordCount = data['wordCount'] || 0
         this.article.viewCount = data['viewCount'] || 0
         this.article.likeCount = data['likeCount'] || 0
         this.article.tagList = data['tagList'] || []
-        this.article.isLike = data['isLike'] || false
+        this.article.lastArticle = data['lastArticle'] || null
+        this.article.nextArticle = data['nextArticle'] || null
+        this.article.recommendList = data['recommendList'] || []
+        this.article.newestList = data['newestList'] || []
 
         this.$nextTick(() => {
           // 添加代码复制功能
@@ -301,6 +347,9 @@ export default {
             this.$toast({ type: 'success', message: '复制成功' })
           })
 
+          // 计算阅读时间
+          this.readTime = Math.round(this.article.wordCount / 400) + '分钟'
+
           // 添加文章生成目录功能
           const nodes = this.$refs.article.children
           if (nodes.length) {
@@ -308,7 +357,7 @@ export default {
               const node = nodes[i]
               const reg = /^H[1-4]$/
               if (reg.exec(node.tagName)) {
-                node.id = i
+                node.id = '' + i
               }
             }
           }
@@ -328,23 +377,54 @@ export default {
     },
     clearArticleInfo() {
       this.article = {
+        id: '',
         title: '',
         content: '',
-        wordNnt: '',
-        wordNum: 0,
+        coverImageType: '',
+        articleImgLinkList: [],
+        authorNickname: '',
         categoryId: '',
         categoryName: '',
-        authorNickname: '',
         createTime: '',
         updateTime: '',
+        wordCount: 0,
         viewCount: 0,
         likeCount: 0,
         tagList: [],
-        isLike: false
+        lastArticle: null,
+        nextArticle: null,
+        recommendList: [],
+        newestList: []
       }
     },
     likeArticle() {
+      // 判断登录
+      if (!this.$store.state.user.id) {
+        this.$store.state.loginFlag = true
+        return false
+      }
 
+      // 发送请求
+      const param = {
+        userId: this.$store.state.user.id,
+        articleId: this.article.id
+      }
+      this.$mapi.portal.likeArticle(param).then(({ code, message }) => {
+        if (code === 200) {
+          // 判断是否点赞
+          if (this.$store.state.articleLikeSet.indexOf(this.article.id) !== -1) {
+            this.$set(this.article, 'likeCount', this.article.likeCount - 1)
+          } else {
+            this.$set(this.article, 'likeCount', this.article.likeCount + 1)
+          }
+
+          this.$store.commit('articleLike', this.article.id)
+        } else {
+          this.$toast({ type: 'error', message: message })
+        }
+      }).catch(_ => {
+        this.$toast({ type: 'error', message: '点赞失败' })
+      })
     },
     getCommentCount(count) {
       this.commentCount = count
@@ -370,6 +450,20 @@ export default {
   font-size: 14px;
   line-height: 1.9;
   display: inline-block;
+}
+.article-title-more-3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.article-title-more-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 @media (min-width: 760px) {
   .banner {
@@ -630,7 +724,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  opacity: 0.4;
+  opacity: 0.6;
   transition: all 0.6s;
   object-fit: cover;
 }

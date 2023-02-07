@@ -10,26 +10,37 @@ const routes = [
     component: resolve => require(['../views/home/index'], resolve)
   },
   {
-    path: '/article/:articleId',
-    component: resolve => require(['../views/article/article'], resolve)
-  },
-  {
     path: '/articles/:articleId',
     component: resolve => require(['../views/article/article'], resolve)
   },
   {
-    path: '/message',
-    component: resolve => require(['../views/message/index'], resolve),
+    path: '/archives',
+    component: resolve => require(['../views/archive/index'], resolve),
     meta: {
-      title: '留言板'
+      title: '归档'
     }
   },
   {
-    path: '/links',
-    component: resolve => require(['../views/link/index'], resolve),
+    path: '/tags',
+    component: resolve => require(['../views/tag/index'], resolve),
     meta: {
-      title: '友链列表'
+      title: '标签'
     }
+  },
+  {
+    path: '/tags/:tagId',
+    component: resolve => require(['../views/article/articleList.vue'], resolve)
+  },
+  {
+    path: '/categories',
+    component: resolve => require(['../views/category/index'], resolve),
+    meta: {
+      title: '分类'
+    }
+  },
+  {
+    path: '/categories/:categoryId',
+    component: resolve => require(['../views/article/articleList.vue'], resolve)
   },
   {
     path: '/talks',
@@ -43,6 +54,20 @@ const routes = [
     component: resolve => require(['../views/talk/detail'], resolve),
     meta: {
       title: '说说'
+    }
+  },
+  {
+    path: '/links',
+    component: resolve => require(['../views/link/index'], resolve),
+    meta: {
+      title: '友链列表'
+    }
+  },
+  {
+    path: '/message',
+    component: resolve => require(['../views/message/index'], resolve),
+    meta: {
+      title: '留言板'
     }
   },
   {

@@ -27,26 +27,48 @@
           <div :class="isRight(index)">
             <router-link :to="'/articles/' + item.id">
               <!-- 无封面 -->
-              <v-img v-if="item['coverImageType'] === 5" class="on-hover" width="100%" height="100%" :src="noArticleCoverImg" />
+              <v-img v-if="item['coverImageType'] === 5" class="on-hover" width="100%" height="100%" :src="noArticleCoverImg">
+                <div class="ribbon">
+                  <span v-if="item['articleType'] === 1">原创</span>
+                  <span v-if="item['articleType'] === 2">转载</span>
+                  <span v-if="item['articleType'] === 3">翻译</span>
+                </div>
+              </v-img>
               <!-- 默认封面 -->
-              <v-img v-if="item['coverImageType'] === 3" class="on-hover" width="100%" height="100%" :src="articleDefaultImg" />
+              <v-img v-if="item['coverImageType'] === 3" class="on-hover" width="100%" height="100%" :src="articleDefaultImg">
+                <div class="ribbon">
+                  <span v-if="item['articleType'] === 1">原创</span>
+                  <span v-if="item['articleType'] === 2">转载</span>
+                  <span v-if="item['articleType'] === 3">翻译</span>
+                </div>
+              </v-img>
               <!-- 单封面、多封面、封面自动生成 -->
-              <v-img v-else class="on-hover" width="100%" height="100%" :src="item['articleImgLinkList'] && item['articleImgLinkList'].length > 0 ? item['articleImgLinkList'][0] : ''" />
+              <v-img v-else class="on-hover" width="100%" height="100%" :src="item['articleImgLinkList'] && item['articleImgLinkList'].length > 0 ? item['articleImgLinkList'][0] : ''">
+                <div class="ribbon">
+                  <span v-if="item['articleType'] === 1">原创</span>
+                  <span v-if="item['articleType'] === 2">转载</span>
+                  <span v-if="item['articleType'] === 3">翻译</span>
+                </div>
+              </v-img>
             </router-link>
           </div>
           <!-- 文章信息 -->
           <div class="article-wrapper">
             <div style="line-height:1.4">
-              <router-link :to="'/articles/' + item.id"> {{ item['title'] }} </router-link>
+              <router-link :to="'/articles/' + item.id" class="article-title"> {{ item['title'] }} </router-link>
             </div>
             <div class="article-info">
-              <!-- 是否置顶 -->
+              <!-- 最新 -->
               <span v-if="index === 0">
                 <span style="color:#ff7242">
-                  <i class="iconfont icon-top" /> 置顶
+                  <i class="iconfont icon-top" /> 最新
                 </span>
                 <span class="separator">|</span>
               </span>
+              <!-- 作者 -->
+              <v-icon size="14">mdi-account-circle</v-icon>
+              {{ item['authorNickname'] }}
+              <span class="separator">|</span>
               <!-- 发表时间 -->
               <v-icon size="14">mdi-calendar-month-outline</v-icon>
               {{ item['createTime'] }}
@@ -359,6 +381,34 @@ export default {
 }
 .article-wrapper {
   font-size: 14px;
+}
+.article-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.ribbon {
+  background-color: #54CBFF;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  right: -80px;
+  opacity: 95%;
+  top: 15px;
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px #888;
+}
+.ribbon span {
+  border: 1px solid #54CBFF;
+  color: #fff;
+  display: block;
+  font: bold 100% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 5px 100px;
+  text-align: center;
+  text-shadow: 0 0 5px #444;
 }
 @media (min-width: 760px) {
   .blog-title {
