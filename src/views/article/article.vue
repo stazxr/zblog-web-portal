@@ -98,7 +98,7 @@
                 {{ item.name }}
               </router-link>
             </div>
-            <!-- <share style="margin-left:auto" :config="shareConfig" /> -->
+            <share style="margin-left:auto" :config="shareConfig" />
           </div>
           <!-- 点赞 / 打赏 -->
           <div class="article-reward">
@@ -233,12 +233,10 @@ export default {
       // 文章链接
       articleLink: window.location.href,
       clipboard: null,
-      shareConfig: {
-        sites: ['qzone', 'wechat', 'weibo', 'qq']
-      },
       article: {
         id: '',
         title: '',
+        remark: '',
         content: '',
         coverImageType: '',
         articleImgLinkList: [],
@@ -285,6 +283,31 @@ export default {
       return function(article) {
         return article ? 'post full' : 'post'
       }
+    },
+    shareConfig() {
+      return {
+        // url: window.location.href,
+        source: this.$store.state.websiteConfig['websiteLink'],
+        title: this.article.title,
+        description: this.article.remark,
+        image: function() {
+          if (this.article.coverImageType === 3) {
+            return this.articleDefaultImg
+          } else if (this.article.coverImageType === 1 || this.article.coverImageType === 2 || this.article.coverImageType === 4) {
+            if (this.article.articleImgLinkList && this.article.articleImgLinkList.length > 0) {
+              return this.article.articleImgLinkList[0]
+            }
+
+            return ''
+          } else {
+            return ''
+          }
+        },
+        sites: ['wechat', 'qq'],
+        disabled: [],
+        wechatQrcodeTitle: '微信扫一扫：分享',
+        wechatQrcodeHelper: '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>'
+      }
     }
   },
   created() {
@@ -324,6 +347,7 @@ export default {
         document.title = data['title']
         this.article.id = data['id'] || ''
         this.article.title = data['title'] || ''
+        this.article.remark = data['remark'] || ''
         this.article.content = data['content'] || ''
         this.article.coverImageType = data['coverImageType'] || null
         this.article.articleImgLinkList = data['articleImgLinkList'] || []
@@ -384,6 +408,7 @@ export default {
       this.article = {
         id: '',
         title: '',
+        remark: '',
         content: '',
         coverImageType: '',
         articleImgLinkList: [],
