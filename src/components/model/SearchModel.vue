@@ -60,10 +60,15 @@ export default {
   watch: {
     keywords(value) {
       this.flag = value.trim() !== ''
-      this.axios.get('/api/articles/search', {
-        params: { current: 1, keywords: value }
-      }).then(({ data }) => {
-        this.articleList = data.data
+      this.$mapi.portal.searchArticleList({ keywords: value }).then(({ code, data, message }) => {
+        if (code === 200) {
+          this.articleList = data
+        } else {
+          this.$toast({ type: 'error', message: message })
+          this.articleList = []
+        }
+      }).catch(_ => {
+        this.articleList = []
       })
     }
   },

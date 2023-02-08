@@ -168,7 +168,7 @@
             </div>
           </div>
           <hr>
-          <comment :type="commentType" @getCommentCount="getCommentCount" />
+          <comment v-if="article.commentFlag" :type="commentType" @getCommentCount="getCommentCount" />
         </v-card>
       </v-col>
       <!-- 右侧 -->
@@ -254,7 +254,8 @@ export default {
         lastArticle: null,
         nextArticle: null,
         recommendList: [],
-        newestList: []
+        newestList: [],
+        commentFlag: ''
       }
     }
   },
@@ -339,6 +340,7 @@ export default {
         this.article.nextArticle = data['nextArticle'] || null
         this.article.recommendList = data['recommendList'] || []
         this.article.newestList = data['newestList'] || []
+        this.article.commentFlag = data['commentFlag'] || false
 
         this.$nextTick(() => {
           // 添加代码复制功能
@@ -397,7 +399,8 @@ export default {
         lastArticle: null,
         nextArticle: null,
         recommendList: [],
-        newestList: []
+        newestList: [],
+        commentFlag: ''
       }
     },
     likeArticle() {
