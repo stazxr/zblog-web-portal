@@ -347,6 +347,9 @@ export default {
             this.$toast({ type: 'success', message: '复制成功' })
           })
 
+          // 增加文章阅读量
+          this.viewArticle()
+
           // 计算阅读时间
           this.readTime = Math.round(this.article.wordCount / 400) + '分钟'
 
@@ -424,6 +427,17 @@ export default {
         }
       }).catch(_ => {
         this.$toast({ type: 'error', message: '点赞失败' })
+      })
+    },
+    viewArticle() {
+      const param = {
+        articleId: this.article.id
+      }
+
+      this.$mapi.portal.viewArticle(param).then(({ code }) => {
+        if (code === 200) {
+          this.$set(this.article, 'viewCount', this.article.viewCount + 1)
+        }
       })
     },
     getCommentCount(count) {

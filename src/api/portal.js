@@ -98,5 +98,13 @@ export default {
   // 点赞文章
   likeArticle: params => {
     return api.httpRequest().post(`${portalApi}/likeArticle`, params)
+  },
+  // 浏览文章
+  viewArticle: params => {
+    return api.httpRequest().post(`${portalApi}/viewArticle`, params)
+  },
+  // 根据关键字搜索文章
+  searchArticleList: params => {
+    return api.httpRequest().get(`${portalApi}/searchArticleList`, params)
   }
 }

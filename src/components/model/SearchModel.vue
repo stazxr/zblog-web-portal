@@ -18,11 +18,11 @@
       <div class="search-result-wrapper">
         <hr class="divider">
         <ul>
-          <li v-for="item of articleList" :key="item.id" class="search-reslut">
+          <li v-for="item of articleList" :key="item.id" class="search-result">
             <!-- 文章标题 -->
-            <a @click="goTo(item.id)" v-html="item.articleTitle" />
+            <a @click="goTo(item.id)" v-html="item['title']" />
             <!-- 文章内容 -->
-            <p class="search-reslut-content text-justify" v-html="item.articleContent" />
+            <p class="search-result-content text-justify" v-html="item['content']" />
           </li>
         </ul>
         <!-- 搜索结果不存在提示 -->
@@ -113,13 +113,13 @@ export default {
     overflow: auto;
   }
 }
-.search-reslut a {
+.search-result a {
   color: #555;
   font-weight: bold;
   border-bottom: 1px solid #999;
   text-decoration: none;
 }
-.search-reslut-content {
+.search-result-content {
   color: #555;
   cursor: pointer;
   border-bottom: 1px dashed #ccc;
