@@ -14,6 +14,10 @@ const routes = [
     component: resolve => require(['../views/article/article'], resolve)
   },
   {
+    path: '/article404',
+    component: resolve => require(['../views/article/articleNotFound'], resolve)
+  },
+  {
     path: '/archives',
     component: resolve => require(['../views/archive/index'], resolve),
     meta: {
@@ -76,6 +80,15 @@ const routes = [
     meta: {
       title: '个人中心'
     }
+  },
+  {
+    path: '/404',
+    component: (resolve) => require(['../views/features/404'], resolve),
+    hidden: true
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ]
 

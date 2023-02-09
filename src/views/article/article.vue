@@ -344,6 +344,10 @@ export default {
     },
     getArticle() {
       this.$mapi.portal.queryArticleDetail({ articleId: this.$route.params.articleId }).then(({ data }) => {
+        if (data == null || data['articleStatus'] !== 5 || data['articlePerm'] !== 1) {
+          this.$router.push('/article404')
+          return
+        }
         document.title = data['title']
         this.article.id = data['id'] || ''
         this.article.title = data['title'] || ''
@@ -400,7 +404,9 @@ export default {
             }
           })
         })
-      }).catch(_ => {
+      }).catch(e => {
+        console.log('文章信息反显失败', e)
+        this.$toast({ type: 'error', message: '查询文章信息失败' })
         this.clearArticleInfo()
       })
     },

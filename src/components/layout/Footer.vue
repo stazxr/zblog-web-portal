@@ -31,7 +31,7 @@ export default {
   width: 100%;
   line-height: 2;
   position: relative;
-  padding: 40px 20px;
+  padding: 10px 5px;
   color: #eee;
   font-size: 14px;
   text-align: center;
