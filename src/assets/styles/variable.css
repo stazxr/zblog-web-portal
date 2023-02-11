@@ -1,0 +1,57 @@
+:root {
+    /* 字体 */
+    --globalFont: customFont;
+
+    /* 箭头 */
+    --globalCursor: url(https://suntaoblog.oss-cn-beijing.aliyuncs.com/zblog/cur/default.cur),default;
+    --globalPointer: url(https://suntaoblog.oss-cn-beijing.aliyuncs.com/zblog/cur/pointer.cur),default;
+
+    /* 透明 */
+    --transparent: rgba(0, 0, 0, 0);
+
+    /* 蓝色 */
+    --blue-color: #49b1f5;
+    --light-blue-color: #80c8f8;
+
+    /* 白色 */
+    --white-color: #eee;
+
+    /* nav - 白天模式/夜间模式：白灰配带遮罩 */
+    --nav-bg-color: rgba(0, 0, 0, 0);
+    --nav-font-color: #eee;
+
+    /* nav-fixed - 白天模式：白灰配带遮罩 */
+    --light-nav-fixed-box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
+    --light-nav-fixed-bg-color: rgba(255, 255, 255, 0.8);
+    --light-nav-fixed-font-color: #4c4948;
+
+    /* nav-fixed - 夜间模式：黑白配 */
+    --dark-nav-fixed-bg-color: rgba(18, 18, 18, 0.8);
+    --dark-nav-fixed-font-color: rgba(255, 255, 255, 0.8);
+
+    /* menus-submenu - 白天模式：白灰配 */
+    --light-menus-submenu-box-shadow: 0 5px 20px -4px rgba(0, 0, 0, 0.5);
+    --light-menus-submenu-bg-color: #fff;
+    --light-menus-submenu-font-color: #4c4948;
+
+    /* menus-submenu - 夜间模式：黑白配带遮罩 */
+    --dark-menus-submenu-bg-color: rgba(18, 18, 18, 0.8);
+    --dark-menus-submenu-font-color: rgba(255, 255, 255, 0.8);
+
+    /* 白色遮罩 */
+    --whiteMask: rgba(255, 255, 255, 0.3);
+    /* max白色遮罩 */
+    --maxWhiteMask: rgba(255, 255, 255, 0.5);
+    --maxMaxWhiteMask: rgba(255, 255, 255, 0.7);
+    /* mini白色遮罩 */
+    --miniWhiteMask: rgba(255, 255, 255, 0.15);
+
+    /* mini黑色遮罩 */
+    --miniMask: rgba(0, 0, 0, 0.15);
+    /* 黑色遮罩 */
+    --mask: rgba(0, 0, 0, 0.3);
+    /* 半透明 */
+    --translucent: rgba(0, 0, 0, 0.5);
+    /* 深黑遮罩 */
+    --maxMask: rgba(0, 0, 0, 0.7);
+}

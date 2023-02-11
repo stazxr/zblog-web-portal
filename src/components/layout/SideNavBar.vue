@@ -12,7 +12,7 @@
         <router-link to="/archives">
           <div style="font-size: 0.875rem;">文章</div>
           <div style="font-size: 1.125rem;">
-            {{ countInfo.articleCount }}
+            {{ countInfo.articleCount || 0 }}
           </div>
         </router-link>
       </div>
@@ -20,7 +20,15 @@
         <router-link to="/categories">
           <div style="font-size: 0.875rem;">分类</div>
           <div style="font-size: 1.125rem;">
-            {{ countInfo.categoryCount }}
+            {{ countInfo.categoryCount || 0 }}
+          </div>
+        </router-link>
+      </div>
+      <div class="blog-info-data">
+        <router-link to="/columns">
+          <div style="font-size: 0.875rem;">专栏</div>
+          <div style="font-size: 1.125rem;">
+            {{ countInfo.columnCount || 0 }}
           </div>
         </router-link>
       </div>
@@ -28,7 +36,7 @@
         <router-link to="/tags">
           <div style="font-size: 0.875rem;">标签</div>
           <div style="font-size: 1.125rem;">
-            {{ countInfo.tagCount }}
+            {{ countInfo.tagCount || 0 }}
           </div>
         </router-link>
       </div>
@@ -38,65 +46,67 @@
     <div class="menu-container">
       <div class="menus-item">
         <router-link to="/">
-          <i class="iconfont iconzhuye" /> 首页
+          <span>🏡</span> 首页
         </router-link>
       </div>
       <div class="menus-item">
         <router-link to="/archives">
-          <i class="iconfont iconguidang" /> 归档
-        </router-link>
-      </div>
-      <!-- <div class="menus-item">
-        <router-link to="/albums">
-          <i class="iconfont iconxiangce1" /> 相册
-        </router-link>
-      </div> -->
-      <div class="menus-item">
-        <router-link to="/talks">
-          <i class="iconfont iconpinglun" /> 说说
+          <span>📚</span> 归档
         </router-link>
       </div>
       <div class="menus-item">
         <router-link to="/categories">
-          <i class="iconfont iconfenlei" /> 分类
+          <span>📖</span> 分类
+        </router-link>
+      </div>
+      <div class="menus-item">
+        <router-link to="/columns">
+          <span>📃</span> 专栏
         </router-link>
       </div>
       <div class="menus-item">
         <router-link to="/tags">
-          <i class="iconfont iconbiaoqian" /> 标签
+          <span>🔖</span> 标签
         </router-link>
       </div>
-      <!-- <div class="menus-item">
-        <router-link to="/columns">
-          <i class="iconfont iconbiaoqian" /> 专栏
+      <div class="menus-item">
+        <router-link to="/albums">
+          <span>💽</span> 相册
         </router-link>
-      </div> -->
+      </div>
+      <div class="menus-item">
+        <router-link to="/talks">
+          <span>💬</span> 说说
+        </router-link>
+      </div>
       <div class="menus-item">
         <router-link to="/links">
-          <i class="iconfont iconlianjie" /> 友链
+          <span>📌</span> 友链
         </router-link>
       </div>
-      <!-- <div class="menus-item">
-        <router-link to="/about">
-          <i class="iconfont iconzhifeiji" /> 关于
-        </router-link>
-      </div> -->
       <div class="menus-item">
         <router-link to="/message">
-          <i class="iconfont icon-pingLun" /> 留言
+          <span>💌</span> 留言
         </router-link>
       </div>
       <div v-if="$store.state.user.id == null || $store.state.user.id === ''" class="menus-item">
-        <a @click="openLogin"><i class="iconfont icon-login" /> 登录 </a>
+        <a @click="openLogin">
+          <span>🔒</span> 登录
+        </a>
       </div>
       <div v-else>
         <div class="menus-item">
           <router-link to="/user">
-            <i class="iconfont icongerenzhongxin" /> 个人中心
+            <span v-if="$store.state.user.gender === 1">🧑 </span>
+            <span v-else-if="$store.state.user.gender === 2">👧 </span>
+            <span v-else>🤷 </span>
+            个人中心
           </router-link>
         </div>
         <div class="menus-item">
-          <a @click="logout"><i class="iconfont icon-logout" /> 退出</a>
+          <a @click="logout">
+            <span>🔓</span> 退出
+          </a>
         </div>
       </div>
     </div>
@@ -139,6 +149,11 @@ export default {
 </script>
 
 <style scoped>
+hr {
+  border: 2px dashed #d2ebfd;
+  margin: 20px 0;
+}
+
 .blogger-info {
   padding: 26px 30px 0;
   text-align: center;
@@ -153,10 +168,6 @@ export default {
   line-height: 2;
   text-align: center;
 }
-hr {
-  border: 2px dashed #d2ebfd;
-  margin: 20px 0;
-}
 .menu-container {
   padding: 0 10px 40px;
   animation: 0.8s ease 0s 1 normal none running sidebarItem;
@@ -166,7 +177,7 @@ hr {
   display: block;
   line-height: 2;
 }
-.menus-item i {
+.menus-item span {
   margin-right: 2rem;
 }
 @keyframes sidebarItem {

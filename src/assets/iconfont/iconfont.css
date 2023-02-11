@@ -19,7 +19,7 @@
   content: "\e619";
 }
 
-.iconxiangxia2:before {
+.icon-toBottom:before {
   content: "\e6fa";
 }
 
@@ -39,7 +39,7 @@
   content: "\e62c";
 }
 
-.iconhanbao:before {
+.icon-daoHang:before {
   content: "\e78c";
 }
 
@@ -83,7 +83,7 @@
   content: "\e797";
 }
 
-.iconsousuo:before {
+.icon-search:before {
   content: "\e60b";
 }
 
@@ -115,7 +115,7 @@
   content: "\e7d5";
 }
 
-.iconzhuye:before {
+.icon-home:before {
   content: "\e7bb";
 }
 

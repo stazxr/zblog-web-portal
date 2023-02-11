@@ -1,89 +1,43 @@
+/** 字体 */
+@font-face {
+  font-family: customFont;
+  src: url(../iconfont/custom.ttf);
+  font-display: swap;
+}
+
+/** 通用CSS */
+* {
+  font-family: var(--globalFont), serif;
+}
 body {
-  cursor: url(https://static.talkxj.com/css/default.cur),default;
+  cursor: var(--globalCursor);
 }
 a, button, img {
-  cursor: url(https://static.talkxj.com/css/pointer.cur),default;
+  cursor: var(--globalPointer);
 }
 ul {
   padding:0 !important;
 }
-* {
-  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Lato,Roboto,'PingFang SC','Microsoft YaHei',sans-serif;
-}
-.v-navigation-drawer {
-  z-index: 20;
-}
-.v-dialog--fullscreen > .v-card {
-  min-height: 100%;
-  min-width: 100%;
-  padding: 20px !important;
-}
-.v-navigation-drawer,.v-toolbar{
-  transition: all 0.5s;
-}
-.v-snack__content {
-  justify-content: start;
-}
-.theme--light.v-card {
-  background: #fff;
-  color: #4c4948;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px 6px rgba(7, 17, 27, 0.06) !important;
-  transition: all 0.3s;
-}
-.theme--light.v-card.blog-container {
-  background: #fff !important;
-}
-.theme--light.v-card.article-wrapper {
-  background: #fff !important;
-}
-.v-card:not(.v-sheet--tile):not(.v-card--shaped) {
-  border-radius: 8px;
-}
-.theme--light.v-card:hover {
-  box-shadow: 0 4px 12px 12px rgba(7, 17, 27, 0.15);
-}
-.theme--light.v-app-bar.v-toolbar.v-sheet {
-  background-color: rgba(0, 0, 0, 0);
-}
-.theme--light.v-app-bar.v-toolbar.v-sheet a {
-  color: #eee;
-}
-.theme--light.v-footer {
-  color: #4c4948;
-}
-.theme--light.v-navigation-drawer {
-  background: #f6f8fa;
-}
+
+/* v-application 全局配置 */
 .theme--light.v-application {
-  background: linear-gradient( 90deg, rgba(247, 149, 51, 0.1) 0, rgba(243, 112, 85, 0.1) 15%, rgba(239, 78, 123, 0.1) 30%, rgba(161, 102, 171, 0.1) 44%, rgba(80, 115, 184, 0.1) 58%, rgba(16, 152, 173, 0.1) 72%, rgba(7, 179, 155, 0.1) 86%, rgba(109, 186, 130, 0.1) 100% );
+  background: linear-gradient(90deg, rgba(247, 149, 51, 0.1) 0, rgba(243, 112, 85, 0.1) 15%, rgba(239, 78, 123, 0.1) 30%, rgba(161, 102, 171, 0.1) 44%, rgba(80, 115, 184, 0.1) 58%, rgba(16, 152, 173, 0.1) 72%, rgba(7, 179, 155, 0.1) 86%, rgba(109, 186, 130, 0.1) 100%);
   color: #4c4948;
 }
 .theme--light.v-application a {
   color: #4c4948;
   text-decoration: none;
 }
-.theme--light.v-divider {
-  border-color: #ccc;
-}
-.theme--dark.v-card {
-  /* background: #121212; */
-
-  color: rgba(255,255,255,0.8);
-}
-.theme--dark.v-footer {
-  color: rgba(255,255,255,0.8);
-}
 .theme--dark.v-application {
   background: #121212;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 .theme--dark.v-application a {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
 }
-.theme--dark.v-navigation-drawer {
-  background-color: #121212;
+.v-application a, .v-application button, .v-application img {
+  cursor: var(--globalPointer);
 }
 .v-application code {
   color: #dcdcdc;
@@ -94,6 +48,74 @@ ul {
 }
 .v-application code:after {
   content: "";
+}
+
+.theme--light.v-card {
+  background: #fff;
+  color: #4c4948;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 6px rgba(7, 17, 27, 0.06) !important;
+  transition: all 0.3s;
+}
+.theme--light.v-card:hover {
+  box-shadow: 0 4px 12px 12px rgba(7, 17, 27, 0.15);
+}
+.theme--dark.v-card {
+  /* background: #121212; */
+  color: rgba(255,255,255,0.8);
+}
+.theme--light.v-card.blog-container {
+  background: #fff !important;
+}
+.theme--light.v-card.article-wrapper {
+  background: #fff !important;
+}
+.v-card:not(.v-sheet--tile):not(.v-card--shaped) {
+  border-radius: 8px;
+}
+
+/* 手机端模式模态框内部 v-card 样式 */
+.v-dialog--fullscreen > .v-card {
+  min-height: 100%;
+  min-width: 100%;
+  padding: 20px !important;
+}
+
+/** 顶部导航栏 */
+.theme--light.v-app-bar.v-toolbar.v-sheet {
+  background-color: rgba(0, 0, 0, 0);
+}
+.theme--light.v-app-bar.v-toolbar.v-sheet a {
+  color: #eee;
+}
+
+/** 侧边导航栏 */
+.v-navigation-drawer {
+  z-index: 20;
+}
+.v-navigation-drawer,.v-toolbar {
+  transition: all 0.5s;
+}
+.theme--light.v-navigation-drawer {
+  background: #f6f8fa;
+}
+.theme--dark.v-navigation-drawer {
+  background: #121212;
+}
+
+/* v-footer */
+.theme--light.v-footer {
+  color: #4c4948;
+}
+.theme--dark.v-footer {
+  color: rgba(255,255,255,0.8);
+}
+
+.v-snack__content {
+  justify-content: start;
+}
+.theme--light.v-divider {
+  border-color: #ccc;
 }
 canvas {
   animation: to_show 4s;
@@ -119,7 +141,10 @@ p {
   background: #fff !important;
 }
 @media (min-width: 760px) {
-  .v-toolbar__content, .v-toolbar__extension {
+  .v-toolbar__content {
+    padding: 0 36px;
+  }
+  .v-toolbar__extension {
     padding: 10px 36px;
   }
   .banner {
@@ -172,7 +197,10 @@ p {
 }
 
 @media (max-width: 759px) {
-  .v-toolbar__content, .v-toolbar__extension {
+  .v-toolbar__content {
+    padding: 0 16px;
+  }
+  .v-toolbar__extension {
     padding: 10px 16px;
   }
   .banner {
@@ -221,6 +249,7 @@ p {
     padding: 18vh 0.5em 0 0.5rem;
    }
 }
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -287,7 +316,7 @@ p {
   resize: none;
   width: 100%;
   border-radius: 4px;
-  background: url(https://static.talkxj.com/config/commentBack.webp) 100% 100% no-repeat;
+  /* background: url(https://suntaoblog.oss-cn-beijing.aliyuncs.com/zblog/image/comment.jpg) 100% 100% no-repeat; */
 }
 .upload-btn {
   color: #fff;
@@ -314,7 +343,7 @@ p {
 .comment-input {
   position: relative;
 }
-.commmen-img {
+.comment-img {
   position: absolute;
   right: 0;
   bottom: 0;

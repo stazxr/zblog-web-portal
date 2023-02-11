@@ -2,8 +2,6 @@
   <v-app>
     <!-- 导航栏 -->
     <TopNavBar />
-    <!-- 侧边导航栏 -->
-    <SideNavBar />
     <!-- 内容 -->
     <v-main>
       <router-view :key="$route.fullPath" />
@@ -12,6 +10,8 @@
     <Footer />
     <!-- 返回顶部 -->
     <BackTop />
+    <!-- 侧边导航栏 -->
+    <SideNavBar />
     <!-- 搜索模态框 -->
     <SearchModel />
     <!-- 登录模态框 -->

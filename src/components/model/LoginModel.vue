@@ -64,7 +64,7 @@ export default {
       return clientWidth <= 960
     },
     socialLoginList() {
-      return this.$store.state.websiteConfig.socialLoginList
+      return this.$store.state.websiteConfig.socialLoginList || []
     },
     showLogin() {
       return function(type) {

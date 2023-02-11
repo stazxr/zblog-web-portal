@@ -1,8 +1,8 @@
 export default {
   "[微笑]": "https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/smile.jpg",
-  "[笑]": " https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/dx.jpg",
+  "[笑]": "https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/dx.jpg",
   "[呲牙]": "https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/cy.jpg",
-  "[OK]": "https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/ok.jpg",
+  "[好的]": "https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/ok.jpg",
   "[星星眼]": "https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/xxy.jpg",
   "[哦呼]": "https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/oh.jpg",
   "[嫌弃]": "https://suntaoblog.oss-cn-beijing.aliyuncs.com/emoji/xq.jpg",

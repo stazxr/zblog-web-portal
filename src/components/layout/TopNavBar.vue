@@ -2,18 +2,19 @@
   <v-app-bar app :class="navClass" hide-on-scroll flat height="60">
     <!-- 手机端导航栏 -->
     <div class="d-md-none nav-mobile-container">
-      <div style="font-size:18px;font-weight:bold">
+      <div class="" style="font-size:18px;font-weight:bold;">
         <router-link to="/">
           {{ websiteConfig['websiteAuthor'] }}
         </router-link>
       </div>
       <div style="margin-left:auto">
-        <a @click="openSearch"><i class="iconfont iconsousuo" /></a>
+        <a @click="openSearch"><i class="iconfont icon-search" /></a>
         <a style="margin-left:10px;font-size:20px" @click="openDrawer">
-          <i class="iconfont iconhanbao" />
+          <i class="iconfont icon-daoHang" />
         </a>
       </div>
     </div>
+
     <!-- 电脑端导航栏 -->
     <div class="d-md-block d-none nav-container">
       <div class="float-left blog-title">
@@ -24,89 +25,99 @@
       <div class="float-right nav-title">
         <div class="menus-item">
           <a class="menu-btn" @click="openSearch">
-            <i class="iconfont iconsousuo" /> 搜索
+            🔍 搜索
           </a>
         </div>
         <div class="menus-item">
           <router-link class="menu-btn" to="/">
-            <i class="iconfont iconzhuye" /> 首页
+            🏡 <span>首页</span>
           </router-link>
         </div>
         <div class="menus-item">
           <a class="menu-btn">
-            <i class="iconfont iconfaxian" /> 博客
-            <i class="iconfont iconxiangxia2 expand" />
+            📕 文章
+            <i class="iconfont icon-toBottom expand" />
           </a>
           <ul class="menus-submenu">
             <li>
               <router-link to="/archives">
-                <i class="iconfont iconguidang" /> 归档
+                📚 归档
               </router-link>
             </li>
             <li>
               <router-link to="/categories">
-                <i class="iconfont iconfenlei" /> 分类
+                📖 分类
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/columns">
+                📃 专栏
               </router-link>
             </li>
             <li>
               <router-link to="/tags">
-                <i class="iconfont iconbiaoqian" /> 标签
+                🔖 标签
               </router-link>
             </li>
-            <!-- <li>
-              <router-link to="/columns">
-                <i class="iconfont iconbiaoqian" /> 专栏
-              </router-link>
-            </li> -->
           </ul>
         </div>
         <div class="menus-item">
           <a class="menu-btn">
-            <i class="iconfont iconqita" /> 生活
-            <i class="iconfont iconxiangxia2 expand" />
+            🌈 生活
+            <i class="iconfont icon-toBottom expand" />
           </a>
           <ul class="menus-submenu">
-            <!-- <li>
+            <li>
               <router-link to="/albums">
-                <i class="iconfont iconxiangce1" /> 相册
+                💽 相册
               </router-link>
-            </li> -->
+            </li>
             <li>
               <router-link to="/talks">
-                <i class="iconfont iconpinglun" /> 说说
+                💬 说说
               </router-link>
             </li>
           </ul>
         </div>
         <div class="menus-item">
-          <router-link class="menu-btn" to="/links">
-            <i class="iconfont iconlianjie" /> 友链
-          </router-link>
+          <a class="menu-btn">
+            💖 社交
+            <i class="iconfont icon-toBottom expand" />
+          </a>
+          <ul class="menus-submenu">
+            <router-link to="/links">
+              📌 友链
+            </router-link>
+            <router-link to="/message">
+              💌 留言
+            </router-link>
+          </ul>
         </div>
-        <!-- <div class="menus-item">
-          <router-link class="menu-btn" to="/about">
-            <i class="iconfont iconzhifeiji" /> 关于
-          </router-link>
-        </div> -->
         <div class="menus-item">
-          <router-link class="menu-btn" to="/message">
-            <i class="iconfont icon-pingLun" /> 留言
-          </router-link>
+          <a class="menu-btn">
+            🌍 网站
+            <i class="iconfont icon-toBottom expand" />
+          </a>
         </div>
         <div class="menus-item">
           <a v-if="$store.state.user.id == null || $store.state.user.id === ''" class="menu-btn" @click="openLogin">
-            <i class="iconfont icon-login" /> 登录
+            🔒 登录
           </a>
           <template v-else>
             <img class="user-avatar" :src="$store.state.user.avatar" height="30" width="30" alt="">
             <ul class="menus-submenu">
               <li>
                 <router-link to="/user">
-                  <i class="iconfont icongerenzhongxin" /> 个人中心
+                  <span v-if="$store.state.user.gender === 1">🧑 </span>
+                  <span v-else-if="$store.state.user.gender === 2">👧 </span>
+                  <span v-else>🤷 </span>
+                  个人中心
                 </router-link>
               </li>
               <li>
-                <a @click="logout"><i class="iconfont icon-logout" /> 退出</a>
+                <a @click="logout">
+                  🔓 退出
+                </a>
               </li>
             </ul>
           </template>
@@ -121,7 +132,7 @@ export default {
   name: 'TopNavBar',
   data() {
     return {
-      navClass: ''
+      navClass: 'nav'
     }
   },
   computed: {
@@ -131,6 +142,9 @@ export default {
     avatar() {
       return this.$store.state.avatar
     }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.scroll)
   },
   methods: {
     scroll() {
@@ -170,43 +184,83 @@ i {
 ul {
   list-style: none;
 }
+
+/* nav */
 .nav {
-  background: rgba(0, 0, 0, 0) !important;
+  background: var(--nav-bg-color) !important;
 }
 .nav a {
-  color: #eee !important;
+  color: var(--nav-font-color) !important;
 }
 .nav .menu-btn {
   text-shadow: 0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.3);
 }
+.nav .menu-btn:hover {
+  color: var(--blue-color) !important;
+}
 .nav .blog-title a {
   text-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.15);
 }
-.theme--light.nav-fixed {
-  background: rgba(255, 255, 255, 0.8) !important;
-  box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
+.theme--light.nav .menus-submenu {
+  box-shadow: var(--light-menus-submenu-box-shadow) !important;
+  background-color: var(--light-menus-submenu-bg-color) !important;
 }
-.theme--dark.nav-fixed {
-  background: rgba(18, 18, 18, 0.8) !important;
+.theme--light.nav .menus-submenu a {
+  color: var(--light-menus-submenu-font-color) !important;
 }
-.theme--dark.nav-fixed a {
-  color: rgba(255, 255, 255, 0.8) !important;
+.theme--dark.nav .menus-submenu {
+  background: var(--dark-menus-submenu-bg-color) !important;
 }
-.theme--light.nav-fixed a {
-  color: #4c4948 !important;
+.theme--dark.nav .menus-submenu a {
+  color: var(--dark-menus-submenu-font-color) !important;
 }
+
+/* nav-fixed */
 .nav-fixed .menus-item a, .nav-fixed .blog-title a {
   text-shadow: none;
 }
-.nav-container {
-  font-size: 14px;
-  width: 100%;
-  height: 100%;
+.nav-fixed .menu-btn:hover {
+  color: var(--blue-color) !important;
 }
+.theme--light.nav-fixed {
+  box-shadow: var(--light-nav-fixed-box-shadow) !important;
+  background: var(--light-nav-fixed-bg-color) !important;
+}
+.theme--light.nav-fixed a {
+  color: var(--light-nav-fixed-font-color) !important;
+}
+.theme--dark.nav-fixed {
+  background: var(--dark-nav-fixed-bg-color) !important;
+}
+.theme--dark.nav-fixed a {
+  color: var(--dark-nav-fixed-font-color) !important;
+}
+.theme--light.nav-fixed .menus-submenu {
+  box-shadow: var(--light-menus-submenu-box-shadow) !important;
+  background-color: var(--light-menus-submenu-bg-color) !important;
+}
+.theme--light.nav-fixed .menus-submenu a {
+  color: var(--light-menus-submenu-font-color) !important;
+}
+.theme--dark.nav-fixed .menus-submenu {
+  background: var(--dark-menus-submenu-bg-color) !important;
+}
+.theme--dark.nav-fixed .menus-submenu a {
+  color: var(--dark-menus-submenu-font-color) !important;
+}
+
+/* mobile nav */
 .nav-mobile-container {
   width: 100%;
   display: flex;
   align-items: center;
+}
+
+/* pc nav */
+.nav-container {
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
 }
 .blog-title, .nav-title {
   display: flex;
@@ -214,37 +268,34 @@ ul {
   height: 100%;
 }
 .blog-title a {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 .menus-item {
   position: relative;
   display: inline-block;
-  margin: 0 0 0 0.875rem;
+  margin: 0 0.5rem;
 }
 .menus-item a {
   transition: all 0.2s;
 }
-.nav-fixed .menu-btn:hover {
-  color: #49b1f5 !important;
+.menu-btn {
+  line-height: 60px;
 }
 .menu-btn:hover:after {
   width: 100%;
 }
 .menus-item a:after {
   position: absolute;
-  bottom: -5px;
+  display: block;
+  bottom: 0;
   left: 0;
   z-index: -1;
   width: 0;
-  height: 3px;
-  background-color: #80c8f8;
+  height: 6px;
+  background-color: var(--light-blue-color);
   content: "";
   transition: all 0.3s ease-in-out;
-}
-.user-avatar {
-  cursor: pointer;
-  border-radius: 50%;
 }
 .menus-item:hover .menus-submenu {
   display: block;
@@ -254,14 +305,12 @@ ul {
   display: none;
   right: 0;
   width: max-content;
-  margin-top: 8px;
-  box-shadow: 0 5px 20px -4px rgba(0, 0, 0, 0.5);
-  background-color: #fff;
+  margin-top: 0;
   animation: submenu 0.3s 0.1s ease both;
 }
 .menus-submenu:before {
   position: absolute;
-  top: -8px;
+  top: 0;
   left: 0;
   width: 100%;
   height: 20px;
@@ -269,13 +318,12 @@ ul {
 }
 .menus-submenu a {
   line-height: 2;
-  color: #4c4948 !important;
   text-shadow: none;
   display: block;
   padding: 6px 14px;
 }
 .menus-submenu a:hover {
-  background: #4ab1f4;
+  background: var(--blue-color);
 }
 @keyframes submenu {
   0% {
@@ -288,5 +336,14 @@ ul {
     filter: none;
     transform: translateY(0);
   }
+}
+
+/* 用户头像 */
+.user-avatar {
+  cursor: var(--globalPointer);
+  height: 40px;
+  width: 40px;
+  margin: auto;
+  border-radius: 15%;
 }
 </style>

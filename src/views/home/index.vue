@@ -7,8 +7,22 @@
           {{ websiteConfig['websiteName'] }}
         </h1>
         <div class="blog-intro">
-          {{ typedConfig.output }} <span class="typed-cursor">|</span>
+          <span style="color: #fff">{{ typedConfig.output }}</span>
+          <span class="typed-cursor">|</span>
         </div>
+      </div>
+      <div class="waves-area">
+        <svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z" />
+          </defs>
+          <g class="parallax">
+            <use href="#gentle-wave" x="48" y="0" />
+            <use href="#gentle-wave" x="48" y="3" />
+            <use href="#gentle-wave" x="48" y="5" />
+            <use href="#gentle-wave" x="48" y="7" />
+          </g>
+        </svg>
       </div>
       <div class="scroll-down" @click="scrollDown">
         <v-icon color="#fff" class="scroll-down-effects">mdi-chevron-down</v-icon>
@@ -118,7 +132,7 @@
                 <router-link to="/archives">
                   <div style="font-size: 0.875rem">文章</div>
                   <div style="font-size: 1.25rem">
-                    {{ countInfo.articleCount }}
+                    {{ countInfo.articleCount || 0 }}
                   </div>
                 </router-link>
               </div>
@@ -126,7 +140,15 @@
                 <router-link to="/categories">
                   <div style="font-size: 0.875rem">分类</div>
                   <div style="font-size: 1.25rem">
-                    {{ countInfo.categoryCount }}
+                    {{ countInfo.categoryCount || 0 }}
+                  </div>
+                </router-link>
+              </div>
+              <div class="blog-info-data">
+                <router-link to="/columns">
+                  <div style="font-size: 0.875rem">专栏</div>
+                  <div style="font-size: 1.25rem">
+                    {{ countInfo.columnCount || 0 }}
                   </div>
                 </router-link>
               </div>
@@ -134,7 +156,7 @@
                 <router-link to="/tags">
                   <div style="font-size: 0.875rem">标签</div>
                   <div style="font-size: 1.25rem">
-                    {{ countInfo.tagCount }}
+                    {{ countInfo.tagCount || 0 }}
                   </div>
                 </router-link>
               </div>
@@ -222,6 +244,7 @@ export default {
       this.$store.state.pageList.forEach(item => {
         if (item['pageLabel'] === 'home') {
           cover = item['pageCover']
+          return 'background: url(' + cover + ') center center / cover no-repeat'
         }
       })
       return 'background: url(' + cover + ') center center / cover no-repeat'
@@ -320,6 +343,7 @@ export default {
 <style lang="stylus">
 .typed-cursor
   opacity: 1
+  color: #fff
   -webkit-animation: blink 0.7s infinite
   -moz-animation: blink 0.7s infinite
   animation: blink 0.7s infinite
@@ -347,6 +371,7 @@ export default {
 </style>
 
 <style scoped>
+/* home-banner */
 .home-banner {
   position: absolute;
   top: -60px;
@@ -358,11 +383,69 @@ export default {
   color: #fff !important;
   animation: header-effect 1s;
 }
+.home-banner:before {
+  position: absolute;
+  /* top: -60px; */
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background-color: rgba(0,0,0,.25);
+  content: "";
+}
 .banner-container {
   margin-top: 43vh;
-  line-height: 1.5;
-  color: #eee;
+  line-height: 2.0;
+  user-select: none;
+  color: #fff;
 }
+.blog-intro {
+  width: max-content;
+  margin: 0 auto;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* waves-area */
+.waves-area {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  z-index: 1;
+  display: block !important;
+}
+.waves-area .waves-svg {
+  width: 100%;
+  height: 4rem;
+}
+.parallax>use {
+  animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+.parallax>use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+  fill: #5782f038;
+}
+.parallax>use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+  fill: #b2c2eb38;
+}
+.parallax>use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+  fill: #7d9be238;
+}
+.parallax>use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+  fill: #bdc9e738;
+}
+
 .card-info-social {
   line-height: 40px;
   text-align: center;
@@ -453,6 +536,10 @@ export default {
   .blog-title {
     font-size: 26px;
   }
+  .waves-area .waves-svg {
+    height: 40px;
+    min-height: 40px;
+  }
   .home-container {
     width: 100%;
     margin: calc(100vh - 66px) auto 0 auto;
@@ -477,10 +564,11 @@ export default {
   }
 }
 .scroll-down {
-  cursor: pointer;
+  cursor: var(--globalPointer);
   position: absolute;
   bottom: 0;
   width: 100%;
+  z-index: 2;
 }
 .scroll-down i {
   font-size: 2rem;

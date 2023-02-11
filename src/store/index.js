@@ -30,6 +30,7 @@ export default new Vuex.Store({
       id: null,
       nickname: '',
       avatar: '',
+      gender: '',
       intro: '',
       webSite: ''
     },
@@ -66,6 +67,7 @@ export default new Vuex.Store({
       state.user.id = user['id']
       state.user.nickname = user['nickname']
       state.user.avatar = user['headImgUrl']
+      state.user.gender = user['gender']
       state.user.webSite = user['website']
       state.user.intro = user['signature']
       state.user.email = user['email']
