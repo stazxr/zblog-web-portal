@@ -15,6 +15,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-qq:before {
+  content: "\e66a";
+}
+.icon-github:before {
+  content: "\e72a";
+}
+.icon-gitee:before {
+  content: "\e686";
+}
+.icon-weibo:before {
+  content: "\e62f";
+}
+
 .iconpinglun:before {
   content: "\e619";
 }
@@ -151,28 +164,12 @@
   content: "\e6a7";
 }
 
-.icon-weibo:before {
-  content: "\e62f";
-}
-
 .icon-like:before {
   content: "\e60c";
 }
 
 .icon-face:before {
   content: "\e644";
-}
-
-.icon-qq:before {
-  content: "\e66a";
-}
-
-.icongithub:before {
-  content: "\e72a";
-}
-
-.icongitee-fill-round:before {
-  content: "\e686";
 }
 
 .iconfanhuidingbu:before {

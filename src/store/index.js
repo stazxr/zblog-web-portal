@@ -20,8 +20,16 @@ export default new Vuex.Store({
       categoryCount: 0,
       // 标签数量
       tagCount: 0,
-      // 访问量
-      viewsCount: 0
+      // 访问总量
+      viewsCount: 0,
+      // 游客总量
+      visitorCount: 0,
+      // 用户总量
+      userCount: 0,
+      // 评论总量
+      commentCount: 0,
+      // 留言总量
+      messageCount: 0
     },
     // 页面信息
     pageList: [],
@@ -60,6 +68,10 @@ export default new Vuex.Store({
       state.countInfo.categoryCount = blogInfo['categoryCount'] || 0
       state.countInfo.tagCount = blogInfo['tagCount'] || 0
       state.countInfo.viewsCount = blogInfo['viewsCount'] || 0
+      state.countInfo.visitorCount = blogInfo['visitorCount'] || 0
+      state.countInfo.userCount = blogInfo['userCount'] || 0
+      state.countInfo.commentCount = blogInfo['commentCount'] || 0
+      state.countInfo.messageCount = blogInfo['messageCount'] || 0
       state.pageList = blogInfo['pageList'] || []
     },
     // 登录成功，设置用户信息

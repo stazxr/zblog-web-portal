@@ -108,7 +108,7 @@ ul {
   color: #4c4948;
 }
 .theme--dark.v-footer {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .v-snack__content {
@@ -140,6 +140,30 @@ p {
 .register-container {
   background: #fff !important;
 }
+
+/* ribbon */
+.ribbon {
+  background-color: #54CBFF;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  right: -80px;
+  opacity: .9;
+  top: 20px;
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px #888;
+}
+.ribbon span {
+  /* border: 1px solid #54CBFF; */
+  color: #fff;
+  display: block;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 100px;
+  text-align: center;
+  text-shadow: 0 0 5px #444;
+}
+
 @media (min-width: 760px) {
   .v-toolbar__content {
     padding: 0 36px;

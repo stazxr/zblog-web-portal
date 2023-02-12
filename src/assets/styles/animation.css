@@ -5,7 +5,6 @@
     animation-fill-mode: both;
 }
 
-
 .my-animation-slide-top {
     animation-name: slide-top
 }
@@ -18,6 +17,16 @@
     animation-name: hideToShow
 }
 
+/* 放大 */
+@keyframes big {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
 
 /* 上移 */
 @keyframes slide-top {
@@ -43,7 +52,7 @@
     }
 }
 
-/* 首图动画：下移 */
+/* 下移 */
 @keyframes header-effect {
     0% {
         opacity: 0;
@@ -189,24 +198,6 @@
 
     50% {
         opacity: 1;
-    }
-}
-
-/* 由左开向右 */
-@keyframes passing {
-    0% {
-        transform: translateX(-150%);
-        opacity: 0
-    }
-
-    50% {
-        transform: translateX(0);
-        opacity: 1
-    }
-
-    100% {
-        transform: translateX(150%);
-        opacity: 0
     }
 }
 

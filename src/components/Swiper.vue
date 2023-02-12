@@ -1,6 +1,6 @@
 <template>
   <router-link to="/talks" class="swiper-container">
-    <v-icon size="20" color="#4c4948">mdi-chat-outline</v-icon>
+    <i class="fa fa-feed" aria-hidden="true" />
     <div id="rollScreen_container" :style="{ height: height * lineNum + 'px' }" class="rollScreen_container">
       <ul class="rollScreen_list" :style="{ transform: transform }" :class="{ rollScreen_list_unanim: num === 0 }">
         <li v-for="(item, index) in list" :key="index" class="rollScreen_once" :style="{ height: height + 'px' }">
@@ -11,7 +11,7 @@
         </li>
       </ul>
     </div>
-    <v-icon size="20" color="#4c4948" class="arrow">mdi-chevron-double-right</v-icon>
+    <i class="fa fa-angle-double-right arrow" aria-hidden="true" />
   </router-link>
 </template>
 
@@ -64,11 +64,37 @@ export default {
 <style>
 .swiper-container {
   margin-top: 20px;
-  padding: 0.6rem 1rem;
+  padding: 22px 22px 22px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 15px;
+}
+.swiper-container i {
+  color: orange;
+  font-size: 22px;
+  margin: auto 0;
+  animation: scale 0.8s ease-in-out infinite;
+}
+.swiper-container .arrow {
+  font-size: 22px;
+  color: #4c4948;
+  animation: 1.5s passing infinite;
+}
+@keyframes passing {
+  0% {
+    transform: translateX(0%);
+    opacity: 0
+  }
+
+  50% {
+    transform: translateX(50%);
+    opacity: 1
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0
+  }
 }
 .rollScreen_container {
   width: 100%;
@@ -80,6 +106,7 @@ export default {
 }
 .item {
   width: 100%;
+  margin-left: 20px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -93,22 +120,5 @@ export default {
 }
 .rollScreen_list_unanim {
   transition: none;
-}
-.arrow {
-  animation: 1s passing infinite;
-}
-@keyframes passing {
-  0% {
-    transform: translateX(-50%);
-    opacity: 0;
-  }
-  50% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(50%);
-    opacity: 0;
-  }
 }
 </style>

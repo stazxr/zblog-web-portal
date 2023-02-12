@@ -1,14 +1,11 @@
 <template>
   <v-footer v-if="!isMessage" app padless absolute>
     <div class="footer-wrap">
+      <div class="footer-title">{{ websiteConfig['websiteIntro'] }}</div>
       <div>
-        ©{{ websiteConfig['websiteCreateTime'] | year }} -
-        {{ new Date().getFullYear() }} By
-        {{ websiteConfig['websiteAuthor'] }}
+        ©{{ websiteConfig['websiteCreateTime'] | year }} - {{ new Date().getFullYear() }} By {{ websiteConfig['websiteAuthor'] }}
+        <a href="https://beian.miit.gov.cn/" target="_blank">{{ websiteConfig['websiteRecordNo'] }}</a>
       </div>
-      <a href="https://beian.miit.gov.cn/" target="_blank">
-        {{ websiteConfig['websiteRecordNo'] }}
-      </a>
     </div>
   </v-footer>
 </template>
@@ -31,13 +28,16 @@ export default {
   width: 100%;
   line-height: 2;
   position: relative;
-  padding: 10px 5px;
+  padding: 5px 0;
   color: #eee;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
   background: linear-gradient(-45deg, #ee7752, #ce3e75, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: Gradient 10s ease infinite;
+}
+.footer-wrap .footer-title {
+  font-size: 16px;
 }
 .footer-wrap a {
   color: #eee !important;

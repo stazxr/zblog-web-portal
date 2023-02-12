@@ -232,25 +232,4 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.ribbon {
-  background-color: #54CBFF;
-  overflow: hidden;
-  white-space: nowrap;
-  position: absolute;
-  right: -80px;
-  opacity: 95%;
-  top: 15px;
-  transform: rotate(45deg);
-  box-shadow: 0 0 10px #888;
-}
-.ribbon span {
-  border: 1px solid #54CBFF;
-  color: #fff;
-  display: block;
-  font: bold 100% 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  margin: 0;
-  padding: 5px 100px;
-  text-align: center;
-  text-shadow: 0 0 5px #444;
-}
 </style>

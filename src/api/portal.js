@@ -63,6 +63,10 @@ export default {
   queryBoardTalkList: params => {
     return api.httpRequest().get(`${portalApi}/queryBoardTalkList`, params)
   },
+  // 获取标签云数据
+  queryBoardTagList: params => {
+    return api.httpRequest().get(`${portalApi}/queryBoardTagList`, params)
+  },
   // 获取说说列表
   queryTalkList: params => {
     return api.httpRequest().get(`${portalApi}/queryTalkList`, params)
