@@ -4,8 +4,8 @@
     --globalFontSize: 16px;
 
     /* 箭头 */
-    --globalCursor: url(https://suntaoblog.oss-cn-beijing.aliyuncs.com/zblog/cur/default.cur),default;
-    --globalPointer: url(https://suntaoblog.oss-cn-beijing.aliyuncs.com/zblog/cur/pointer.cur),default;
+    --globalCursor: url(https://suntaoblog.oss-cn-beijing.aliyuncs.com/zblog/cur/default.cur), default;
+    --globalPointer: url(https://suntaoblog.oss-cn-beijing.aliyuncs.com/zblog/cur/pointer.cur), pointer;
 
     /* 透明 */
     --transparent: rgba(0, 0, 0, 0);

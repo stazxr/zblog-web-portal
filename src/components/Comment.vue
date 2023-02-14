@@ -31,7 +31,7 @@
     <!-- 评论列表 -->
     <div v-if="count > 0 && reFresh">
       <div class="count">{{ count }} 评论</div>
-      <div v-for="(item, index) of commentList" :key="item.id" style="display:flex" class="pt-5">
+      <div v-for="(item, index) of commentList" :id="'comment' + item.id" :key="item.id" style="display:flex" class="pt-5">
         <v-avatar size="40" class="comment-avatar">
           <img :src="item['avatar']" alt="">
         </v-avatar>
@@ -57,7 +57,7 @@
           <p class="comment-content" v-html="item.content" />
 
           <!-- 回复信息 -->
-          <div v-for="reply of item.replyList" :key="reply.id" style="display:flex">
+          <div v-for="reply of item.replyList" :id="'comment' + reply.id" :key="reply.id" style="display:flex">
             <v-avatar size="36" class="comment-avatar">
               <img :src="reply['avatar']" alt="">
             </v-avatar>
@@ -183,13 +183,16 @@ export default {
     }
   },
   created() {
-    this.listComments()
+    this.listCommentsFirst()
   },
   methods: {
     addEmoji(key) {
       this.commentContent += key
     },
-    listComments() {
+    listCommentsFirst() {
+      this.listComments(true)
+    },
+    listComments(firstLoad = false) {
       // 查看评论
       const param = {
         current: this.current,
@@ -217,7 +220,9 @@ export default {
 
         this.current++
         this.count = data.total
-        this.$emit('getCommentCount', this.count)
+        this.$nextTick(() => {
+          this.$emit('getCommentCount', this.count, firstLoad)
+        })
       })
     },
     insertComment() {
@@ -517,7 +522,7 @@ export default {
   color: #eb5055;
 }
 .load-wrapper {
-  margin-top: 10px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;

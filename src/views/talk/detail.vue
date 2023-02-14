@@ -51,7 +51,7 @@
       </div>
 
       <!-- 评论 -->
-      <Comment :type="commentType" @getCommentCount="getCommentCount" />
+      <Comment id="comment" :type="commentType" @getCommentCount="getCommentCount" />
     </v-card>
   </div>
 </template>
@@ -75,7 +75,8 @@ export default {
         imagesList: [],
         likeCount: null
       },
-      previewList: []
+      previewList: [],
+      commentLoadFinish: false
     }
   },
   computed: {
@@ -129,8 +130,36 @@ export default {
         likeCount: 0
       }
     },
-    getCommentCount(count) {
+    getCommentCount(count, firstLoad) {
       this.commentCount = count
+      if (firstLoad) {
+        // 评论首次加载结束
+        this.scrollToHash()
+      }
+    },
+    scrollToHash() {
+      const hash = location.hash
+      if (hash && hash !== '') {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            let targetBox = document.getElementById('comment' + hash.replace('#', ''))
+            if (targetBox == null) {
+              targetBox = document.getElementById('comment')
+            }
+
+            // 跳转
+            if (targetBox != null) {
+              // 非平滑滚顶
+              // targetBox.scrollIntoView()
+              // 平滑滚动
+              window.scrollTo({
+                top: targetBox.getBoundingClientRect().top + window.scrollY - 70,
+                behavior: 'smooth'
+              })
+            }
+          }, 500)
+        })
+      }
     },
     previewImg(imagesList, img) {
       if (imagesList && imagesList.length > 0) {

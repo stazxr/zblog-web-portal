@@ -67,6 +67,18 @@ export default {
   queryBoardTagList: params => {
     return api.httpRequest().get(`${portalApi}/queryBoardTagList`, params)
   },
+  // 获取热门文章列表
+  queryBoardHotArticleList: params => {
+    return api.httpRequest().get(`${portalApi}/queryBoardHotArticleList`, params)
+  },
+  // 获取分类专栏列表
+  queryBoardCategoryList: params => {
+    return api.httpRequest().get(`${portalApi}/queryBoardCategoryList`, params)
+  },
+  // 获取最新评论列表
+  queryBoardLastedCommentList: params => {
+    return api.httpRequest().get(`${portalApi}/queryBoardLastedCommentList`, params)
+  },
   // 获取说说列表
   queryTalkList: params => {
     return api.httpRequest().get(`${portalApi}/queryTalkList`, params)

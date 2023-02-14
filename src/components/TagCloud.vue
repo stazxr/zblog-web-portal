@@ -27,7 +27,7 @@ export default {
       chart: null,
       option: {
         title: { text: '', x: 'center' },
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
         // tooltip: {
         //   pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         // },

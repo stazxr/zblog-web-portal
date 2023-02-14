@@ -37,7 +37,7 @@
         友链信息展示需要，你的信息格式要包含：名称、介绍、链接、头像
       </blockquote>
       <!-- 评论 -->
-      <Comment :type="commentType" />
+      <Comment id="comment" :type="commentType" @getCommentCount="getCommentCount" />
     </v-card>
   </div>
 </template>
@@ -78,6 +78,36 @@ export default {
       }).catch(_ => {
         this.friendLinkList = []
       })
+    },
+    getCommentCount(_, firstLoad) {
+      if (firstLoad) {
+        // 评论首次加载结束
+        this.scrollToHash()
+      }
+    },
+    scrollToHash() {
+      const hash = location.hash
+      if (hash && hash !== '') {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            let targetBox = document.getElementById('comment' + hash.replace('#', ''))
+            if (targetBox == null) {
+              targetBox = document.getElementById('comment')
+            }
+
+            // 跳转
+            if (targetBox != null) {
+              // 非平滑滚顶
+              // targetBox.scrollIntoView()
+              // 平滑滚动
+              window.scrollTo({
+                top: targetBox.getBoundingClientRect().top + window.scrollY - 70,
+                behavior: 'smooth'
+              })
+            }
+          }, 500)
+        })
+      }
     }
   }
 }

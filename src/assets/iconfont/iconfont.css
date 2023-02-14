@@ -28,64 +28,16 @@
   content: "\e62f";
 }
 
-.iconpinglun:before {
-  content: "\e619";
-}
-
 .icon-toBottom:before {
   content: "\e6fa";
-}
-
-.iconqita:before {
-  content: "\e7eb";
-}
-
-.iconfaxian:before {
-  content: "\e616";
-}
-
-.iconxiangce1:before {
-  content: "\e7be";
-}
-
-.iconyueliang:before {
-  content: "\e62c";
 }
 
 .icon-daoHang:before {
   content: "\e78c";
 }
 
-.iconziyuanldpi:before {
-  content: "\e60d";
-}
-
-.iconshezhi:before {
-  content: "\e771";
-}
-
-.icontaiyang:before {
-  content: "\e6ed";
-}
-
-.icon-time:before {
-  content: "\e61a";
-}
-
-.icon-viewsCount:before {
-  content: "\e60e";
-}
-
-.icon-commentCount:before {
-  content: "\e766";
-}
-
 .icon-category:before {
   content: "\e625";
-}
-
-.icon-wordNum:before {
-  content: "\e617";
 }
 
 .icon-updateTime:before {
@@ -98,42 +50,6 @@
 
 .icon-search:before {
   content: "\e60b";
-}
-
-.iconfenlei:before {
-  content: "\e669";
-}
-
-.icon-logout:before {
-  content: "\e600";
-}
-
-.icongerenzhongxin:before {
-  content: "\e606";
-}
-
-.icon-login:before {
-  content: "\e611";
-}
-
-.iconbiaoqian:before {
-  content: "\e62b";
-}
-
-.iconlianjie:before {
-  content: "\e746";
-}
-
-.iconzhifeiji:before {
-  content: "\e7d5";
-}
-
-.icon-home:before {
-  content: "\e7bb";
-}
-
-.iconguidang:before {
-  content: "\e689";
 }
 
 .icon-pingLun:before {
@@ -171,8 +87,3 @@
 .icon-face:before {
   content: "\e644";
 }
-
-.iconfanhuidingbu:before {
-  content: "\e633";
-}
-

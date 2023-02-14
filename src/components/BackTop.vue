@@ -1,12 +1,12 @@
 <template>
-  <div class="rightside" :style="isShow">
-    <div :class="'rightside-config-hide ' + isOut">
-      <i :class="'iconfont rightside-icon ' + icon" @click="check" />
+  <div class="right-side" :style="isShow">
+    <div :class="'right-side-config-hide ' + isOut">
+      <span :class="'right-side-icon ' + icon" @click="check" />
     </div>
     <div class="setting-container" @click="show">
-      <i class="iconfont iconshezhi setting" />
+      <span class="mdi mdi-spin mdi-cog-outline" />
     </div>
-    <i class="iconfont rightside-icon iconziyuanldpi" @click="backTop" />
+    <i class="right-side-icon mdi mdi-arrow-up-bold" @click="backTop" />
   </div>
 </template>
 
@@ -15,8 +15,8 @@ export default {
   data: function() {
     return {
       isShow: '',
-      isOut: 'rightside-out',
-      icon: 'iconyueliang'
+      isOut: 'right-side-out',
+      icon: 'mdi mdi-weather-night'
     }
   },
   mounted() {
@@ -26,14 +26,12 @@ export default {
     window.removeEventListener('scroll', this.scrollToTop)
   },
   methods: {
-    // 回到顶部方法
     backTop() {
       window.scrollTo({
         behavior: 'smooth',
         top: 0
       })
     },
-    // 为了计算距离顶部的高度，当高度大于100显示回顶部图标，小于100则隐藏
     scrollToTop() {
       const that = this
       that.scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -44,12 +42,10 @@ export default {
       }
     },
     show() {
-      const flag = this.isOut === 'rightside-out'
-      this.isOut = flag ? 'rightside-in' : 'rightside-out'
+      this.isOut = this.isOut === 'right-side-out' ? 'right-side-in' : 'right-side-out'
     },
     check() {
-      const flag = this.icon === 'iconyueliang'
-      this.icon = flag ? 'icontaiyang' : 'iconyueliang'
+      this.icon = this.icon === 'mdi mdi-weather-night' ? 'mdi mdi-weather-sunny' : 'mdi mdi-weather-night'
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
     }
   }
@@ -57,24 +53,27 @@ export default {
 </script>
 
 <style scoped>
-.rightside {
+.right-side {
   z-index: 4;
   position: fixed;
   right: -38px;
   bottom: 85px;
   transition: all 0.5s;
 }
-.rightside-config-hide {
+.right-side-config-hide {
   transform: translate(35px, 0);
 }
-.rightside-out {
-  animation: rightsideOut 0.3s;
+.right-side-out {
+  animation: right-side-out 0.3s;
 }
-.rightside-in {
+.right-side-in {
   transform: translate(0, 0) !important;
-  animation: rightsideIn 0.3s;
+  animation: right-side-in 0.3s;
 }
-.rightside-icon, .setting-container {
+.right-side i {
+  font-size: 18px;
+}
+.right-side-icon, .setting-container {
   display: block;
   margin-bottom: 2px;
   width: 30px;
@@ -82,26 +81,19 @@ export default {
   background-color: #49b1f5;
   color: #fff;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 30px;
   cursor: pointer;
 }
-.rightside-icon:hover, .setting-container:hover {
+.right-side-icon:hover, .setting-container:hover {
   background-color: #ff7242;
 }
 .setting-container i {
   display: block;
   animation: turn-around 2s linear infinite;
 }
-@keyframes turn-around {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@keyframes rightsideOut {
+
+@keyframes right-side-out {
   0% {
     transform: translate(0, 0);
   }
@@ -109,7 +101,7 @@ export default {
     transform: translate(30px, 0);
   }
 }
-@keyframes rightsideIn {
+@keyframes right-side-in {
   0% {
     transform: translate(30px, 0);
   }

@@ -32,12 +32,10 @@
           </div>
           <div class="second-line">
             <span>
-              <!-- <i class="iconfont icon-wordNum" /> -->
               字数统计: {{ article.wordCount }}
             </span>
             <span class="separator">|</span>
             <span>
-              <!-- <i class="iconfont icon-time" /> -->
               预计阅读时长: {{ readTime }}
             </span>
           </div>
@@ -45,13 +43,11 @@
             <span class="separator">|</span>
             <!-- 阅读量 -->
             <span>
-              <!-- <i class="iconfont icon-viewsCount" /> -->
               阅读量: {{ article.viewCount }}
             </span>
             <span class="separator">|</span>
             <!-- 评论量 -->
             <span>
-              <!-- <i class="iconfont icon-commentCount" /> -->
               评论数: {{ commentCount }}
             </span>
           </div>
@@ -168,7 +164,7 @@
             </div>
           </div>
           <hr>
-          <comment v-if="article.commentFlag" :type="commentType" @getCommentCount="getCommentCount" />
+          <comment v-if="article.commentFlag" id="comment" :type="commentType" @getCommentCount="getCommentCount" />
         </v-card>
       </v-col>
       <!-- 右侧 -->
@@ -474,8 +470,36 @@ export default {
         }
       })
     },
-    getCommentCount(count) {
+    getCommentCount(count, firstLoad) {
       this.commentCount = count
+      if (firstLoad) {
+        // 评论首次加载结束
+        this.scrollToHash()
+      }
+    },
+    scrollToHash() {
+      const hash = location.hash
+      if (hash && hash !== '') {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            let targetBox = document.getElementById('comment' + hash.replace('#', ''))
+            if (targetBox == null) {
+              targetBox = document.getElementById('comment')
+            }
+
+            // 跳转
+            if (targetBox != null) {
+              // 非平滑滚顶
+              // targetBox.scrollIntoView()
+              // 平滑滚动
+              window.scrollTo({
+                top: targetBox.getBoundingClientRect().top + window.scrollY - 70,
+                behavior: 'smooth'
+              })
+            }
+          }, 500)
+        })
+      }
     }
   }
 }

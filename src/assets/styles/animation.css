@@ -78,6 +78,16 @@
     }
 }
 
+/* 旋转 */
+@keyframes turn-around {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* 显示 */
 @keyframes hideToShow {
     from {
