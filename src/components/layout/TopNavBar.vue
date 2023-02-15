@@ -89,7 +89,7 @@
               📌 友链
             </router-link>
             <router-link to="/message">
-              💌 留言
+              💌 弹幕
             </router-link>
           </ul>
         </div>

@@ -28,7 +28,7 @@ export default new Vuex.Store({
       userCount: 0,
       // 评论总量
       commentCount: 0,
-      // 留言总量
+      // 弹幕总量
       messageCount: 0
     },
     // 页面信息

@@ -244,7 +244,7 @@
                 <li>
                   <router-link :to="'/articles/' + item.id">
                     <span>{{ item['title'] }}</span>
-                    <img src="https://suntaoblog.oss-cn-beijing.aliyuncs.com/zblog/icon/readCountWhite.png" alt="">
+                    <img src="https://file.suntaoblog.com/icon/readCountWhite.png" alt="">
                     <span class="read">{{ item['viewCount'] }}</span>
                   </router-link>
                 </li>
@@ -330,7 +330,7 @@
                 评论数:<span class="float-right"> {{ countInfo.commentCount || 0 }}</span>
               </div>
               <div style="padding:4px 0 0">
-                留言数:<span class="float-right"> {{ countInfo.messageCount || 0 }}</span>
+                弹幕数:<span class="float-right"> {{ countInfo.messageCount || 0 }}</span>
               </div>
               <div style="padding:4px 0 0">
                 建站时间:<span class="float-right">{{ websiteConfig['websiteCreateTime'] }}</span>

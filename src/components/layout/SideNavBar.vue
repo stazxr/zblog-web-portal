@@ -86,7 +86,7 @@
       </div>
       <div class="menus-item">
         <router-link to="/message">
-          <span>💌</span> 留言
+          <span>💌</span> 弹幕
         </router-link>
       </div>
       <div v-if="$store.state.user.id == null || $store.state.user.id === ''" class="menus-item">

@@ -23,11 +23,11 @@ export default {
   queryArticleDetail: params => {
     return api.httpRequest().get(`${portalApi}/queryArticleDetail`, params)
   },
-  // 获取留言列表
+  // 获取弹幕列表
   queryMessageList: params => {
     return api.httpRequest().get(`${portalApi}/queryMessageList`, params)
   },
-  // 保存留言
+  // 发送弹幕
   saveMessage: params => {
     return api.httpRequest().post(`${portalApi}/saveMessage`, params)
   },

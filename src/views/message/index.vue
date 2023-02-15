@@ -2,7 +2,7 @@
   <div>
     <div class="message-banner" :style="cover">
       <div class="message-container">
-        <h1 class="message-title">留言板</h1>
+        <!-- <h1 class="message-title">弹幕墙</h1> -->
         <div class="animated fadeInUp message-input-wrapper">
           <input v-model="messageContent" placeholder="说点什么吧" maxlength="200" @click="showBtn = true" @keyup.enter="addToList">
           <button v-show="showBtn" class="ml-3 animated bounceInLeft" @click="addToList">
@@ -53,7 +53,7 @@ export default {
   methods: {
     addToList() {
       if (this.messageContent.trim() === '') {
-        this.$toast({ type: 'error', message: '留言不能为空' })
+        this.$toast({ type: 'error', message: '内容不能为空' })
         return false
       }
 
@@ -70,9 +70,9 @@ export default {
       this.messageContent = ''
       this.$mapi.portal.saveMessage(message).then(_ => {
         this.barrageList.push(message)
-        this.$toast({ type: 'success', message: '留言成功' })
+        this.$toast({ type: 'success', message: '发送成功' })
       }).catch(_ => {
-        this.$toast({ type: 'error', message: '留言失败' })
+        this.$toast({ type: 'error', message: '发送失败' })
       })
     },
     listMessage() {

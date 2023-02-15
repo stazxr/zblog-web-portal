@@ -71,7 +71,7 @@ const routes = [
     path: '/message',
     component: resolve => require(['../views/message/index'], resolve),
     meta: {
-      title: '留言板'
+      title: '弹幕'
     }
   },
   {
