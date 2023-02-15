@@ -28,7 +28,7 @@
           @click:append="show = !show"
         />
         <!-- 注册按钮 -->
-        <v-btn :disabled="btnDisabled" class="mt-7" block color="red" style="color:#fff" @click="register">注册</v-btn>
+        <v-btn :disabled="btnDisabled || username === ''" class="mt-7" block color="red" style="color:#fff" @click="register">注册</v-btn>
         <!-- 登录 -->
         <div class="mt-10 login-tip">
           已有账号？<span @click="openLogin">登录</span>
@@ -139,6 +139,11 @@ export default {
       this.$mapi.other.userRegister(registerData).then(({ code, message }) => {
         if (code === 200) {
           // 注册成功，自动跳转登录
+          this.username = ''
+          this.password = ''
+          this.email = ''
+          this.code = ''
+          this.uuid = ''
           this.$toast({ type: 'success', message: '注册成功，即将自动登录...' })
           const param = {
             username: this.username,
@@ -146,11 +151,6 @@ export default {
           }
           this.$mapi.portal.webLogin(param).then(({ code, data, message }) => {
             if (code === 200) {
-              this.username = ''
-              this.password = ''
-              this.email = ''
-              this.code = ''
-              this.uuid = ''
               this.$store.commit('login', data)
               this.$store.commit('closeModel')
               this.$toast({ type: 'success', message: '自动登录成功' })
