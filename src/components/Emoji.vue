@@ -35,7 +35,7 @@ export default {
   vertical-align: middle;
 }
 .emoji-item {
-  cursor: pointer;
+  cursor: var(--globalPointer);
   display: inline-block;
 }
 .emoji-item:hover {
