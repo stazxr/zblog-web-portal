@@ -21,6 +21,12 @@
     /* 白色 */
     --white-color: #eee;
 
+    /* 古董白 */
+    --antique-white-color: antiquewhite;
+
+    /* 黑色 */
+    --black-color: #4c4948;
+
     /* nav - 白天模式/夜间模式：白灰配带遮罩 */
     --nav-bg-color: rgba(0, 0, 0, 0);
     --nav-font-color: #eee;

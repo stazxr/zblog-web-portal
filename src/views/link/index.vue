@@ -137,6 +137,29 @@ blockquote {
   transition: all 0.3s;
   border-radius: 8px;
 }
+.link-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.theme--dark.v-card .link-wrapper .link-name {
+  color: var(--antique-white-color)
+}
+.link-intro {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.theme--dark.v-card .link-wrapper .link-intro {
+  color: var(--white-color)
+}
+.theme--dark.v-card blockquote {
+  color: var(--black-color)
+}
 .link-avatar {
   margin-top: 5px;
   margin-left: 10px;
