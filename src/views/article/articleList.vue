@@ -11,24 +11,7 @@
           <v-card class="animated zoomIn article-item-card">
             <div class="article-item-cover">
               <router-link :to="'/articles/' + item.id">
-                <!-- 无封面 -->
-                <v-img v-if="item['coverImageType'] === 5" class="on-hover" width="100%" height="100%" :src="noArticleCoverImg">
-                  <div class="ribbon">
-                    <span v-if="item['articleType'] === 1">原创</span>
-                    <span v-if="item['articleType'] === 2">转载</span>
-                    <span v-if="item['articleType'] === 3">翻译</span>
-                  </div>
-                </v-img>
-                <!-- 默认封面 -->
-                <v-img v-if="item['coverImageType'] === 3" class="on-hover" width="100%" height="100%" :src="articleDefaultImg">
-                  <div class="ribbon">
-                    <span v-if="item['articleType'] === 1">原创</span>
-                    <span v-if="item['articleType'] === 2">转载</span>
-                    <span v-if="item['articleType'] === 3">翻译</span>
-                  </div>
-                </v-img>
-                <!-- 单封面、多封面、封面自动生成 -->
-                <v-img v-else class="on-hover" width="100%" height="100%" :src="item['articleImgLinkList'] && item['articleImgLinkList'].length > 0 ? item['articleImgLinkList'][0] : ''">
+                <v-img class="on-hover" width="100%" height="100%" :src="getArticleCover(item)">
                   <div class="ribbon">
                     <span v-if="item['articleType'] === 1">原创</span>
                     <span v-if="item['articleType'] === 2">转载</span>
@@ -80,12 +63,22 @@ export default {
       current: 1,
       size: 10,
       articleList: [],
+      categoryCover: '',
       name: '',
       title: ''
     }
   },
   computed: {
     cover() {
+      const path = this.$route.path
+      if (path.indexOf('/categories') !== -1) {
+        // 分类
+        if (this.categoryCover !== '') {
+          return 'background: url(' + this.categoryCover + ') center center / cover no-repeat'
+        }
+      }
+
+      // 默认封面
       let cover = ''
       this.$store.state.pageList.forEach(item => {
         if (item['pageLabel'] === 'articles') {
@@ -107,15 +100,27 @@ export default {
     }
   },
   methods: {
+    getArticleCover(article) {
+      if (article['coverImageType'] === 5) {
+        return this.noArticleCoverImg
+      } else if (article['coverImageType'] === 3) {
+        return this.articleDefaultImg
+      } else {
+        return article['articleImgLinkList'] && article['articleImgLinkList'].length > 0 ? article['articleImgLinkList'][0] : ''
+      }
+    },
     queryCategoryName() {
       const param = { categoryId: this.$route.params.categoryId }
       this.$mapi.portal.queryCategoryById(param).then(({ data }) => {
-        this.name = data ? data.name : ''
+        this.name = data ? data['name'] : ''
+        this.categoryCover = data ? data['imageUrl'] : ''
       }).catch(_ => {
         this.name = ''
+        this.categoryCover = ''
       })
     },
     queryTagName() {
+      this.categoryCover = ''
       const param = { tagId: this.$route.params.tagId }
       this.$mapi.portal.queryTagById(param).then(({ data }) => {
         this.name = data ? data.name : ''
