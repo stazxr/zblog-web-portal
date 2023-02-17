@@ -22,18 +22,18 @@ ul {
 /* v-application 全局配置 */
 .theme--light.v-application {
   background: linear-gradient(90deg, rgba(247, 149, 51, 0.1) 0, rgba(243, 112, 85, 0.1) 15%, rgba(239, 78, 123, 0.1) 30%, rgba(161, 102, 171, 0.1) 44%, rgba(80, 115, 184, 0.1) 58%, rgba(16, 152, 173, 0.1) 72%, rgba(7, 179, 155, 0.1) 86%, rgba(109, 186, 130, 0.1) 100%);
-  color: #4c4948;
+  color: var(--theme-light-color);
 }
 .theme--light.v-application a {
-  color: #4c4948;
+  color: var(--theme-light-color);
   text-decoration: none;
 }
 .theme--dark.v-application {
   background: #121212;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--theme-dark-color);
 }
 .theme--dark.v-application a {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--theme-dark-color);
   text-decoration: none;
 }
 .v-application a, .v-application button, .v-application img {
@@ -52,7 +52,7 @@ ul {
 
 .theme--light.v-card {
   background: #fff;
-  color: #4c4948;
+  color: var(--theme-light-color);
   border-radius: 8px;
   box-shadow: 0 4px 8px 6px rgba(7, 17, 27, 0.06) !important;
   transition: all 0.3s;
@@ -62,7 +62,7 @@ ul {
 }
 .theme--dark.v-card {
   /* background: #121212; */
-  color: rgba(255,255,255,0.8);
+  color: var(--theme-dark-color);
 }
 .theme--light.v-card.blog-container {
   background: #fff !important;
@@ -105,10 +105,10 @@ ul {
 
 /* v-footer */
 .theme--light.v-footer {
-  color: #4c4948;
+  color: var(--theme-light-color);
 }
 .theme--dark.v-footer {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--theme-dark-color);
 }
 
 .v-snack__content {

@@ -7,6 +7,10 @@
     --globalCursor: url(https://file.suntaoblog.com/cur/default.cur), default;
     --globalPointer: url(https://file.suntaoblog.com/cur/pointer.cur), pointer;
 
+    /* 字体颜色 */
+    --theme-light-color: #4c4948;
+    --theme-dark-color: rgba(255, 255, 255, 0.8);
+
     /* 透明 */
     --transparent: rgba(0, 0, 0, 0);
 
@@ -24,18 +28,18 @@
     /* nav-fixed - 白天模式：白灰配带遮罩 */
     --light-nav-fixed-box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
     --light-nav-fixed-bg-color: rgba(255, 255, 255, 0.8);
-    --light-nav-fixed-font-color: #4c4948;
+    --light-nav-fixed-font-color: var(--theme-light-color);
 
     /* nav-fixed - 夜间模式：黑白配 */
     --dark-nav-fixed-bg-color: rgba(18, 18, 18, 0.8);
-    --dark-nav-fixed-font-color: rgba(255, 255, 255, 0.8);
+    --dark-nav-fixed-font-color: var(--theme-dark-color);
 
     /* menus-submenu - 白天模式：白灰配 */
     --light-menus-submenu-box-shadow: 0 5px 20px -4px rgba(0, 0, 0, 0.5);
     --light-menus-submenu-bg-color: #fff;
-    --light-menus-submenu-font-color: #4c4948;
+    --light-menus-submenu-font-color: var(--theme-light-color);
 
     /* menus-submenu - 夜间模式：黑白配带遮罩 */
     --dark-menus-submenu-bg-color: rgba(18, 18, 18, 0.8);
-    --dark-menus-submenu-font-color: rgba(255, 255, 255, 0.8);
+    --dark-menus-submenu-font-color: var(--theme-dark-color);
 }

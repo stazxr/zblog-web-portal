@@ -12,7 +12,7 @@
           <!-- 日期 -->
           <span class="time">{{ item['createTime'] }}</span>
           <!-- 文章标题 -->
-          <router-link :to="'/articles/' + item.id" style="color:#666;text-decoration: none">
+          <router-link :to="'/articles/' + item.id" style="text-decoration: none">
             {{ item['title'] }}
           </router-link>
         </timeline-item>
@@ -78,7 +78,18 @@ export default {
 <style scoped>
 .time {
   font-size: 0.75rem;
-  color: #555;
   margin-right: 1rem;
+}
+.theme--light.v-card .timeline-title {
+  color: var(--theme-light-color) !important;
+}
+.theme--dark.v-card .timeline-title {
+  color: var(--theme-dark-color) !important;
+}
+.theme--light.v-card .timeline-item {
+  color: var(--theme-light-color) !important;
+}
+.theme--dark.v-card .timeline-item {
+  color: var(--theme-dark-color) !important;
 }
 </style>
