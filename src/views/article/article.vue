@@ -344,7 +344,7 @@ export default {
           this.$router.push('/article404')
           return
         }
-        document.title = data['title']
+
         this.article.id = data['id'] || ''
         this.article.title = data['title'] || ''
         this.article.remark = data['remark'] || ''
