@@ -9,7 +9,7 @@
       <div v-if="count > 0" class="tag-cloud-title">标签 - {{ count }}</div>
       <div v-else class="tag-cloud-title">暂无内容</div>
       <div class="tag-cloud">
-        <router-link v-for="item of tagList" :key="item.id" :style="{ 'font-size': Math.floor(Math.random() * 10) + 18 + 'px' }" :to="'/tags/' + item.id">
+        <router-link v-for="(item, index) of tagList" :key="item.id" :style="{ 'font-size': Math.floor(Math.random() * 10) + 18 + 'px', color: color[index % color.length] }" :to="'/tags/' + item.id">
           {{ item.name }}
         </router-link>
       </div>
@@ -21,6 +21,10 @@
 export default {
   data: function() {
     return {
+      color: ['#86D4FF', '#FF8F6C', '#2CF263', '#9FA8F7', '#1274FF', '#E6613D', '#FFC629', '#FFAB2E', '#F78289', '#FF6C96',
+        '#45BFD4', '#4E31FF', '#31FBFB', '#86D4FF', '#BF8AFD', '#FFF500', '#DE58FF', '#72ED7C', '#0BEEB8', '#931CFF',
+        '#3D25F2', '#F995C8', '#FBE9B4', '#FF4AB6'
+      ],
       tagList: []
     }
   },
