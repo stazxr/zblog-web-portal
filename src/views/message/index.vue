@@ -58,8 +58,8 @@ export default {
       }
 
       // 访问信息
-      const userAvatar = this.$store.state.otherConfig['touristAvatar']
-      const userNickname = '游客'
+      const userAvatar = this.$store.state.user.id ? this.$store.state.user.avatar : this.$store.state.otherConfig['touristAvatar']
+      const userNickname = this.$store.state.user.id ? this.$store.state.user.nickname : '游客'
 
       const message = {
         avatar: userAvatar,

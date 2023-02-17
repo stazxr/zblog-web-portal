@@ -113,9 +113,6 @@ export default {
       this.chart.on('click', function(params) {
         this.yid = params.data.id
       })
-      window.onresize = function() {
-        this.chart.resize()
-      }
     },
     setOptions(data) {
       const chartData = []
