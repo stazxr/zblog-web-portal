@@ -11,7 +11,8 @@
           <!-- 用户信息 -->
           <div class="user-info-wrapper">
             <v-avatar size="36" class="user-avatar">
-              <img :src="item['userAvatar']" alt="">
+              <img v-if="item['userAvatar'] !== ''" :src="item['userAvatar']" alt="">
+              <img v-else :src="$store.state.otherConfig['touristAvatar']" alt="">
             </v-avatar>
             <div class="user-detail-wrapper">
               <div class="user-nickname">

@@ -10,7 +10,8 @@
         <!-- 用户信息 -->
         <div class="user-info-wrapper">
           <v-avatar size="36" class="user-avatar">
-            <img :src="talkInfo['userAvatar']" alt="">
+            <img v-if="talkInfo['userAvatar'] !== ''" :src="talkInfo['userAvatar']" alt="">
+            <img v-else :src="$store.state.otherConfig['touristAvatar']" alt="">
           </v-avatar>
           <div class="user-detail-wrapper">
             <div class="user-nickname">
@@ -112,8 +113,8 @@ export default {
             this.clearTalkInfo()
           }
         }).catch(_ => {
-          this.$toast({ type: 'error', message: '查询失败' })
           this.clearTalkInfo()
+          this.$router.push('/404')
         })
       } else {
         this.clearTalkInfo()

@@ -32,7 +32,8 @@
     <div v-if="count > 0 && reFresh">
       <div v-for="(item, index) of commentList" :id="'comment' + item.id" :key="item.id" class="comment-wrapper">
         <v-avatar size="40" class="comment-avatar">
-          <img :src="item['avatar']" alt="">
+          <img v-if="item['avatar'] !== ''" :src="item['avatar']" alt="">
+          <img v-else :src="$store.state.otherConfig['touristAvatar']" alt="">
         </v-avatar>
         <div class="comment-meta">
           <div class="comment-user">

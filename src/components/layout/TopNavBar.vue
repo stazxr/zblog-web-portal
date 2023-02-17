@@ -104,7 +104,8 @@
             🔒 登录
           </a>
           <template v-else>
-            <img class="user-avatar" :src="$store.state.user.avatar" height="30" width="30" alt="">
+            <img v-if="$store.state.user.avatar !== ''" class="user-avatar" :src="$store.state.user.avatar" height="30" width="30" alt="">
+            <img v-else class="user-avatar" :src="$store.state.otherConfig['touristAvatar']" height="30" width="30" alt="">
             <ul class="menus-submenu">
               <li>
                 <router-link to="/user">

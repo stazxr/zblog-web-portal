@@ -33,7 +33,8 @@
       <div class="count">{{ count }} 评论</div>
       <div v-for="(item, index) of commentList" :id="'comment' + item.id" :key="item.id" style="display:flex" class="pt-5">
         <v-avatar size="40" class="comment-avatar">
-          <img :src="item['avatar']" alt="">
+          <img v-if="item['avatar'] !== ''" :src="item['avatar']" alt="">
+          <img v-else :src="$store.state.otherConfig['touristAvatar']" alt="">
         </v-avatar>
         <div class="comment-meta">
           <div class="comment-user">
