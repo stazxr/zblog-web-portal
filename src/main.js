@@ -20,7 +20,6 @@ import './assets/fontawesome/font-awesome.min.css'
 import './assets/styles/markdown.css'
 import './assets/styles/wangEditor.css'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
-import '@mdi/font/css/materialdesignicons.css'
 
 Vue.use(InfiniteLoading)
 Vue.use(animated)
