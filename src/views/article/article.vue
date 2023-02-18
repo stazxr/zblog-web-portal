@@ -7,26 +7,34 @@
         <div class="article-info">
           <div class="first-line">
             <span>
+              <svg class="iconfont_svg" aria-hidden="true" style="font-size: 15px">
+                <use v-if="article.authorGender === 1" xlink:href="#icon-yonghu1" />
+                <use v-else-if="article.authorGender === 2" xlink:href="#icon-yonghu2" />
+                <use v-else xlink:href="#icon-yonghu" />
+              </svg>
               {{ article.authorNickname }}
             </span>
             <span class="separator">|</span>
             <span>
-              <i class="iconfont icon-riLi" />
-              发表于 {{ article.createTime }}
+              <svg class="iconfont_svg" aria-hidden="true" style="font-size: 15px">
+                <use xlink:href="#icon-calendar" />
+              </svg> 发表于 {{ article.createTime }}
             </span>
             <span class="separator">|</span>
             <span v-if="article.updateTime != null && article.updateTime !== ''">
-              <i class="iconfont icon-updateTime" />
-              更新于
+              <svg class="iconfont_svg" aria-hidden="true" style="font-size: 15px">
+                <use xlink:href="#icon-dingdanxiangqing-chuangjianshijian" />
+              </svg> 更新于
               <template>
                 {{ article.updateTime }}
               </template>
               <span class="separator">|</span>
             </span>
             <span class="article-category">
-              <i class="iconfont icon-category" />
               <router-link :to="'/categories/' + article.categoryId">
-                {{ article.categoryName }}
+                <svg class="iconfont_svg" aria-hidden="true" style="font-size: 15px">
+                  <use xlink:href="#icon-fenlei" />
+                </svg> {{ article.categoryName }}
               </router-link>
             </span>
           </div>
@@ -48,7 +56,7 @@
             <span class="separator">|</span>
             <!-- 评论量 -->
             <span>
-              评论数: {{ commentCount }}
+              评论量: {{ article.commentCount }}
             </span>
           </div>
         </div>
@@ -98,11 +106,11 @@
           <!-- 点赞 / 打赏 -->
           <div class="article-reward">
             <a :class="isLike" @click="likeArticle">
-              <v-icon size="14" color="#fff">mdi-thumb-up</v-icon> 点赞
+              <i class="iconfont icon-dianzan1" /> 点赞
               <span v-show="article.likeCount > 0">{{ article.likeCount }}</span>
             </a>
             <a v-if="otherConfig['isReward'] === 1" class="reward-btn">
-              <i class="iconfont icon-qrCode" /> 打赏
+              <i class="iconfont icon-ico" /> 打赏
               <div class="animated fadeInDown reward-main">
                 <ul class="reward-all">
                   <li class="reward-item">
@@ -145,7 +153,9 @@
           <!-- 推荐文章 -->
           <div v-if="article.recommendList.length > 0" class="recommend-container">
             <div class="recommend-title">
-              <v-icon size="20" color="#4c4948">mdi-thumb-up</v-icon> 相关推荐
+              <svg class="iconfont_svg" aria-hidden="true" style="font-size: 25px;">
+                <use xlink:href="#icon-tuijian" />
+              </svg> 相关推荐
             </div>
             <div class="recommend-list">
               <div v-for="item of article.recommendList" :key="item.id" class="recommend-item">
@@ -172,7 +182,7 @@
           <!-- 文章目录 -->
           <v-card class="right-container">
             <div class="right-title">
-              <i class="iconfont icon-daoHang" style="font-size: 16px" />
+              <i class="iconfont icon-daohang" style="font-size: 16px" />
               <span style="margin-left:10px">目录</span>
             </div>
             <div id="toc" />
@@ -180,7 +190,7 @@
           <!-- 最新文章 -->
           <v-card class="right-container" style="margin-top:20px">
             <div class="right-title">
-              <i class="iconfont icon-updateTime" style="font-size:16px" />
+              <i class="iconfont icon-tubiaozuixin01" style="font-size:16px" />
               <span style="margin-left:10px">最新文章</span>
             </div>
             <div class="article-list">
@@ -235,6 +245,7 @@ export default {
         content: '',
         coverImageType: '',
         articleImgLinkList: [],
+        authorGender: '',
         authorNickname: '',
         categoryId: '',
         categoryName: '',
@@ -243,6 +254,7 @@ export default {
         wordCount: 0,
         viewCount: 0,
         likeCount: 0,
+        commentCount: 0,
         tagList: [],
         lastArticle: null,
         nextArticle: null,
@@ -325,6 +337,7 @@ export default {
         this.article.content = data['content'] || ''
         this.article.coverImageType = data['coverImageType'] || null
         this.article.articleImgLinkList = data['articleImgLinkList'] || []
+        this.article.authorGender = data['authorGender'] || 3
         this.article.authorNickname = data['authorNickname'] || ''
         this.article.categoryId = data['categoryId'] || ''
         this.article.categoryName = data['categoryName'] || ''
@@ -333,6 +346,7 @@ export default {
         this.article.wordCount = data['wordCount'] || 0
         this.article.viewCount = data['viewCount'] || 0
         this.article.likeCount = data['likeCount'] || 0
+        this.article.commentCount = data['commentCount'] || 0
         this.article.tagList = data['tagList'] || []
         this.article.lastArticle = data['lastArticle'] || null
         this.article.nextArticle = data['nextArticle'] || null
@@ -444,8 +458,7 @@ export default {
         }
       })
     },
-    getCommentCount(count, firstLoad) {
-      this.commentCount = count
+    getCommentCount(_, firstLoad) {
       if (firstLoad) {
         // 评论首次加载结束
         this.scrollToHash()

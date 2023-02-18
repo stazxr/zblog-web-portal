@@ -7,7 +7,7 @@
     <!-- 归档列表 -->
     <v-card class="blog-container">
       <timeline>
-        <timeline-title> 目前共计{{ count }}篇文章，继续加油 </timeline-title>
+        <timeline-title style="padding-bottom: 20px;"> 目前共计{{ count }}篇文章，继续加油 </timeline-title>
         <timeline-item v-for="item of archiveList" :key="item.id" style="padding: 5px 0">
           <!-- 日期 -->
           <span class="time">{{ item['createTime'] }}</span>

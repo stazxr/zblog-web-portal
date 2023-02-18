@@ -3,7 +3,7 @@
     <textarea v-model="commentContent" class="comment-textarea" :placeholder="'回复 @' + nickname + '：'" auto-grow dense />
     <div class="emoji-container">
       <span :class="chooseEmoji ? 'emoji-btn-active' : 'emoji-btn'" @click="chooseEmoji = !chooseEmoji">
-        <i class="iconfont icon-face" />
+        <i class="iconfont icon-xiaolian" style="font-size: 25px;" />
       </span>
       <div style="margin-left:auto">
         <button class="cancel-btn v-comment-btn" @click="cancelReply">

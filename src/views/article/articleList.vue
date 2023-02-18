@@ -27,10 +27,13 @@
                 </router-link>
               </div>
               <div style="margin-top:0.375rem">
-                <v-icon size="18" style="padding-bottom: 2px;">mdi-clock-outline</v-icon>
-                {{ item['createTime'] }}
+                <svg class="iconfont_svg" aria-hidden="true" style="font-size: 15px;">
+                  <use xlink:href="#icon-shijianku" />
+                </svg> {{ item['createTime'] }}
                 <router-link :to="'/categories/' + item['categoryId']" class="float-right">
-                  <v-icon>mdi-bookmark</v-icon>{{ item['categoryName'] }}
+                  <svg class="iconfont_svg" aria-hidden="true" style="font-size: 15px;">
+                    <use xlink:href="#icon-shangjiaduantubiao_bookmark" />
+                  </svg> {{ item['categoryName'] }}
                 </router-link>
               </div>
             </div>

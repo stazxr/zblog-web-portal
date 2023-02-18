@@ -1,9 +1,7 @@
 <template>
   <v-dialog v-model="registerFlag" :fullscreen="isMobile" max-width="460">
     <v-card class="register-container" style="border-radius:4px">
-      <v-icon class="float-right" @click="registerFlag = false">
-        mdi-close
-      </v-icon>
+      <v-icon class="float-right iconfont icon-guanbi" @click="registerFlag = false" />
       <div class="login-wrapper">
         <!-- 用户名 -->
         <v-text-field v-model="username" label="用户名" placeholder="请输入您的用户名，用于登录" clearable @keyup.enter="register" />
@@ -22,7 +20,7 @@
           class="mt-7"
           label="密码"
           placeholder="请输入您的密码"
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+          :append-icon="show ? 'iconfont icon-in_zhengyan_fill' : 'iconfont icon-in_biyan_fill'"
           :type="show ? 'text' : 'password'"
           @keyup.enter="register"
           @click:append="show = !show"

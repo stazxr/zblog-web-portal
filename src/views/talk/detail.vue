@@ -16,9 +16,7 @@
           <div class="user-detail-wrapper">
             <div class="user-nickname">
               {{ talkInfo['userNickname'] }}
-              <v-icon class="user-sign" size="20" color="#ffa51e">
-                mdi-check-decagram
-              </v-icon>
+              <span v-if="talkInfo['userId'] === '1'" class="blogger-tag">站长</span>
             </div>
             <!-- 发表时间 -->
             <div class="time">{{ talkInfo['createTime'] }}</div>
@@ -34,16 +32,16 @@
             <div class="talk-operation">
               <div class="talk-operation-item">
                 <v-icon size="16" :color="isLike(talkInfo.id)" class="like-btn" @click.prevent="like(talkInfo)">
-                  mdi-thumb-up
+                  iconfont icon-dianzan1
                 </v-icon>
                 <div class="operation-count">
                   {{ talkInfo['likeCount'] == null ? 0 : talkInfo['likeCount'] }}
                 </div>
               </div>
               <div class="talk-operation-item">
-                <v-icon size="16" color="#999">mdi-chat</v-icon>
+                <v-icon size="16" color="#999">iconfont icon-comment-v2-full</v-icon>
                 <div class="operation-count">
-                  {{ commentCount == null ? 0 : commentCount }}
+                  {{ talkInfo['commentCount'] == null ? 0 : talkInfo['commentCount'] }}
                 </div>
               </div>
             </div>
@@ -66,15 +64,16 @@ export default {
   data: function() {
     return {
       commentType: 3,
-      commentCount: 0,
       talkInfo: {
         id: '',
+        userId: '',
         userAvatar: '',
         userNickname: '',
         createTime: '',
         content: '',
         imagesList: [],
-        likeCount: null
+        likeCount: 0,
+        commentCount: 0
       },
       previewList: [],
       commentLoadFinish: false
@@ -131,8 +130,7 @@ export default {
         likeCount: 0
       }
     },
-    getCommentCount(count, firstLoad) {
-      this.commentCount = count
+    getCommentCount(_, firstLoad) {
       if (firstLoad) {
         // 评论首次加载结束
         this.scrollToHash()
@@ -207,6 +205,16 @@ export default {
 </script>
 
 <style scoped>
+.blogger-tag {
+  background: #ffa51e;
+  font-size: 12px;
+  display: inline-block;
+  border-radius: 2px;
+  color: #fff;
+  padding: 0 5px;
+  margin-left: 6px;
+}
+
 .col-xl,
 .col-xl-auto,
 .col-xl-12,
@@ -306,7 +314,6 @@ export default {
 }
 .user-detail-wrapper {
   margin-left: 10px;
-  width: 100%;
   flex: 1;
   width: 0;
 }

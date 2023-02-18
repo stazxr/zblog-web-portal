@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="loginFlag" :fullscreen="isMobile" max-width="460">
     <v-card class="login-container" style="border-radius:4px">
-      <v-icon class="float-right" @click="loginFlag = false">mdi-close</v-icon>
+      <v-icon class="float-right iconfont icon-guanbi" @click="loginFlag = false" />
       <div class="login-wrapper">
         <v-text-field
           v-model="username"
@@ -15,7 +15,7 @@
           class="mt-7"
           label="密码"
           placeholder="请输入您的密码"
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+          :append-icon="show ? 'iconfont icon-in_zhengyan_fill' : 'iconfont icon-in_biyan_fill'"
           :type="show ? 'text' : 'password'"
           @keyup.enter="login"
           @click:append="show = !show"
@@ -31,7 +31,11 @@
           <div class="social-login-title">社交账号登录</div>
           <div class="social-login-wrapper">
             <!-- qq登录 -->
-            <a v-if="showLogin('qq')" class="iconfont icon-qq" style="color:#00AAEE" @click="qqLogin" />
+            <a v-if="showLogin('qq')" @click="qqLogin">
+              <svg class="iconfont_svg" aria-hidden="true" style="font-size: 25px">
+                <use xlink:href="#icon-social-qq" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>

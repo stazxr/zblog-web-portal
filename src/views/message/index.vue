@@ -53,7 +53,7 @@ export default {
   methods: {
     addToList() {
       if (this.messageContent.trim() === '') {
-        this.$toast({ type: 'error', message: '内容不能为空' })
+        this.$toast({ type: 'warning', message: '内容不能为空' })
         return false
       }
 

@@ -18,6 +18,8 @@ export default new Vuex.Store({
       articleCount: 0,
       // 分类数量
       categoryCount: 0,
+      // 专栏数量
+      columnCount: 0,
       // 标签数量
       tagCount: 0,
       // 访问总量
@@ -29,7 +31,9 @@ export default new Vuex.Store({
       // 评论总量
       commentCount: 0,
       // 弹幕总量
-      messageCount: 0
+      messageCount: 0,
+      // 网站版本
+      websiteVersion: ''
     },
     // 页面信息
     pageList: [],
@@ -54,6 +58,7 @@ export default new Vuex.Store({
     searchFlag: false,
     // 登录链接
     loginUrl: '',
+    // 用户点赞列表
     commentLikeSet: [],
     articleLikeSet: [],
     talkLikeSet: []
@@ -66,12 +71,14 @@ export default new Vuex.Store({
       state.otherConfig = blogInfo['otherInfo'] || {}
       state.countInfo.articleCount = blogInfo['articleCount'] || 0
       state.countInfo.categoryCount = blogInfo['categoryCount'] || 0
+      state.countInfo.columnCount = blogInfo['columnCount'] || 0
       state.countInfo.tagCount = blogInfo['tagCount'] || 0
       state.countInfo.viewsCount = blogInfo['viewsCount'] || 0
       state.countInfo.visitorCount = blogInfo['visitorCount'] || 0
       state.countInfo.userCount = blogInfo['userCount'] || 0
       state.countInfo.commentCount = blogInfo['commentCount'] || 0
       state.countInfo.messageCount = blogInfo['messageCount'] || 0
+      state.countInfo.websiteVersion = blogInfo['websiteVersion'] || ''
       state.pageList = blogInfo['pageList'] || []
     },
     // 登录成功，设置用户信息

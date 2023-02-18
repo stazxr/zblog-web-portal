@@ -1,12 +1,12 @@
 <template>
   <div class="right-side" :style="isShow">
     <div :class="'right-side-config-hide ' + isOut">
-      <span :class="'right-side-icon ' + icon" @click="check" />
+      <span :class="'right-side-icon ' + icon" style="font-size: 14px;" @click="check" />
     </div>
     <div class="setting-container" @click="show">
-      <span class="mdi mdi-spin mdi-cog-outline" />
+      <span class="iconfont icon-shezhi" style="font-size: 14px;" />
     </div>
-    <i class="right-side-icon mdi mdi-arrow-up-bold" @click="backTop" />
+    <i class="right-side-icon iconfont icon-xiangshang4" style="font-size: 14px;" @click="backTop" />
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
     return {
       isShow: '',
       isOut: 'right-side-out',
-      icon: 'mdi mdi-weather-night'
+      icon: 'iconfont icon-moon_fill'
     }
   },
   mounted() {
@@ -45,7 +45,7 @@ export default {
       this.isOut = this.isOut === 'right-side-out' ? 'right-side-in' : 'right-side-out'
     },
     check() {
-      this.icon = this.icon === 'mdi mdi-weather-night' ? 'mdi mdi-weather-sunny' : 'mdi mdi-weather-night'
+      this.icon = this.icon === 'iconfont icon-moon_fill' ? 'iconfont icon-taiyang' : 'iconfont icon-moon_fill'
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
     }
   }

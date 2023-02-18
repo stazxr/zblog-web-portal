@@ -1,6 +1,6 @@
 <template>
   <router-link to="/talks" class="swiper-container">
-    <i class="fa fa-feed" aria-hidden="true" />
+    <i class="iconfont icon-feed" />
     <div id="rollScreen_container" :style="{ height: height * lineNum + 'px' }" class="rollScreen_container">
       <ul class="rollScreen_list" :style="{ transform: transform }" :class="{ rollScreen_list_unanim: num === 0 }">
         <li v-for="(item, index) in list" :key="index" class="rollScreen_once" :style="{ height: height + 'px' }">
@@ -11,7 +11,7 @@
         </li>
       </ul>
     </div>
-    <i class="fa fa-angle-double-right arrow" aria-hidden="true" />
+    <i class="iconfont icon-arrow-double-right arrow" aria-hidden="true" />
   </router-link>
 </template>
 

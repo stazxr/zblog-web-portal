@@ -1,9 +1,7 @@
 <template>
   <v-dialog v-model="forgetFlag" :fullscreen="isMobile" max-width="460">
     <v-card class="login-container" style="border-radius:4px">
-      <v-icon class="float-right" @click="forgetFlag = false">
-        mdi-close
-      </v-icon>
+      <v-icon class="float-right iconfont icon-guanbi" @click="forgetFlag = false" />
       <div class="login-wrapper">
         <v-text-field v-model="email" label="邮箱号" placeholder="请输入您的邮箱号" clearable @keyup.enter="forget" />
         <div class="mt-7 send-wrapper">
@@ -17,7 +15,7 @@
           class="mt-7"
           label="新密码"
           placeholder="请输入您的新密码"
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+          :append-icon="show ? 'iconfont icon-in_zhengyan_fill' : 'iconfont icon-in_biyan_fill'"
           :type="show ? 'text' : 'password'"
           @keyup.enter="forget"
           @click:append="show = !show"

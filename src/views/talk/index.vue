@@ -4,6 +4,7 @@
     <div class="banner" :style="cover">
       <h1 class="banner-title">说说</h1>
     </div>
+
     <!-- 说说内容 -->
     <v-card class="blog-container">
       <div v-for="item of talkList" :key="item.id" class="talk-item">
@@ -17,15 +18,15 @@
             <div class="user-detail-wrapper">
               <div class="user-nickname">
                 {{ item['userNickname'] }}
-                <v-icon class="user-sign" size="20" color="#ffa51e">
-                  mdi-check-decagram
-                </v-icon>
+                <span v-if="item['userId'] === '1'" class="blogger-tag">站长</span>
               </div>
               <!-- 发表时间 -->
               <div class="time">
                 {{ item['createTime'] }}
-                <span v-if="item['isTop'] === 1" class="top">
-                  <i class="iconfont icon-top" /> 置顶
+                <span v-if="item['isTop'] === true" class="top">
+                  <svg class="iconfont_svg" aria-hidden="true" style="font-size: 16px;vertical-align: -4px;">
+                    <use xlink:href="#icon-zhiding" />
+                  </svg>
                 </span>
               </div>
               <!-- 说说信息 -->
@@ -40,14 +41,14 @@
               <div class="talk-operation">
                 <div class="talk-operation-item">
                   <v-icon size="16" :color="isLike(item.id)" class="like-btn" @click.prevent="like(item)">
-                    mdi-thumb-up
+                    iconfont icon-dianzan1
                   </v-icon>
                   <div class="operation-count">
                     {{ item['likeCount'] == null ? 0 : item['likeCount'] }}
                   </div>
                 </div>
                 <div class="talk-operation-item">
-                  <v-icon size="16" color="#999">mdi-chat</v-icon>
+                  <v-icon size="16" color="#999">iconfont icon-comment-v2-full</v-icon>
                   <div class="operation-count">
                     {{ item['commentCount'] == null ? 0 : item['commentCount'] }}
                   </div>
@@ -160,6 +161,16 @@ export default {
 </script>
 
 <style scoped>
+.blogger-tag {
+  background: #ffa51e;
+  font-size: 12px;
+  display: inline-block;
+  border-radius: 2px;
+  color: #fff;
+  padding: 0 5px;
+  margin-left: 6px;
+}
+
 .col-xl,
 .col-xl-auto,
 .col-xl-12,
@@ -271,7 +282,9 @@ export default {
   vertical-align: middle;
 }
 .user-sign {
-  margin-left: 4px;
+  font-size: 20px;
+  vertical-align: -4px;
+  margin-left: 5px;
 }
 .time {
   color: #999;

@@ -5,7 +5,9 @@
     </div>
     <v-card class="blog-container">
       <div class="link-title mb-1">
-        <v-icon color="blue">mdi-link-variant</v-icon> 友链列表
+        <svg class="iconfont_svg" aria-hidden="true" style="font-size: 20px;margin-right: 5px;">
+          <use xlink:href="#icon-lianjie" />
+        </svg> 友链列表
       </div>
       <v-row class="link-container">
         <v-col v-for="item of friendLinkList" :key="item.id" class="link-wrapper" md="4" cols="12">
@@ -22,7 +24,9 @@
       </v-row>
       <!-- 说明 -->
       <div class="link-title mt-4 mb-4">
-        <v-icon color="blue">mdi-dots-horizontal-circle</v-icon> 添加友链
+        <svg class="iconfont_svg" aria-hidden="true" style="font-size: 20px;margin-right: 5px;">
+          <use xlink:href="#icon-xinzeng" />
+        </svg> 添加友链
       </div>
       <blockquote>
         <div>名称：{{ websiteConfig['websiteName'] }}</div>

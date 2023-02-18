@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- 标题 -->
-    <div class="comment-title"><i class="iconfont icon-pingLun" />评论</div>
+    <div class="comment-title">
+      <svg class="iconfont_svg" aria-hidden="true" style="font-size: 25px;margin-right: 5px;">
+        <use xlink:href="#icon-pinglun1" />
+      </svg> 评论
+    </div>
 
     <!-- 评论框 -->
     <div class="comment-wrapper">
@@ -16,7 +20,7 @@
           </div>
           <div class="emoji-container">
             <span :class="chooseEmoji ? 'emoji-btn-active' : 'emoji-btn'" @click="chooseEmoji = !chooseEmoji">
-              <i class="iconfont icon-face" />
+              <i class="iconfont icon-xiaolian" style="font-size: 25px;" />
             </span>
             <button :disabled="submitDisabled" class="upload-btn v-comment-btn" style="margin-left:auto" @click="insertComment">
               提交
@@ -39,9 +43,7 @@
           <div class="comment-user">
             <span v-if="item['website'] == null || item['website'] === ''">{{ item['nickname'] }}</span>
             <a v-else :href="item['website']" target="_blank">{{ item['nickname'] }}</a>
-            <v-icon v-if="item['userId'] === 1" size="20" color="#ffa51e">
-              mdi-check-decagram
-            </v-icon>
+            <span v-if="item['userId'] === '1'" class="blogger-tag">站长</span>
             <span style="margin-left:10px;font-size: 0.75rem;color: #b3b3b3;">来自{{ item['ipSource'] }}</span>
           </div>
           <div class="comment-info">
@@ -49,7 +51,7 @@
             <!-- <span style="margin-right:10px">{{ item['ipSource'] }}</span> -->
             <span style="margin-right:10px">{{ item['createTime'] }}</span>
             <!-- 点赞 -->
-            <span :class="isLike(item.id) + ' iconfont icon-like'" @click="like(item)" />
+            <span :class="isLike(item.id) + ' iconfont icon-dianzan1'" @click="like(item)" />
             <span v-show="item['likeCount'] > 0"> {{ item['likeCount'] }}</span>
             <!-- 删除 -->
             <span v-if="$store.state.user.id === item.userId" class="delete-btn" @click="deleteComment(index, item)">删除</span>
@@ -61,22 +63,21 @@
           <!-- 回复信息 -->
           <div v-for="reply of item.replyList" :id="'comment' + reply.id" :key="reply.id" style="display:flex">
             <v-avatar size="36" class="comment-avatar">
-              <img :src="reply['avatar']" alt="">
+              <img v-if="reply['avatar'] !== ''" :src="reply['avatar']" alt="">
+              <img v-else :src="$store.state.otherConfig['touristAvatar']" alt="">
             </v-avatar>
             <div class="reply-meta">
               <div class="comment-user">
                 <span v-if="!reply['website']">{{ reply['nickname'] }}</span>
                 <a v-else :href="reply['website']" target="_blank">{{ reply['nickname'] }}</a>
-                <v-icon v-if="reply['userId'] === 1" size="20" color="#ffa51e">
-                  mdi-check-decagram
-                </v-icon>
+                <span v-if="reply['userId'] === '1'" class="blogger-tag">站长</span>
                 <span style="margin-left:10px;font-size: 0.75rem;color: #b3b3b3;">来自{{ item['ipSource'] }}</span>
               </div>
               <div class="comment-info">
                 <!-- <span style="margin-right:10px">{{ item['ipSource'] }}</span> -->
                 <span style="margin-right: 10px;">{{ reply['createTime'] }}</span>
                 <!-- 点赞 -->
-                <span :class="isLike(reply.id) + ' iconfont icon-like'" @click="like(reply)" />
+                <span :class="isLike(reply.id) + ' iconfont icon-dianzan1'" @click="like(reply)" />
                 <span v-show="reply['likeCount'] > 0"> {{ reply['likeCount'] }}</span>
                 <!-- 删除 -->
                 <span v-if="$store.state.user.id === reply.userId" class="delete-btn" @click="deleteComment(index, reply)">删除</span>
@@ -427,6 +428,15 @@ export default {
 </script>
 
 <style scoped>
+.blogger-tag {
+  background: #ffa51e;
+  font-size: 12px;
+  display: inline-block;
+  border-radius: 2px;
+  color: #fff;
+  padding: 0 5px;
+  margin-left: 6px;
+}
 .comment-wrapper {
   margin-top: 20px;
   display: flex;
@@ -457,6 +467,11 @@ export default {
   line-height: 1.75;
   font-size: 1.25rem;
   font-weight: bold;
+}
+.user-sign {
+  font-size: 20px;
+  vertical-align: -4px;
+  margin-left: 5px;
 }
 .comment-meta {
   margin-left: 0.8rem;

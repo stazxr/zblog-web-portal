@@ -5,13 +5,11 @@
       <div class="mb-3">
         <span class="search-title">本地搜索</span>
         <!-- 关闭按钮 -->
-        <v-icon class="float-right" @click="searchFlag = false">
-          mdi-close
-        </v-icon>
+        <v-icon class="float-right iconfont icon-guanbi" @click="searchFlag = false" />
       </div>
       <!-- 输入框 -->
       <div class="search-input-wrapper">
-        <v-icon>mdi-magnify</v-icon>
+        <v-icon class="iconfont icon-sousuo" />
         <input v-model="keywords" placeholder="输入文章标题或内容...">
       </div>
       <!-- 搜索结果 -->
