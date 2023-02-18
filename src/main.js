@@ -8,7 +8,6 @@ import Highlight from './directive/highlight'
 import Toast from './components/toast/index'
 import Confirm from './components/confirm/index'
 import dayjs from 'dayjs'
-import Share from 'vue-social-share'
 import VueImageSwipe from 'vue-image-swipe'
 import animated from 'animate.css'
 import InfiniteLoading from 'vue-infinite-loading'
@@ -20,13 +19,11 @@ import './assets/iconfont/iconfont.css'
 import './assets/fontawesome/font-awesome.min.css'
 import './assets/styles/markdown.css'
 import './assets/styles/wangEditor.css'
-import './assets/styles/vue-social-share/client.css'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
 import '@mdi/font/css/materialdesignicons.css'
 
 Vue.use(InfiniteLoading)
 Vue.use(animated)
-Vue.use(Share)
 Vue.use(vueBaberrage)
 Vue.use(VueImageSwipe)
 Vue.use(Toast)

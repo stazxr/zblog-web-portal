@@ -94,7 +94,6 @@
                 {{ item.name }}
               </router-link>
             </div>
-            <share style="margin-left:auto" :config="shareConfig" />
           </div>
           <!-- 点赞 / 打赏 -->
           <div class="article-reward">
@@ -278,31 +277,6 @@ export default {
     isFull() {
       return function(article) {
         return article ? 'post full' : 'post'
-      }
-    },
-    shareConfig() {
-      return {
-        // url: window.location.href,
-        source: this.$store.state.websiteConfig['websiteLink'],
-        title: this.article.title,
-        description: this.article.remark,
-        image: function() {
-          if (this.article.coverImageType === 3) {
-            return this.articleDefaultImg
-          } else if (this.article.coverImageType === 1 || this.article.coverImageType === 2 || this.article.coverImageType === 4) {
-            if (this.article.articleImgLinkList && this.article.articleImgLinkList.length > 0) {
-              return this.article.articleImgLinkList[0]
-            }
-
-            return ''
-          } else {
-            return ''
-          }
-        },
-        sites: ['wechat', 'qq'],
-        disabled: [],
-        wechatQrcodeTitle: '微信扫一扫：分享',
-        wechatQrcodeHelper: '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>'
       }
     }
   },
