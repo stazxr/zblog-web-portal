@@ -256,8 +256,7 @@ export default {
       commentCount: 0,
       // 评论类型
       commentType: 1,
-      // 默认封面
-      articleDefaultImg: '',
+      // 文章封面
       noArticleCoverImg: 'https://file.suntaoblog.com/image/no-article-cover.png',
       // 文章链接
       articleLink: window.location.href,
@@ -306,6 +305,9 @@ export default {
 
       return 'background: url(' + cover + ') center center / cover no-repeat'
     },
+    articleDefaultImg() {
+      return this.$store.state.articleDefaultImg
+    },
     isLike() {
       const articleLikeSet = this.$store.state.articleLikeSet
       return articleLikeSet.indexOf(this.article.id) !== -1 ? 'like-btn-active' : 'like-btn'
@@ -317,7 +319,6 @@ export default {
     }
   },
   created() {
-    this.queryArticleDefaultImg()
     this.getArticle()
   },
   destroyed() {
@@ -330,14 +331,6 @@ export default {
     // Editor
     onCreated(editor) {
       this.editor = Object.seal(editor)
-    },
-    queryArticleDefaultImg() {
-      this.$mapi.other.queryArticleDefaultImg().then(res => {
-        const { data } = res
-        this.articleDefaultImg = data || ''
-      }).catch(_ => {
-        this.articleDefaultImg = ''
-      })
     },
     getArticleCover(article) {
       if (article.coverImageType === 3) {

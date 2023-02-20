@@ -327,7 +327,7 @@
                 弹幕数:<span class="float-right"> {{ countInfo.messageCount || 0 }}</span>
               </div>
               <div style="padding:4px 0 0">
-                网站版本:<span class="float-right">{{ countInfo.websiteVersion }}</span>
+                网站版本:<span class="float-right">{{ $store.state.websiteVersion }}</span>
               </div>
               <div style="padding:4px 0 0">
                 建站时间:<span class="float-right">{{ websiteConfig['websiteCreateTime'] }}</span>
@@ -368,7 +368,6 @@ export default {
         sentencePause: true
       },
       noArticleCoverImg: 'https://file.suntaoblog.com/image/no-article-cover.png',
-      articleDefaultImg: '',
       articleList: [],
       talkList: [],
       tagList: [],
@@ -389,6 +388,9 @@ export default {
         }
       })
       return 'background: url(' + cover + ') center center / cover no-repeat'
+    },
+    articleDefaultImg() {
+      return this.$store.state.articleDefaultImg
     },
     isRight() {
       return function(index) {
@@ -416,7 +418,6 @@ export default {
     this.listLastedComments()
     this.listHotArticles()
     this.listCategories()
-    this.queryArticleDefaultImg()
   },
   methods: {
     init() {
@@ -485,14 +486,6 @@ export default {
         this.lastedCommentList = data
       }).catch(_ => {
         this.lastedCommentList = []
-      })
-    },
-    queryArticleDefaultImg() {
-      this.$mapi.other.queryArticleDefaultImg().then(res => {
-        const { data } = res
-        this.articleDefaultImg = data || ''
-      }).catch(_ => {
-        this.articleDefaultImg = ''
       })
     },
     getArticleCover(article) {

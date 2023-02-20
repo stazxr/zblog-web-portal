@@ -31,10 +31,12 @@ export default new Vuex.Store({
       // 评论总量
       commentCount: 0,
       // 弹幕总量
-      messageCount: 0,
-      // 网站版本
-      websiteVersion: ''
+      messageCount: 0
     },
+    // 网站版本
+    websiteVersion: '',
+    // 文章默认封面
+    articleDefaultImg: '',
     // 页面信息
     pageList: [],
     // 用户信息
@@ -78,7 +80,8 @@ export default new Vuex.Store({
       state.countInfo.userCount = blogInfo['userCount'] || 0
       state.countInfo.commentCount = blogInfo['commentCount'] || 0
       state.countInfo.messageCount = blogInfo['messageCount'] || 0
-      state.countInfo.websiteVersion = blogInfo['websiteVersion'] || ''
+      state.websiteVersion = blogInfo['websiteVersion'] || ''
+      state.articleDefaultImg = blogInfo['articleDefaultImg'] || ''
       state.pageList = blogInfo['pageList'] || []
     },
     // 登录成功，设置用户信息

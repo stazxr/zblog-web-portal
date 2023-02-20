@@ -61,7 +61,6 @@ export default {
   data: function() {
     return {
       noArticleCoverImg: 'https://file.suntaoblog.com/image/no-article-cover.png',
-      articleDefaultImg: '',
       current: 1,
       size: 10,
       articleList: [],
@@ -88,10 +87,12 @@ export default {
         }
       })
       return 'background: url(' + cover + ') center center / cover no-repeat'
+    },
+    articleDefaultImg() {
+      return this.$store.state.articleDefaultImg
     }
   },
   created() {
-    this.queryArticleDefaultImg()
     const path = this.$route.path
     if (path.indexOf('/categories') !== -1) {
       this.title = '分类'
@@ -128,14 +129,6 @@ export default {
         this.name = data ? data.name : ''
       }).catch(_ => {
         this.name = ''
-      })
-    },
-    queryArticleDefaultImg() {
-      this.$mapi.other.queryArticleDefaultImg().then(res => {
-        const { data } = res
-        this.articleDefaultImg = data || ''
-      }).catch(_ => {
-        this.articleDefaultImg = ''
       })
     },
     infiniteHandler($state) {
