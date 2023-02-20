@@ -347,7 +347,6 @@
 
 <script>
 import EasyTyper from 'easy-typer-js'
-import NoArticleCoverImg from '../../assets/images/no-article-cover.png'
 import Swiper from '../../components/Swiper.vue'
 import TagCloud3D from '../../components/TagCloud3D.vue'
 export default {
@@ -368,7 +367,7 @@ export default {
         backSpeed: 40,
         sentencePause: true
       },
-      noArticleCoverImg: NoArticleCoverImg,
+      noArticleCoverImg: 'https://file.suntaoblog.com/image/no-article-cover.png',
       articleDefaultImg: '',
       articleList: [],
       talkList: [],

@@ -227,7 +227,6 @@ import Clipboard from 'clipboard'
 import tocbot from 'tocbot'
 import Comment from '../../components/Comment'
 import { Editor } from '@wangeditor/editor-for-vue'
-import NoArticleCoverImg from '../../assets/images/no-article-cover.png'
 // import hljs from 'highlight.js'
 export default {
   components: {
@@ -259,7 +258,7 @@ export default {
       commentType: 1,
       // 默认封面
       articleDefaultImg: '',
-      noArticleCoverImg: NoArticleCoverImg,
+      noArticleCoverImg: 'https://file.suntaoblog.com/image/no-article-cover.png',
       // 文章链接
       articleLink: window.location.href,
       clipboard: null,
@@ -302,7 +301,7 @@ export default {
           cover = this.article.articleImgLinkList[0]
         }
       } else {
-        cover = ''
+        cover = this.noArticleCoverImg
       }
 
       return 'background: url(' + cover + ') center center / cover no-repeat'

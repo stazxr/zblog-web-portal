@@ -57,11 +57,10 @@
 </template>
 
 <script>
-import NoArticleCoverImg from '../../assets/images/no-article-cover.png'
 export default {
   data: function() {
     return {
-      noArticleCoverImg: NoArticleCoverImg,
+      noArticleCoverImg: 'https://file.suntaoblog.com/image/no-article-cover.png',
       articleDefaultImg: '',
       current: 1,
       size: 10,
