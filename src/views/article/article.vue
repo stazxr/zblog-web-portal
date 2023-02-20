@@ -68,13 +68,20 @@
       <!-- 左侧 -->
       <v-col md="9" cols="12">
         <v-card class="article-wrapper">
-          <article
+          <Editor
+            ref="article"
+            v-model="html"
+            :default-config="editorConfig"
+            class="article-content"
+            @onCreated="onCreated"
+          />
+          <!-- <article
             id="write"
             ref="article"
             v-highlight
             class="article-content wangEditor-body"
             v-html="article.content"
-          />
+          /> -->
           <!-- 版权声明 -->
           <div class="article-copyright">
             <div>
@@ -219,13 +226,31 @@
 import Clipboard from 'clipboard'
 import tocbot from 'tocbot'
 import Comment from '../../components/Comment'
+import { Editor } from '@wangeditor/editor-for-vue'
 import NoArticleCoverImg from '../../assets/images/no-article-cover.png'
+// import hljs from 'highlight.js'
 export default {
   components: {
-    Comment
+    Editor, Comment
   },
   data() {
     return {
+      editor: null,
+      html: '<p><br></p>',
+      editorConfig: {
+        placeholder: '',
+        readOnly: true,
+        autoFocus: false,
+        scroll: false,
+        hoverbarKeys: {
+          attachment: {
+            menuKeys: ['downloadAttachment']
+          },
+          formula: {
+            menuKeys: ['editFormula']
+          }
+        }
+      },
       // 阅读时长
       readTime: 0,
       // 评论数
@@ -303,6 +328,10 @@ export default {
     }
   },
   methods: {
+    // Editor
+    onCreated(editor) {
+      this.editor = Object.seal(editor)
+    },
     queryArticleDefaultImg() {
       this.$mapi.other.queryArticleDefaultImg().then(res => {
         const { data } = res
@@ -355,8 +384,65 @@ export default {
         this.article.commentFlag = data['commentFlag'] || false
 
         this.$nextTick(() => {
+          // 回显文章内容
+          this.editor.setHtml(this.article.content)
+
+          // // 自定义代码块
+          // const codes = document.querySelectorAll('pre code')
+          // console.log('codes', codes)
+          // codes.forEach((item) => {
+          //   console.log('item', item)
+          //   const pre = item.parentElement
+          //
+          //   // 行号
+          //   const lineNumBox = document.createElement('div')
+          //   lineNumBox.setAttribute('style', 'height: ' + item.offsetHeight + 'px')
+          //   lineNumBox.className = 'line-num-box'
+          //   let num = ''
+          //   for (let i = 1; i <= Math.ceil(item.offsetHeight / 20); i++) {
+          //     // 设行高二十
+          //     num += i + '\n'
+          //   }
+          //   lineNumBox.innerText = num
+          //   item.parentElement.insertBefore(lineNumBox, item)
+          //
+          //   // 代码块
+          //   const codeBox = document.createElement('div')
+          //   codeBox.className = 'code-box'
+          //   codeBox.appendChild(item)
+          //
+          //   // 插入代码块
+          //   pre.appendChild(codeBox)
+          //
+          //   // 标题
+          //   const icon = `<div class="mac-icon">` +
+          //     `<span class="mac-icon-red"></span>` +
+          //     `<span class="mac-icon-yellow"></span>` +
+          //     `<span class="mac-icon-green"></span>` +
+          //     // `<span class="mac-icon-lang">${lang.split('-')[1].toUpperCase()}</span>` +
+          //     `<button class="copy-button">复制</button>` +
+          //     // `<button class="full-screen-button">全屏</button>` +
+          //     `</div>`
+          //   pre.insertAdjacentHTML('afterbegin', icon)
+          //
+          //   // 复制
+          //   const copyButton = pre.firstElementChild.getElementsByClassName('copy-button')[0]
+          //   copyButton.onclick = function() {
+          //     // https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard/writeText
+          //     const copyPromise = navigator.clipboard.writeText(pre.lastElementChild.innerText)
+          //     copyPromise.then(() => {
+          //       alert('复制成功')
+          //     }).catch(() => {
+          //       alert('复制失败')
+          //     })
+          //   }
+          //
+          //   // 代码高亮
+          //   hljs.highlightElement(codeBox.firstElementChild)
+          // })
+
           // 添加代码复制功能
-          this.clipboard = new Clipboard('.copy-btn')
+          this.clipboard = new Clipboard('.copy-button')
           this.clipboard.on('success', () => {
             this.$toast({ type: 'success', message: '复制成功' })
           })
@@ -368,19 +454,9 @@ export default {
           this.readTime = Math.round(this.article.wordCount / 400) + '分钟'
 
           // 添加文章生成目录功能
-          const nodes = this.$refs.article.children
-          if (nodes.length) {
-            for (let i = 0; i < nodes.length; i++) {
-              const node = nodes[i]
-              const reg = /^H[1-4]$/
-              if (reg.exec(node.tagName)) {
-                node.id = '' + i
-              }
-            }
-          }
           tocbot.init({
             tocSelector: '#toc', // 要把目录添加元素位置，支持选择器
-            contentSelector: '.article-content', // 获取html的元素
+            contentSelector: '.w-e-scroll', // 获取html的元素
             headingSelector: 'h1, h2, h3', // 要显示的id的目录
             hasInnerContainers: true,
             onClick: function(e) {
@@ -492,7 +568,123 @@ export default {
 }
 </script>
 
+<style src='@wangeditor/editor/dist/css/style.css' />
+<!-- <style src='highlight.js/styles/xcode.css' /> -->
+
 <style scoped>
+/* 头部按钮 */
+::v-deep .mac-icon {
+  border-bottom: 1px solid silver;
+  margin-bottom: 5px;
+  color: deeppink;
+}
+::v-deep .mac-icon > span {
+  display: inline-block;
+  letter-spacing: 5px;
+  word-spacing: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+}
+::v-deep .mac-icon-red {
+  background-color: red;
+}
+::v-deep .mac-icon-yellow {
+  margin-left: 10px;
+  background-color: yellow;
+}
+::v-deep .mac-icon-green {
+  margin-left: 10px;
+  background-color: green;
+}
+::v-deep .mac-icon-lang {
+  width: 50px !important;
+  padding-left: 10px;
+  font-size: 16px;
+  vertical-align: top;
+}
+
+/* 复制按钮 */
+::v-deep .copy-button {
+  width: 40px;
+  height: 20px;
+  background-color: wheat;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  margin-left: calc(100% - 208px);
+}
+::v-deep .copy-button:hover {
+  background-color: white;
+}
+
+/* 行号 */
+::v-deep .line-num-box {
+  display: inline-block;
+  color: #fff;
+  border-right: 2px solid white;
+  line-height: 20px !important;
+  font-size: 16px !important;
+  text-align: right;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* 代码块 */
+::v-deep .code-box {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(100% - 50px);
+  border-left-style: none;
+}
+::v-deep code {
+  line-height: 20px !important;
+  font-size: 16px !important;
+  vertical-align: top;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 10px !important;
+}
+</style>
+
+<style scoped>
+.theme--light .article-content {
+  /* textarea - css vars */
+  --w-e-textarea-bg-color: #fff;
+  --w-e-textarea-color: var(--theme-light-color);
+  --w-e-textarea-border-color: #ccc;
+  --w-e-textarea-slight-border-color: #e8e8e8;
+  --w-e-textarea-slight-color: #d4d4d4;
+  --w-e-textarea-slight-bg-color: #f5f2f0;
+  --w-e-textarea-selected-border-color: #B4D5FF;
+  --w-e-textarea-handler-bg-color: #4290f7;
+
+  /* toolbar - css vars */
+  --w-e-toolbar-color: #595959;
+  --w-e-toolbar-bg-color: #fff;
+  --w-e-toolbar-active-color: #333;
+  --w-e-toolbar-active-bg-color: #f1f1f1;
+  --w-e-toolbar-disabled-color: #999;
+  --w-e-toolbar-border-color: #e8e8e8;
+
+  /* modal - css vars */
+  --w-e-modal-button-bg-color: #fafafa;
+  --w-e-modal-button-border-color: #d9d9d9;
+}
+.theme--dark .article-content {
+  /* textarea - css vars */
+  --w-e-textarea-bg-color: #333;
+  --w-e-textarea-color: var(--theme-dark-color);
+  --w-e-textarea-slight-bg-color: #111111;
+  --w-e-textarea-slight-border-color: #000000;
+  --w-e-textarea-selected-border-color: #9b9797;
+}
+
+::v-deep pre>code {
+  text-shadow: none !important;
+}
+
 .banner:before {
   content: "";
   position: absolute;
@@ -913,7 +1105,7 @@ hr {
 </style>
 
 <style lang="scss">
-.article-content pre {
+.article-content-bak pre {
   padding: 12px 2px 12px 40px !important;
   border-radius: 5px !important;
   position: relative;

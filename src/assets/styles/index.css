@@ -417,14 +417,6 @@ p {
     transform: translateY(0);
   }
 }
-.hljs {
-  background: #282c34 !important;
-}
-pre.hljs code {
-  display: block !important;
-  margin: 0 10px !important;
-  overflow-x: auto !important;
-}
 .is-collapsed {
   display: none;
 }

@@ -1,32 +1,55 @@
 import Vue from 'vue'
 import App from './App.vue'
+// 路由组件
 import router from './router/routers'
+// Vuex
 import store from './store'
+// Vuetify
 import vuetify from './plugins/vuetify'
+// Api
 import api from './api/http-index'
-import Highlight from './directive/highlight'
+// 消息提醒
 import Toast from './components/toast/index'
+// 确认框
 import Confirm from './components/confirm/index'
-import dayjs from 'dayjs'
-import VueImageSwipe from 'vue-image-swipe'
+// 动画
 import animated from 'animate.css'
-import InfiniteLoading from 'vue-infinite-loading'
-import { vueBaberrage } from 'vue-baberrage'
 import './assets/styles/animation.css'
+// 样式
 import './assets/styles/index.css'
 import './assets/styles/variable.css'
+// 图标
 import './assets/iconfont/iconfont.js'
 import './assets/iconfont/iconfont.css'
-import './assets/styles/markdown.css'
-import './assets/styles/wangEditor.css'
+// 图片预览
+import VueImageSwipe from 'vue-image-swipe'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
+// 无限加载
+import InfiniteLoading from 'vue-infinite-loading'
+// 弹幕墙
+import { vueBaberrage } from 'vue-baberrage'
+// 日期工具
+import dayjs from 'dayjs'
+// WangEditor
+import { Boot } from '@wangeditor/editor'
+import attachmentModule from '@wangeditor/plugin-upload-attachment'
+import formulaModule from '@wangeditor/plugin-formula'
+// 代码高亮
+import Highlight from './directive/highlight'
 
-Vue.use(InfiniteLoading)
+// WangEditor 附件上传注册
+Boot.registerModule(attachmentModule)
+
+// WangEditor 公式注册
+Boot.registerModule(formulaModule)
+
+// 安装插件
 Vue.use(animated)
+Vue.use(InfiniteLoading)
 Vue.use(vueBaberrage)
-Vue.use(VueImageSwipe)
 Vue.use(Toast)
 Vue.use(Confirm)
+Vue.use(VueImageSwipe)
 Vue.use(Highlight)
 
 // 声明全局变量
