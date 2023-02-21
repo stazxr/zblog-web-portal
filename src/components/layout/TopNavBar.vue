@@ -98,6 +98,16 @@
             🌍 网站
             <i class="iconfont icon-xiangxia expand" />
           </a>
+          <ul class="menus-submenu">
+            <li>
+              <a v-if="$store.state.websiteConfig['readMeLink'] && $store.state.websiteConfig['readMeLink'] !== ''" :href="$store.state.websiteConfig['readMeLink']" target="_blank">
+                🧐 关于
+              </a>
+              <router-link to="/history">
+                👣 历史
+              </router-link>
+            </li>
+          </ul>
         </div>
         <div class="menus-item">
           <a v-if="$store.state.user.id == null || $store.state.user.id === ''" class="menu-btn" @click="openLogin">

@@ -18,7 +18,7 @@ export default {
     return {
       interval: null,
       stop: false,
-      active: false,
+      active: true,
       oList: null,
       oA: null,
       mcList: [],
@@ -88,20 +88,22 @@ export default {
         this.positionAll()
 
         // 无效
-        this.$refs.tagCloudLink.onmouseover = () => {
-          this.stop = true
-        }
+        // this.$refs.tagCloudLink.onmouseover = () => {
+        //   this.stop = true
+        // }
 
         // 无效
-        this.$refs.tagCloudLink.onmouseout = () => {
-          this.stop = false
-        }
+        // this.$refs.tagCloudLink.onmouseout = () => {
+        //   this.stop = false
+        // }
 
         this.oList.onmouseover = () => {
-          this.active = true
+          // this.active = true
+          this.stop = true
         }
         this.oList.onmouseout = () => {
-          this.active = false
+          // this.active = false
+          this.stop = false
         }
 
         this.oList.onmousemove = (event) => {
@@ -121,7 +123,7 @@ export default {
     // 坐标更新 让标签动起来
     update() {
       this.$nextTick(() => {
-        if (this.stop) {
+        if (this.stop === true) {
           return
         }
 

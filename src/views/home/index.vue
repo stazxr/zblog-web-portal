@@ -46,9 +46,9 @@
         </v-card>
 
         <!-- 说说轮播 -->
-        <v-card v-if="talkList.length > 0" class="animated zoomIn">
+        <!-- <v-card v-if="talkList.length > 0" class="animated zoomIn">
           <Swiper :list="talkList" />
-        </v-card>
+        </v-card> -->
 
         <!-- 分界线 -->
         <div class="home-hr">
@@ -238,13 +238,13 @@
               </ul>
             </div>
           </v-card>
-          <v-card class="blog-card animated zoomIn mt-5 big">
+          <!-- <v-card class="blog-card animated zoomIn mt-5 big">
             <div class="blog-card-title">
               <svg class="iconfont_svg" aria-hidden="true">
                 <use xlink:href="#icon-zhuanlan" />
               </svg> 文章专栏
             </div>
-          </v-card>
+          </v-card> -->
           <v-card class="blog-card animated zoomIn mt-5 big">
             <div class="blog-card-title">
               <svg class="iconfont_svg" aria-hidden="true">
@@ -347,12 +347,13 @@
 
 <script>
 import EasyTyper from 'easy-typer-js'
-import Swiper from '../../components/Swiper.vue'
+// import Swiper from '../../components/Swiper.vue'
 import TagCloud3D from '../../components/TagCloud3D.vue'
 export default {
   name: 'Home',
   components: {
-    Swiper, TagCloud3D
+    // Swiper,
+    TagCloud3D
   },
   data() {
     return {
@@ -413,7 +414,7 @@ export default {
   created() {
     this.init()
     this.listArticles()
-    this.listHomeTalks()
+    // this.listHomeTalks()
     this.listHomeTags()
     this.listLastedComments()
     this.listHotArticles()
