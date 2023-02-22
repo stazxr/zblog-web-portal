@@ -21,6 +21,7 @@
     "dayjs": "^1.10.6",
     "easy-typer-js": "^2.1.0",
     "highlight.js": "^11.6.0",
+    "jquery": "^3.6.0",
     "jsencrypt": "^3.0.0-rc.1",
     "json-bigint": "^1.0.0",
     "katex": "^0.16.3",

@@ -20,6 +20,8 @@
     <RegisterModel />
     <!-- 忘记密码模态框 -->
     <ForgetModel />
+    <!-- 音乐播放器 -->
+    <Player v-if="otherConfig['isMusicPlayer'] === 1 && !isMobile" />
   </v-app>
 </template>
 
@@ -32,14 +34,18 @@ import SearchModel from './components/model/SearchModel'
 import LoginModel from './components/model/LoginModel'
 import RegisterModel from './components/model/RegisterModel'
 import ForgetModel from './components/model/ForgetModel'
+import Player from './components/zw-player/Player'
 export default {
   name: 'App',
   components: {
-    TopNavBar, SideNavBar, Footer, BackTop, SearchModel, LoginModel, RegisterModel, ForgetModel
+    TopNavBar, SideNavBar, Footer, BackTop, SearchModel, LoginModel, RegisterModel, ForgetModel, Player
   },
   computed: {
     websiteConfig() {
       return this.$store.state.websiteConfig
+    },
+    otherConfig() {
+      return this.$store.state.otherConfig
     },
     isMobile() {
       return navigator.userAgent.match(
