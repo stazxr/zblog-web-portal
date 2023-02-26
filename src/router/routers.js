@@ -75,6 +75,13 @@ const routes = [
     }
   },
   {
+    path: '/statistics',
+    component: resolve => require(['../views/statistics/index'], resolve),
+    meta: {
+      title: '统计'
+    }
+  },
+  {
     path: '/user',
     component: resolve => require(['../views/user/index'], resolve),
     meta: {

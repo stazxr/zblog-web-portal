@@ -122,5 +122,9 @@ export default {
   // 根据关键字搜索文章
   searchArticleList: params => {
     return api.httpRequest().get(`${portalApi}/searchArticleList`, params)
+  },
+  // 查询 Github 贡献日历数据
+  queryGithubCalendarData: params => {
+    return api.httpRequest().get(`${portalApi}/queryGithubCalendarData`, params)
   }
 }

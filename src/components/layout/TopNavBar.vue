@@ -103,6 +103,9 @@
               <a v-if="$store.state.websiteConfig['readMeLink'] && $store.state.websiteConfig['readMeLink'] !== ''" :href="$store.state.websiteConfig['readMeLink']" target="_blank">
                 🧐 关于
               </a>
+              <router-link to="/statistics">
+                📊 统计
+              </router-link>
               <router-link to="/history">
                 👣 历史
               </router-link>
