@@ -128,7 +128,7 @@ export default {
         }
 
         let a, b
-        if (this.active) {
+        if (!this.active) {
           a = (-Math.min(Math.max(-this.mouseY, -this.size), this.size) / this.radius) * this.tspeed
           b = (Math.min(Math.max(-this.mouseX, -this.size), this.size) / this.radius) * this.tspeed
         } else {
