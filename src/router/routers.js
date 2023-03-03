@@ -33,7 +33,7 @@ const routes = [
   },
   {
     path: '/tags/:tagId',
-    component: resolve => require(['../views/article/articleList.vue'], resolve)
+    component: resolve => require(['../views/article/articleList'], resolve)
   },
   {
     path: '/categories',
@@ -44,7 +44,21 @@ const routes = [
   },
   {
     path: '/categories/:categoryId',
-    component: resolve => require(['../views/article/articleList.vue'], resolve)
+    component: resolve => require(['../views/article/articleList'], resolve)
+  },
+  {
+    path: '/albums',
+    component: resolve => require(['../views/album/index'], resolve),
+    meta: {
+      title: '相册列表'
+    }
+  },
+  {
+    path: '/albums/:albumId',
+    component: resolve => require(['../views/album/photo'], resolve),
+    meta: {
+      title: '相册'
+    }
   },
   {
     path: '/talks',

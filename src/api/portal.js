@@ -126,5 +126,13 @@ export default {
   // 查询 Github 贡献日历数据
   queryGithubCalendarData: params => {
     return api.httpRequest().get(`${portalApi}/queryGithubCalendarData`, params)
+  },
+  // 获取相册列表
+  queryAlbumList: params => {
+    return api.httpRequest().get(`${portalApi}/queryAlbumList`, params)
+  },
+  // 获取相册照片列表
+  queryAlbumPhotoList: params => {
+    return api.httpRequest().get(`${portalApi}/queryAlbumPhotoList`, params)
   }
 }
