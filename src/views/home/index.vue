@@ -131,7 +131,7 @@
       </v-col>
 
       <!-- 博客信息 -->
-      <v-col md="3" cols="12" class="d-md-block d-none">
+      <v-col md="3" cols="12" class="d-md-block d-none right-div" style="overflow-y: scroll;">
         <div class="blog-wrapper">
           <!-- 基础介绍 -->
           <v-card class="animated zoomIn blog-card mt-5">
@@ -376,7 +376,7 @@ export default {
       categoryList: [],
       lastedCommentList: [],
       articlePage: 1,
-      articlePageSize: 10
+      articlePageSize: 15
     }
   },
   computed: {
@@ -796,6 +796,15 @@ export default {
 }
 
 /* 博客信息样式 */
+.right-div::-webkit-scrollbar {
+  width: 0 !important;
+}
+.right-div {
+  -ms-overflow-style: none;
+}
+.right-div {
+  /* overflow: -moz-scrollbars-none; */
+}
 .blog-wrapper {
   position: sticky;
   top: 10px;

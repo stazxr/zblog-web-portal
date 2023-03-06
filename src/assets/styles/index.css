@@ -312,6 +312,8 @@ p {
   color: #fff;
   background-color: #49b1f5;
 }
+
+/* emoji */
 .emoji-btn {
   cursor: pointer;
   font-size: 1.3rem;
@@ -326,6 +328,8 @@ p {
   display: flex;
   align-items: center;
 }
+
+/* 验证码 */
 .send-wrapper {
   display: flex;
   align-items: center;
