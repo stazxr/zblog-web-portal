@@ -22,6 +22,8 @@
     <ForgetModel />
     <!-- 音乐播放器 -->
     <Player v-if="otherConfig['isMusicPlayer'] === 1 && !isMobile" />
+    <!-- 聊天机器人 -->
+    <Rebot v-if="false" />
   </v-app>
 </template>
 
@@ -35,10 +37,11 @@ import LoginModel from './components/model/LoginModel'
 import RegisterModel from './components/model/RegisterModel'
 import ForgetModel from './components/model/ForgetModel'
 import Player from './components/zw-player/Player'
+import Rebot from './components/Rebot'
 export default {
   name: 'App',
   components: {
-    TopNavBar, SideNavBar, Footer, BackTop, SearchModel, LoginModel, RegisterModel, ForgetModel, Player
+    TopNavBar, SideNavBar, Footer, BackTop, SearchModel, LoginModel, RegisterModel, ForgetModel, Player, Rebot
   },
   computed: {
     websiteConfig() {

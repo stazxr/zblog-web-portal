@@ -63,6 +63,10 @@ Vue.filter('year', function(value) {
   return dayjs(value).format('YYYY')
 })
 
+Vue.filter('hour', function(value) {
+  return dayjs(value).format('HH:mm:ss')
+})
+
 new Vue({
   router,
   store,
