@@ -132,8 +132,8 @@ export default {
           a = (-Math.min(Math.max(-this.mouseY, -this.size), this.size) / this.radius) * this.tspeed
           b = (Math.min(Math.max(-this.mouseX, -this.size), this.size) / this.radius) * this.tspeed
         } else {
-          a = this.lasta * 0.98
-          b = this.lastb * 0.98
+          a = this.lasta * 1.01
+          b = this.lastb * 1.01
         }
         this.lasta = a
         this.lastb = b
