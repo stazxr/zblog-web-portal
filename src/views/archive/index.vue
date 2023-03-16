@@ -18,7 +18,7 @@
         </timeline-item>
       </timeline>
       <!-- 分页按钮 -->
-      <v-pagination v-model="current" color="#00C4B6" :length="Math.ceil(count / 10)" total-visible="7" />
+      <v-pagination v-model="current" color="#00C4B6" :length="Math.ceil(count / 10)" total-visible="7" prev-icon="iconfont icon-xiangzuo" next-icon="iconfont icon-xiangyou" />
     </v-card>
   </div>
 </template>
