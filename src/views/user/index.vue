@@ -81,4 +81,7 @@ export default {
   display: flex;
   align-items: center;
 }
+::v-deep [disabled] {
+  cursor: var(--globalCursor);
+}
 </style>

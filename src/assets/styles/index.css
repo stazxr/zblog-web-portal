@@ -315,11 +315,11 @@ p {
 
 /* emoji */
 .emoji-btn {
-  cursor: pointer;
+  cursor: var(--globalPointer);
   font-size: 1.3rem;
 }
 .emoji-btn-active {
-  cursor: pointer;
+  cursor: var(--globalPointer);
   font-size: 1.3rem;
   color: #66b1ff;
 }
