@@ -66,7 +66,7 @@ export default {
     getBlogInfo() {
       this.$mapi.portal.queryBlogInfo().then(res => {
         this.$store.commit('setBlogInfo', res.data)
-        document.title = res.data['webInfo'] ? res.data['webInfo']['websiteName'] : 'zblog'
+        document.title = res.data['webInfo'] ? res.data['webInfo']['websiteName'] : 'Z-BLOG'
       })
     },
     recordVisitor() {

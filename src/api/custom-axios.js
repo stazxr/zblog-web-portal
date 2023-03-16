@@ -37,6 +37,7 @@ instance.interceptors.request.use(
     // set default header
     config.headers.Authorization = getToken()
     config.headers['Content-Type'] = 'application/json;charset=UTF-8'
+    // config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
     return config
   },
   error => {
