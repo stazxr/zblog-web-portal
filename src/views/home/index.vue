@@ -33,7 +33,7 @@
     <v-row class="home-container">
       <v-col md="9" cols="12">
         <!-- 网站公告 -->
-        <v-card class="animated zoomIn">
+        <v-card v-if="!isMobile" class="animated zoomIn">
           <div class="announcement">
             <v-icon class="iconfont icon-guangbo" />
             <div v-if="websiteConfig['websiteNotice'] && websiteConfig['websiteNotice'] !== ''">
@@ -409,6 +409,11 @@ export default {
     },
     countInfo() {
       return this.$store.state.countInfo
+    },
+    isMobile() {
+      return navigator.userAgent.match(
+        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+      )
     }
   },
   created() {
