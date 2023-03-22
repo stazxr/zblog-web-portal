@@ -2,12 +2,12 @@
   <div>
     <!-- banner -->
     <div class="banner" :style="cover">
-      <h1 class="banner-title">标签</h1>
+      <!-- <h1 class="banner-title">标签</h1> -->
     </div>
     <!-- 标签列表 -->
     <v-card class="blog-container">
-      <div v-if="count > 0" class="tag-cloud-title">标签 - {{ count }}</div>
-      <div v-else class="tag-cloud-title">暂无内容</div>
+      <!-- <div v-if="count > 0" class="tag-cloud-title">标签 - {{ count }}</div>
+      <div v-else class="tag-cloud-title">暂无内容</div> -->
       <div class="tag-cloud">
         <router-link v-for="(item, index) of tagList" :key="item.id" :style="{ 'font-size': Math.floor(Math.random() * 10) + 18 + 'px', color: color[index % color.length] }" :to="'/tags/' + item.id">
           {{ item.name }}
