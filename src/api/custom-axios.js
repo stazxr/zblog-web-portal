@@ -36,7 +36,7 @@ instance.interceptors.request.use(
   config => {
     // set default header
     config.headers.Authorization = getToken()
-    config.headers['Content-Type'] = 'application/json;charset=UTF-8'
+    // config.headers['Content-Type'] = 'application/json;charset=UTF-8'
     // config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
     return config
   },
@@ -81,19 +81,19 @@ export const get = (url, params, requestItem) => {
       // 是与请求一起发送的 URL 参数，必须是一个简单对象或 URLSearchParams 对象
       params: params,
       // 自定义请求头
-      headers: {},
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
       // 浏览器将要响应的数据类型，['arraybuffer', 'document', 'json', 'text', 'stream', 'blob'(浏览器专属)]
       responseType: 'json'
     }
 
     options = Object.assign({}, options, requestItem)
-    instance(options)
-      .then(response => {
-        resolve(response)
-      })
-      .catch(err => {
-        reject(err)
-      })
+    instance(options).then(response => {
+      resolve(response)
+    }).catch(err => {
+      reject(err)
+    })
   })
 }
 
@@ -107,19 +107,19 @@ export const post = (url, params, requestItem) => {
       // 可选语法，Country=China&City=Xian，只有 value 会被发送，key 则不会
       data: params,
       // 自定义请求头
-      headers: {},
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
       // 浏览器将要响应的数据类型，['arraybuffer', 'document', 'json', 'text', 'stream', 'blob'(浏览器专属)]
       responseType: 'json'
     }
 
     options = Object.assign({}, options, requestItem)
-    instance(options)
-      .then(response => {
-        resolve(response)
-      })
-      .catch(err => {
-        reject(err)
-      })
+    instance(options).then(response => {
+      resolve(response)
+    }).catch(err => {
+      reject(err)
+    })
   })
 }
 

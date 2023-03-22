@@ -1,3 +1,4 @@
+import qs from 'qs'
 import api from './custom-axios'
 
 const portalApi = '/api/portal'
@@ -117,7 +118,9 @@ export default {
   },
   // 浏览文章
   viewArticle: params => {
-    return api.httpRequest().post(`${portalApi}/viewArticle`, params)
+    return api.httpRequest().post(`${portalApi}/viewArticle`, qs.stringify(params), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }
+    })
   },
   // 根据关键字搜索文章
   searchArticleList: params => {
