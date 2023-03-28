@@ -634,8 +634,8 @@ export default {
   line-height: 20px !important;
   font-size: 16px !important;
   vertical-align: top;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  /* padding-top: 0 !important; */
+  /* padding-bottom: 0 !important; */
   padding-left: 10px !important;
 }
 </style>
