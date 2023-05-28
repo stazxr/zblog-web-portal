@@ -137,5 +137,17 @@ export default {
   // 获取相册照片列表
   queryAlbumPhotoList: params => {
     return api.httpRequest().get(`${portalApi}/queryAlbumPhotoList`, params)
+  },
+  // 获取专栏列表
+  queryColumnList: params => {
+    return api.httpRequest().get(`${portalApi}/queryColumnList`, params)
+  },
+  // 获取专栏详情
+  queryColumnById: params => {
+    return api.httpRequest().get(`${portalApi}/queryColumnById`, params)
+  },
+  // 获取专栏文章列表
+  queryColumnArticleList: params => {
+    return api.httpRequest().get(`${portalApi}/queryColumnArticleList`, params)
   }
 }

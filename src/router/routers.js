@@ -75,6 +75,20 @@ const routes = [
     }
   },
   {
+    path: '/columns',
+    component: resolve => require(['../views/column/index'], resolve),
+    meta: {
+      title: '专栏列表'
+    }
+  },
+  {
+    path: '/columns/:columnId',
+    component: resolve => require(['../views/column/detail'], resolve),
+    meta: {
+      title: '专栏'
+    }
+  },
+  {
     path: '/links',
     component: resolve => require(['../views/link/index'], resolve),
     meta: {
