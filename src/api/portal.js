@@ -149,5 +149,9 @@ export default {
   // 获取专栏文章列表
   queryColumnArticleList: params => {
     return api.httpRequest().get(`${portalApi}/queryColumnArticleList`, params)
+  },
+  // 查询前台版本列表
+  queryVersionList: params => {
+    return api.httpRequest().get(`${portalApi}/queryVersionList`, params)
   }
 }

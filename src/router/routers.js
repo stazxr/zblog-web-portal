@@ -110,6 +110,13 @@ const routes = [
     }
   },
   {
+    path: '/versions',
+    component: resolve => require(['../views/versions/index'], resolve),
+    meta: {
+      title: '版本'
+    }
+  },
+  {
     path: '/user',
     component: resolve => require(['../views/user/index'], resolve),
     meta: {

@@ -106,8 +106,8 @@
               <router-link to="/statistics">
                 📊 统计
               </router-link>
-              <router-link to="/history">
-                👣 历史
+              <router-link to="/versions">
+                👣 版本
               </router-link>
             </li>
           </ul>
