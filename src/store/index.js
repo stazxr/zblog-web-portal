@@ -28,6 +28,8 @@ export default new Vuex.Store({
       visitorCount: 0,
       // 用户总量
       userCount: 0,
+      // 文章阅读数
+      articleViewCount: 0,
       // 评论总量
       commentCount: 0,
       // 弹幕总量
@@ -78,6 +80,7 @@ export default new Vuex.Store({
       state.countInfo.viewsCount = blogInfo['viewsCount'] || 0
       state.countInfo.visitorCount = blogInfo['visitorCount'] || 0
       state.countInfo.userCount = blogInfo['userCount'] || 0
+      state.countInfo.articleViewCount = blogInfo['articleViewCount'] || 0
       state.countInfo.commentCount = blogInfo['commentCount'] || 0
       state.countInfo.messageCount = blogInfo['messageCount'] || 0
       state.websiteVersion = blogInfo['websiteVersion'] || ''

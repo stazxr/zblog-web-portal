@@ -17,8 +17,8 @@
           </div>
         </v-col>
       </v-row>
-      <v-row v-else>
-        <h2 style="margin: 0 auto;">暂无内容</h2>
+      <v-row v-if="!pageLoading && photoAlbumList.length === 0">
+        <h2 style="margin: 0 auto;">空空如也~</h2>
       </v-row>
     </v-card>
   </div>
@@ -28,7 +28,8 @@
 export default {
   data: function() {
     return {
-      photoAlbumList: []
+      photoAlbumList: [],
+      pageLoading: false
     }
   },
   computed: {
@@ -47,10 +48,15 @@ export default {
   },
   methods: {
     listPhotoAlbums() {
+      this.$loading.show()
+      this.pageLoading = true
       this.$mapi.portal.queryAlbumList().then(({ data }) => {
         this.photoAlbumList = data
       }).catch(_ => {
         this.photoAlbumList = []
+      }).finally(_ => {
+        this.$loading.hide()
+        this.pageLoading = false
       })
     }
   }

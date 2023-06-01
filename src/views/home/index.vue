@@ -321,6 +321,9 @@
                 用户数:<span class="float-right"> {{ countInfo.userCount || 0 }}</span>
               </div>
               <div style="padding:4px 0 0">
+                阅读数:<span class="float-right"> {{ countInfo.articleViewCount || 0 }}</span>
+              </div>
+              <div style="padding:4px 0 0">
                 评论数:<span class="float-right"> {{ countInfo.commentCount || 0 }}</span>
               </div>
               <div style="padding:4px 0 0">
@@ -450,11 +453,14 @@ export default {
         page: this.articlePage,
         pageSize: this.articlePageSize
       }
+      this.$loading.show()
       this.$mapi.portal.queryArticleList(param).then(({ data }) => {
         if (data.list.length !== 0) {
           this.articlePage++
           this.articleList.push(...data.list)
         }
+      }).finally(_ => {
+        this.$loading.hide()
       })
     },
     listHomeTalks() {
@@ -514,6 +520,7 @@ export default {
         page: this.articlePage,
         pageSize: this.articlePageSize
       }
+      this.$loading.show()
       this.$mapi.portal.queryArticleList(param).then(({ data }) => {
         if (data.list.length === 0) {
           $state.complete()
@@ -522,6 +529,11 @@ export default {
           this.articleList.push(...data.list)
           $state.loaded()
         }
+      }).catch(_ => {
+        $state.complete()
+        this.$toast({ type: 'error', message: '文章列表加载失败' })
+      }).finally(_ => {
+        this.$loading.hide()
       })
     }
   }

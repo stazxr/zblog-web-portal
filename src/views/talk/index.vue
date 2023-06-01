@@ -58,6 +58,7 @@
           </div>
         </router-link>
       </div>
+      <div v-if="!pageLoading && talkList.length === 0" class="category-title">空空如也~</div>
       <div v-if="talkList && count > talkList.length" class="load-wrapper" @click="listTalks">
         <v-btn outlined>
           加载更多...
@@ -75,7 +76,8 @@ export default {
       current: 1,
       size: 10,
       talkList: [],
-      previewList: []
+      previewList: [],
+      pageLoading: false
     }
   },
   computed: {
@@ -105,6 +107,8 @@ export default {
         pageSize: this.size
       }
 
+      this.$loading.show()
+      this.pageLoading = true
       this.$mapi.portal.queryTalkList(param).then(({ data }) => {
         if (this.current === 1) {
           this.talkList = data.list
@@ -114,6 +118,11 @@ export default {
 
         this.current++
         this.count = data.total
+      }).catch(_ => {
+        this.$toast({ type: 'error', message: '说说列表加载失败' })
+      }).finally(_ => {
+        this.$loading.hide()
+        this.pageLoading = false
       })
     },
     previewImg(imagesList, img) {
@@ -336,5 +345,15 @@ export default {
 }
 .like-btn:hover {
   color: #eb5055 !important;
+}
+.category-title {
+  text-align: center;
+  font-size: 36px;
+  line-height: 2;
+}
+@media (max-width: 759px) {
+  .category-title {
+    font-size: 28px;
+  }
 }
 </style>

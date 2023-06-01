@@ -32,7 +32,8 @@
         <div>名称：{{ websiteConfig['websiteName'] }}</div>
         <div>介绍：{{ websiteConfig['websiteIntro'] }}</div>
         <div>链接：{{ websiteConfig['websiteLink'] }}</div>
-        <div>头像：{{ websiteConfig['websiteAvatar'] }}</div>
+        <!-- <div>头像：{{ websiteConfig['websiteAvatar'] }}</div> -->
+        <div>头像：https://suntaoblog.oss-cn-beijing.aliyuncs.com/image/siteImg.png</div>
       </blockquote>
       <div class="mt-5 mb-5">
         需要交换友链的可在下方留言💖
@@ -77,10 +78,13 @@ export default {
   },
   methods: {
     listFriendLink() {
+      this.$loading.show()
       this.$mapi.portal.queryFriendLinkList().then(({ data }) => {
         this.friendLinkList = data
       }).catch(_ => {
         this.friendLinkList = []
+      }).finally(_ => {
+        this.$loading.hide()
       })
     },
     getCommentCount(_, firstLoad) {

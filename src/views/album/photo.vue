@@ -9,6 +9,7 @@
       <div class="photo-wrap">
         <img v-for="(item, index) of photoList" :key="item.id" class="photo" :src="item['photoLink']" alt="" @click="preview(index)">
       </div>
+      <div v-if="!pageLoading && photoList.length === 0" class="category-title">空空如也~</div>
       <!-- 无限加载 -->
       <infinite-loading @infinite="infiniteHandler">
         <div slot="no-more" />
@@ -27,7 +28,8 @@ export default {
       photoList: [],
       photoLinkList: [],
       current: 1,
-      size: 10
+      size: 10,
+      pageLoading: false
     }
   },
   computed: {
@@ -59,6 +61,8 @@ export default {
         albumId: this.$route.params.albumId
       }
 
+      this.$loading.show()
+      this.pageLoading = true
       this.$mapi.portal.queryAlbumPhotoList(param).then(({ data }) => {
         this.photoAlbumName = data.photoAlbumName
         this.photoAlbumCover = data.photoAlbumCover
@@ -70,8 +74,11 @@ export default {
           $state.loaded()
         }
       }).catch(_ => {
-        this.$toast({ type: 'error', message: '列表查询失败' })
+        this.$toast({ type: 'error', message: '照片列表查询失败' })
         $state.complete()
+      }).finally(_ => {
+        this.$loading.hide()
+        this.pageLoading = false
       })
     }
   }
@@ -98,6 +105,16 @@ export default {
 @media (max-width: 759px) {
   .photo {
     width: 100%;
+  }
+}
+.category-title {
+  text-align: center;
+  font-size: 36px;
+  line-height: 2;
+}
+@media (max-width: 759px) {
+  .category-title {
+    font-size: 28px;
   }
 }
 </style>

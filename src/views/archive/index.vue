@@ -59,16 +59,15 @@ export default {
   },
   methods: {
     listArchives(value) {
-      const param = {
-        current: value
-      }
-
-      this.$mapi.portal.queryArchiveList(param).then(({ data }) => {
+      this.$loading.show()
+      this.$mapi.portal.queryArchiveList({ current: value }).then(({ data }) => {
         this.archiveList = data.list
         this.count = data.total
       }).catch(_ => {
         this.archiveList = []
         this.count = 0
+      }).finally(_ => {
+        this.$loading.hide()
       })
     }
   }

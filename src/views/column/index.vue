@@ -16,7 +16,7 @@
         </v-col>
       </v-row>
       <v-row v-if="!pageLoading && columnList.length === 0">
-        <h2 style="margin: 0 auto;">暂无内容</h2>
+        <h2 style="margin: 0 auto;">空空如也~</h2>
       </v-row>
       <infinite-loading @infinite="infiniteHandler">
         <div slot="no-results" />
@@ -52,12 +52,9 @@ export default {
   },
   methods: {
     infiniteHandler($state) {
-      const param = {
-        current: this.current
-      }
-
+      this.$loading.show()
       this.pageLoading = true
-      this.$mapi.portal.queryColumnList(param).then(({ data }) => {
+      this.$mapi.portal.queryColumnList({ current: this.current }).then(({ data }) => {
         if (data.list.length === 0) {
           $state.complete()
         } else {
@@ -69,6 +66,7 @@ export default {
         $state.complete()
         this.$toast({ type: 'error', message: '专栏列表加载失败' })
       }).finally(_ => {
+        this.$loading.hide()
         this.pageLoading = false
       })
     }

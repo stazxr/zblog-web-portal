@@ -2,10 +2,10 @@
   <div>
     <!-- 标签或分类名 -->
     <div class="banner" :style="cover">
-      <h1 class="banner-title animated fadeInDown">{{ title }} - {{ name }}</h1>
+      <h1 class="banner-title animated fadeInDown">{{ name }}</h1>
     </div>
     <div class="article-list-wrapper">
-      <v-row>
+      <v-row v-if="articleList.length > 0">
         <v-col v-for="item of articleList" :key="item.id" md="4" cols="12">
           <!-- 文章 -->
           <v-card class="animated zoomIn article-item-card">
@@ -46,6 +46,7 @@
           </v-card>
         </v-col>
       </v-row>
+      <div v-if="!pageLoading && articleList.length === 0" class="category-title">空空如也~</div>
 
       <!-- 无限加载 -->
       <infinite-loading @infinite="infiniteHandler">
@@ -66,7 +67,7 @@ export default {
       articleList: [],
       categoryCover: '',
       name: '',
-      title: ''
+      pageLoading: false
     }
   },
   computed: {
@@ -95,10 +96,8 @@ export default {
   created() {
     const path = this.$route.path
     if (path.indexOf('/categories') !== -1) {
-      this.title = '分类'
       this.queryCategoryName()
     } else {
-      this.title = '标签'
       this.queryTagName()
     }
   },
@@ -139,12 +138,9 @@ export default {
         tagId: this.$route.params.tagId
       }
 
+      this.$loading.show()
+      this.pageLoading = true
       this.$mapi.portal.queryArticleList(param).then(({ data }) => {
-        // if (data.data.name) {
-        //   this.name = data.data.name
-        //   document.title = this.title + ' - ' + this.name
-        // }
-
         if (data.list.length === 0) {
           $state.complete()
         } else {
@@ -152,6 +148,12 @@ export default {
           this.current++
           $state.loaded()
         }
+      }).catch(_ => {
+        $state.complete()
+        this.$toast({ type: 'error', message: '文章列表加载失败' })
+      }).finally(_ => {
+        this.$loading.hide()
+        this.pageLoading = false
       })
     }
   }
@@ -231,5 +233,15 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+.category-title {
+  text-align: center;
+  font-size: 36px;
+  line-height: 2;
+}
+@media (max-width: 759px) {
+  .category-title {
+    font-size: 28px;
+  }
 }
 </style>

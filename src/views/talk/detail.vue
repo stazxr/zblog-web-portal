@@ -83,7 +83,7 @@ export default {
     cover() {
       let cover = ''
       this.$store.state.pageList.forEach(item => {
-        if (item['pageLabel'] === 'talk') {
+        if (item['pageLabel'] === 'talkDetail') {
           cover = item['pageCover']
         }
       })
@@ -102,6 +102,7 @@ export default {
   methods: {
     getTalkById() {
       if (this.$route.params.talkId && this.$route.params.talkId !== '') {
+        this.$loading.show()
         this.$mapi.portal.queryTalkById({ talkId: this.$route.params.talkId }).then(({ code, message, data }) => {
           if (code === 200) {
             Object.keys(this.talkInfo).forEach(key => {
@@ -114,6 +115,8 @@ export default {
         }).catch(_ => {
           this.clearTalkInfo()
           this.$router.push('/404')
+        }).finally(_ => {
+          this.$loading.hide()
         })
       } else {
         this.clearTalkInfo()

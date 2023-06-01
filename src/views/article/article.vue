@@ -346,6 +346,7 @@ export default {
       }
     },
     getArticle() {
+      this.$loading.show()
       this.$mapi.portal.queryArticleDetail({ articleId: this.$route.params.articleId }).then(({ data }) => {
         if (data == null || data['articleStatus'] !== 5 || data['articlePerm'] !== 1) {
           this.$router.push('/article404')
@@ -460,6 +461,8 @@ export default {
         console.log('文章信息反显失败', e)
         this.$toast({ type: 'error', message: '查询文章信息失败' })
         this.clearArticleInfo()
+      }).finally(_ => {
+        this.$loading.hide()
       })
     },
     clearArticleInfo() {

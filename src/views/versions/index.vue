@@ -49,10 +49,13 @@ export default {
   },
   methods: {
     listVersions() {
+      this.$loading.show()
       this.$mapi.portal.queryVersionList().then(({ data }) => {
         this.versionList = data
       }).catch(_ => {
         this.versionList = []
+      }).finally(_ => {
+        this.$loading.hide()
       })
     }
   }

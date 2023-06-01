@@ -7,7 +7,6 @@
     <!-- 分类列表 -->
     <v-card class="blog-container">
       <div v-if="count > 0" class="category-title">分类 - {{ count }}</div>
-      <div v-else class="category-title">暂无内容</div>
       <ul class="category-list">
         <li v-for="item of categoryList" :key="item.id" class="category-list-item">
           <router-link :to="'/categories/' + item.id">
@@ -16,6 +15,7 @@
           </router-link>
         </li>
       </ul>
+      <div v-if="!pageLoading && count === 0" class="category-title">空空如也~</div>
     </v-card>
   </div>
 </template>
@@ -24,7 +24,8 @@
 export default {
   data: function() {
     return {
-      categoryList: []
+      categoryList: [],
+      pageLoading: false
     }
   },
   computed: {
@@ -46,10 +47,15 @@ export default {
   },
   methods: {
     listCategories() {
+      this.$loading.show()
+      this.pageLoading = true
       this.$mapi.portal.queryCategoryList().then(({ data }) => {
         this.categoryList = data
       }).catch(_ => {
         this.categoryList = []
+      }).finally(_ => {
+        this.$loading.hide()
+        this.pageLoading = false
       })
     }
   }

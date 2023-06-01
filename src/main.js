@@ -36,6 +36,7 @@ import attachmentModule from '@wangeditor/plugin-upload-attachment'
 import formulaModule from '@wangeditor/plugin-formula'
 // 代码高亮
 import Highlight from './directive/highlight'
+import loading from './components/loading/index'
 
 // WangEditor 附件上传注册
 Boot.registerModule(attachmentModule)
@@ -51,6 +52,7 @@ Vue.use(Toast)
 Vue.use(Confirm)
 Vue.use(VueImageSwipe)
 Vue.use(Highlight)
+Vue.use(loading)
 
 // 声明全局变量
 Vue.prototype['$mapi'] = api
