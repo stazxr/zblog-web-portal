@@ -89,6 +89,21 @@
           <span>💌</span> 弹幕
         </router-link>
       </div>
+      <div class="menus-item">
+        <a v-if="$store.state.websiteConfig['readMeLink'] && $store.state.websiteConfig['readMeLink'] !== ''" :href="$store.state.websiteConfig['readMeLink']" target="_blank">
+          <span>🧐</span> 关于
+        </a>
+      </div>
+      <div class="menus-item">
+        <router-link to="/statistics">
+          <span>📊</span> 统计
+        </router-link>
+      </div>
+      <div class="menus-item">
+        <router-link to="/versions">
+          <span>👣</span> 版本
+        </router-link>
+      </div>
       <div v-if="$store.state.user.id == null || $store.state.user.id === ''" class="menus-item">
         <a @click="openLogin">
           <span>🔒</span> 登录
