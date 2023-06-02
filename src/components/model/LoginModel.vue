@@ -1,46 +1,49 @@
 <template>
-  <v-dialog v-model="loginFlag" :fullscreen="isMobile" max-width="460">
-    <v-card class="login-container" style="border-radius:4px">
-      <v-icon class="float-right iconfont icon-guanbi" @click="loginFlag = false" />
-      <div class="login-wrapper">
-        <v-text-field
-          v-model="username"
-          label="账号"
-          placeholder="请输入您的用户名或邮箱"
-          clearable
-          @keyup.enter="login"
-        />
-        <v-text-field
-          v-model="password"
-          class="mt-7"
-          label="密码"
-          placeholder="请输入您的密码"
-          :append-icon="show ? 'iconfont icon-in_zhengyan_fill' : 'iconfont icon-in_biyan_fill'"
-          :type="show ? 'text' : 'password'"
-          @keyup.enter="login"
-          @click:append="show = !show"
-        />
-        <!-- 登录 -->
-        <v-btn :disabled="loginDisabled" class="mt-7" block color="blue" style="color:#fff" @click="login">登录</v-btn>
-        <!-- 注册和找回密码 -->
-        <div class="mt-10 login-tip">
-          <span @click="openRegister">立即注册</span>
-          <span class="float-right" @click="openForget">忘记密码?</span>
-        </div>
-        <div v-if="socialLoginList.length > 0">
-          <div class="social-login-title">社交账号登录</div>
-          <div class="social-login-wrapper">
-            <!-- qq登录 -->
-            <a v-if="showLogin('qq')" @click="qqLogin">
-              <svg class="iconfont_svg" aria-hidden="true" style="font-size: 25px">
-                <use xlink:href="#icon-social-qq" />
-              </svg>
-            </a>
+  <div>
+    <v-dialog v-model="loginFlag" :fullscreen="isMobile" max-width="460">
+      <v-card class="login-container" style="border-radius:4px">
+        <v-icon class="float-right iconfont icon-guanbi" @click="loginFlag = false" />
+        <div class="login-wrapper">
+          <v-text-field
+            v-model="username"
+            label="账号"
+            placeholder="请输入您的用户名或邮箱"
+            clearable
+            @keyup.enter="login"
+          />
+          <v-text-field
+            v-model="password"
+            class="mt-7"
+            label="密码"
+            placeholder="请输入您的密码"
+            :append-icon="show ? 'iconfont icon-in_zhengyan_fill' : 'iconfont icon-in_biyan_fill'"
+            :type="show ? 'text' : 'password'"
+            @keyup.enter="login"
+            @click:append="show = !show"
+          />
+          <!-- 登录 -->
+          <v-btn :disabled="loginDisabled" class="mt-7" block color="blue" style="color:#fff" @click="login">登录</v-btn>
+          <!-- 注册和找回密码 -->
+          <div class="mt-10 login-tip">
+            <span @click="openRegister">立即注册</span>
+            <span class="float-right" @click="openForget">忘记密码?</span>
+          </div>
+          <div v-if="socialLoginList.length > 0">
+            <div class="social-login-title">社交账号登录</div>
+            <div class="social-login-wrapper">
+              <!-- qq登录 -->
+              <a v-if="showLogin('qq')" @click="qqLogin">
+                <svg class="iconfont_svg" aria-hidden="true" style="font-size: 25px">
+                  <use xlink:href="#icon-social-qq" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </v-card>
-  </v-dialog>
+      </v-card>
+    </v-dialog>
+    <iframe v-show="false" ref="iframe" :src="src" title="iframe" />
+  </div>
 </template>
 
 <script>
@@ -51,10 +54,17 @@ export default {
       username: '',
       password: '',
       show: false,
-      loginDisabled: false
+      loginDisabled: false,
+      userToken: ''
     }
   },
   computed: {
+    websiteConfig() {
+      return this.$store.state.websiteConfig
+    },
+    src() {
+      return this.$store.state.websiteConfig['websiteAdminLink'] + '?isIframe=true&origin=' + this.$store.state.websiteConfig['websiteLink']
+    },
     loginFlag: {
       set(value) {
         this.$store.state.loginFlag = value
@@ -75,6 +85,17 @@ export default {
         return this.socialLoginList.indexOf(type) !== -1
       }
     }
+  },
+  mounted() {
+    const _this = this
+    // 这里是用来监听是否已经连接完成了 如果连接完成，就可以给管理页面传递信息了
+    window.addEventListener('message', function(event) {
+      // 判断消息来源是否是为子页面
+      if (event.origin === _this.websiteConfig['websiteAdminLink']) {
+        console.log('第二次交互成功：前台收到了后台的响应，并通知后台可以收到其消息', event)
+        _this.$refs.iframe.contentWindow.postMessage(null, _this.websiteConfig['websiteAdminLink'])
+      }
+    }, false)
   },
   methods: {
     login() {
@@ -99,6 +120,8 @@ export default {
           this.password = ''
           this.$store.commit('login', data)
           this.$store.commit('closeModel')
+          this.userToken = data.userToken
+          this.$refs.iframe.contentWindow.postMessage(this.userToken, this.websiteConfig['websiteAdminLink'])
           this.$toast({ type: 'success', message: '登录成功' })
         } else {
           this.$toast({ type: 'error', message: message })

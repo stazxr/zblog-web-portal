@@ -181,7 +181,7 @@ export default {
     },
     logout() {
       if (this.$route.path === '/user') {
-        this.$router.go(-1)
+        this.$router.push('/')
       }
 
       this.$store.commit('logout')
