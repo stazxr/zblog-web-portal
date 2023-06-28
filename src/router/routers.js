@@ -129,6 +129,10 @@ const routes = [
     hidden: true
   },
   {
+    path: '/oauth/login',
+    component: resolve => require(['../components/OauthLogin.vue'], resolve)
+  },
+  {
     path: '*',
     redirect: '/404'
   }

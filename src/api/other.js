@@ -12,5 +12,9 @@ export default {
   // 通过邮箱修改密码
   updateUserPwdByEmail: params => {
     return api.httpRequest().post(`/api/users/updateUserPwdByEmail`, params)
+  },
+  // QQ 登录
+  loginQq: params => {
+    return api.httpRequest().post(`/api/portal/oauth/login/qq`, params)
   }
 }

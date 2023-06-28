@@ -63,7 +63,7 @@ export default {
     return {
       noArticleCoverImg: 'https://file.suntaoblog.com/image/no-article-cover.png',
       current: 1,
-      size: 10,
+      size: 12,
       articleList: [],
       categoryCover: '',
       name: '',
@@ -145,8 +145,12 @@ export default {
           $state.complete()
         } else {
           this.articleList.push(...data.list)
-          this.current++
-          $state.loaded()
+          if (this.articleList.length === data.total) {
+            $state.complete()
+          } else {
+            this.current++
+            $state.loaded()
+          }
         }
       }).catch(_ => {
         $state.complete()

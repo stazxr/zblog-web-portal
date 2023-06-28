@@ -142,22 +142,19 @@ export default {
     },
     qqLogin() {
       // 保留当前路径
+      console.log('this.$route.path', this.$route.path)
+      let display = 'pc'
       this.$store.commit('saveLoginUrl', this.$route.path)
       if (navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i)) {
-        // eslint-disable-next-line no-undef
-        // QC.Login.showPopup({
-        //   appId: this.config.QQ_APP_ID,
-        //   redirectURI: this.config.QQ_REDIRECT_URI
-        // })
-      } else {
-        // window.open(
-        //   'https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=' +
-        //     +this.config.QQ_APP_ID +
-        //     '&response_type=token&scope=all&redirect_uri=' +
-        //     this.config.QQ_REDIRECT_URI,
-        //   '_self'
-        // )
+        display = 'mobile'
       }
+
+      window.open(
+        'https://graph.qq.com/oauth2.0/show?which=Login&display=' + display + '&client_id=' +
+        this.websiteConfig['qqAppId'] + '&response_type=token&scope=all&redirect_uri=' +
+        this.websiteConfig['qqCallBackUrl'],
+        '_self'
+      )
     }
   }
 }
