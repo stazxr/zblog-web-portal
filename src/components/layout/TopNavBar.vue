@@ -103,6 +103,9 @@
               <a v-if="$store.state.websiteConfig['readMeLink'] && $store.state.websiteConfig['readMeLink'] !== ''" :href="$store.state.websiteConfig['readMeLink']" target="_blank">
                 🧐 关于
               </a>
+              <a v-if="$store.state.websiteConfig['websiteAdminLink'] && $store.state.websiteConfig['websiteAdminLink'] !== ''" :href="$store.state.websiteConfig['websiteAdminLink']" target="_blank">
+                🐱 后台
+              </a>
               <router-link to="/statistics">
                 📊 统计
               </router-link>
@@ -180,12 +183,14 @@ export default {
       this.$store.state.loginFlag = true
     },
     logout() {
-      if (this.$route.path === '/user') {
-        this.$router.push('/')
-      }
+      this.$mapi.other.logout({ userId: this.$store.state.user.id }).then(_ => {
+        if (this.$route.path === '/user') {
+          this.$router.push('/')
+        }
 
-      this.$store.commit('logout')
-      this.$toast({ type: 'success', message: '注销成功' })
+        this.$store.commit('logout')
+        this.$toast({ type: 'success', message: '注销成功' })
+      })
     }
   }
 }

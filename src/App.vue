@@ -43,6 +43,11 @@ export default {
   components: {
     TopNavBar, SideNavBar, Footer, BackTop, SearchModel, LoginModel, RegisterModel, ForgetModel, Player, Robot
   },
+  data() {
+    return {
+      interval: null
+    }
+  },
   computed: {
     websiteConfig() {
       return this.$store.state.websiteConfig
@@ -64,6 +69,16 @@ export default {
     this.getBlogInfo()
     // 上传访客信息
     this.recordVisitor()
+
+    // 每60秒刷新一次用户信息
+    this.checkUserLoginStatus()
+    this.interval = window.setInterval(() => {
+      this.checkUserLoginStatus()
+    }, 60000)
+  },
+  destroyed() {
+    console.log('clear interval')
+    clearInterval(this.interval)
   },
   methods: {
     getBlogInfo() {
@@ -74,6 +89,29 @@ export default {
     },
     recordVisitor() {
       this.$mapi.portal.recordVisitor()
+    },
+    checkUserLoginStatus() {
+      console.log('开始检查用户的登录状态...')
+      this.$mapi.other.checkUserLoginStatus().then(res => {
+        if (res.code === 200 && res.data != null) {
+          // 查询用户信息
+          console.log('用户已登录，加载用户信息...')
+          const userId = res.data.userId
+          this.$mapi.portal.queryUserDetail({ userId: userId }).then(({ code, data, message }) => {
+            if (code === 200) {
+              this.$store.commit('login', data)
+              this.userToken = data.userToken
+            } else {
+              this.$toast({ type: 'error', message: message })
+            }
+          }).catch(_ => {
+            this.$toast({ type: 'error', message: '用户信息加载失败' })
+          })
+        } else {
+          console.log('用户未登录...')
+          this.$store.commit('logout')
+        }
+      })
     }
   }
 }

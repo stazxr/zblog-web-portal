@@ -152,12 +152,14 @@ export default {
       this.$store.state.loginFlag = true
     },
     logout() {
-      if (this.$route.path === '/user') {
-        this.$router.go(-1)
-      }
+      this.$mapi.other.logout({ userId: this.$store.state.user.id }).then(_ => {
+        if (this.$route.path === '/user') {
+          this.$router.go(-1)
+        }
 
-      this.$store.commit('logout')
-      this.$toast({ type: 'success', message: '注销成功' })
+        this.$store.commit('logout')
+        this.$toast({ type: 'success', message: '注销成功' })
+      })
     }
   }
 }

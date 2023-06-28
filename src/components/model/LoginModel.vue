@@ -42,7 +42,7 @@
         </div>
       </v-card>
     </v-dialog>
-    <iframe v-show="false" ref="iframe" :src="src" title="iframe" />
+    <!-- <iframe v-show="false" ref="iframe" :src="src" title="iframe" /> -->
   </div>
 </template>
 
@@ -86,17 +86,17 @@ export default {
       }
     }
   },
-  mounted() {
-    const _this = this
-    // 这里是用来监听是否已经连接完成了 如果连接完成，就可以给管理页面传递信息了
-    window.addEventListener('message', function(event) {
-      // 判断消息来源是否是为子页面
-      if (event.origin === _this.websiteConfig['websiteAdminLink']) {
-        console.log('第二次交互成功：前台收到了后台的响应，并通知后台可以收到其消息', event)
-        _this.$refs.iframe.contentWindow.postMessage(null, _this.websiteConfig['websiteAdminLink'])
-      }
-    }, false)
-  },
+  // mounted() {
+  //   const _this = this
+  //   // 这里是用来监听是否已经连接完成了 如果连接完成，就可以给管理页面传递信息了
+  //   window.addEventListener('message', function(event) {
+  //     // 判断消息来源是否是为子页面
+  //     if (event.origin === _this.websiteConfig['websiteAdminLink']) {
+  //       console.log('第二次交互成功：前台收到了后台的响应，并通知后台可以收到其消息', event)
+  //       _this.$refs.iframe.contentWindow.postMessage(null, _this.websiteConfig['websiteAdminLink'])
+  //     }
+  //   }, false)
+  // },
   methods: {
     login() {
       if (this.username.trim().length === 0) {
@@ -121,7 +121,7 @@ export default {
           this.$store.commit('login', data)
           this.$store.commit('closeModel')
           this.userToken = data.userToken
-          this.$refs.iframe.contentWindow.postMessage(this.userToken, this.websiteConfig['websiteAdminLink'])
+          // this.$refs.iframe.contentWindow.postMessage(this.userToken, this.websiteConfig['websiteAdminLink'])
           this.$toast({ type: 'success', message: '登录成功' })
         } else {
           this.$toast({ type: 'error', message: message })

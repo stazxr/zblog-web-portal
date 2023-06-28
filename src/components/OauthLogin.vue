@@ -51,7 +51,7 @@ export default {
           expires_in: this.urlParam['expires_in']
         }
 
-        this.$mapi.other.loginQq(param).then(({ code, data, message }) => {
+        this.$mapi.portal.loginQq(param).then(({ code, data, message }) => {
           if (code === 200) {
             this.$store.commit('login', data)
             this.userToken = data.userToken
@@ -93,7 +93,7 @@ export default {
 }
 #preloader_1 span {
   display: block;
-  bottom: 0px;
+  bottom: 0;
   width: 9px;
   height: 5px;
   background: #9b59b6;

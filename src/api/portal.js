@@ -153,5 +153,13 @@ export default {
   // 查询前台版本列表
   queryVersionList: params => {
     return api.httpRequest().get(`${portalApi}/queryVersionList`, params)
+  },
+  // QQ 登录
+  loginQq: params => {
+    return api.httpRequest().post(`${portalApi}/oauth/login/qq`, params)
+  },
+  // 查询用户详情
+  queryUserDetail: params => {
+    return api.httpRequest().get(`${portalApi}/queryUserDetail`, params)
   }
 }
