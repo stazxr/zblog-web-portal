@@ -261,6 +261,8 @@ export default {
       // 文章链接
       articleLink: window.location.href,
       clipboard: null,
+      // 是否禁用文章点赞按钮
+      disabledLikeBtn: false,
       article: {
         id: '',
         title: '',
@@ -490,6 +492,10 @@ export default {
       }
     },
     likeArticle() {
+      if (this.disabledLikeBtn) {
+        return false
+      }
+
       // 判断登录
       if (!this.$store.state.user.id) {
         this.$store.state.loginFlag = true
@@ -501,13 +507,16 @@ export default {
         userId: this.$store.state.user.id,
         articleId: this.article.id
       }
+      this.disabledLikeBtn = true
       this.$mapi.portal.likeArticle(param).then(({ code, message }) => {
         if (code === 200) {
           // 判断是否点赞
           if (this.$store.state.articleLikeSet.indexOf(this.article.id) !== -1) {
             this.$set(this.article, 'likeCount', this.article.likeCount - 1)
+            this.$toast({ type: 'success', message: '取消成功' })
           } else {
             this.$set(this.article, 'likeCount', this.article.likeCount + 1)
+            this.$toast({ type: 'success', message: '点赞成功' })
           }
 
           this.$store.commit('articleLike', this.article.id)
@@ -516,6 +525,8 @@ export default {
         }
       }).catch(_ => {
         this.$toast({ type: 'error', message: '点赞失败' })
+      }).finally(_ => {
+        this.disabledLikeBtn = false
       })
     },
     viewArticle() {

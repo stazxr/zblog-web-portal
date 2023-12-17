@@ -163,6 +163,8 @@ export default {
   },
   data: function() {
     return {
+      // 是否禁用评论点赞按钮
+      disabledLikeBtn: false,
       submitDisabled: false,
       commentContent: '',
       chooseEmoji: false,
@@ -294,6 +296,10 @@ export default {
       })
     },
     like(comment) {
+      if (this.disabledLikeBtn) {
+        return false
+      }
+
       // 判断登录
       if (!this.$store.state.user.id) {
         this.$store.state.loginFlag = true
@@ -305,13 +311,16 @@ export default {
         userId: this.$store.state.user.id,
         commentId: comment.id
       }
+      this.disabledLikeBtn = true
       this.$mapi.portal.likeComment(param).then(({ code, message }) => {
         if (code === 200) {
           // 判断是否点赞
           if (this.$store.state.commentLikeSet.indexOf(comment.id) !== -1) {
             this.$set(comment, 'likeCount', comment.likeCount - 1)
+            this.$toast({ type: 'success', message: '取消成功' })
           } else {
             this.$set(comment, 'likeCount', comment.likeCount + 1)
+            this.$toast({ type: 'success', message: '点赞成功' })
           }
 
           this.$store.commit('commentLike', comment.id)
@@ -320,6 +329,8 @@ export default {
         }
       }).catch(_ => {
         this.$toast({ type: 'error', message: '点赞失败' })
+      }).finally(_ => {
+        this.disabledLikeBtn = false
       })
     },
     deleteComment(index, item) {
